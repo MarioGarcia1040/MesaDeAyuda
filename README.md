@@ -33,10 +33,8 @@ Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaSc
 # Sistema de mesa de ayuda
 ## Sistema de mesa de ayuda por tickets. Está desarrollado con PHP (CodeIgniter 4), JavaScript, CSS, MySQL, Shield para acceso y privilegios, utiliza AdminLTE como plantilla de interfaz.
 
-###Características principales
-Registro de tickets de usuarios
 
-###Tecnologías
+### Tecnologías
 PHP (CodeIgniter 4)
 MySQL / MariaDB
 JavaScript, CSS, AdminLTE, Shield
@@ -79,7 +77,7 @@ APP_ENV = development APP_DEBUG = true app.baseURL = 'http://localhost:8080/'
 
 database.default.hostname = localhost database.default.database = escuela database.default.username = tu_usuario database.default.password = tu_contraseña database.default.DBDriver = MySQLi
 
-###Buenas prácticas y seguridad
+### Buenas prácticas y seguridad
 No subas el .env con credenciales a repositorios públicos.
 Mantén actualizado PHP y las dependencias.
 Limpia permisos y desactiva APP_DEBUG en producción.
@@ -88,10 +86,10 @@ Realiza backups de la base de datos periódicamente.
 Añade instrucciones para ejecutar tests o linters si existen.
 Describe el flujo para crear issues y pull requests.
 Revisa CONTRIBUTING.md para normas de contribución e intrucciones.
-###Licencia
+### Licencia
 Este proyecto está bajo la licencia MIT.  
 Consulta el archivo [LICENSE](MIT License.txt) para más detalles.
-###Contacto
+### Contacto
 Desarrollado por: Mario García — mariogarcia1040@gmail.com | Búho Computación 29/Agosto/2026 
 
 **Please** read the user guide for a better explanation of how CI4 works!
