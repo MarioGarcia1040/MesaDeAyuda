@@ -1,0 +1,33 @@
+﻿# ############################################################################ #
+# Registro de cambios y modificaciones                                         #
+# Sistema de tickets/Mesa de ayuda Shoei                                       #                                             
+# PHP 8.2.4 | CodeIgniter 4.7.4 | MariaDB 10.4.28                              #
+# Desarrollado por: Mario García (mariogarcia1040@gmail.com)                   #
+# Búho Computación                                                             #
+# ############################################################################ #
+
+## [0.0.3] - 2026-08-29
+
+# Changelog - Mesa de ayuda
+
+## Información del Sistema
+- **PHP**: 8.2.4
+- **Framework**: CodeIgniter 4.7.4
+- **Base de datos**: MariaDB 10.4.28
+- **Desarrollador**: Mario García (mariogarcia1040@gmail.com)
+- **Empresa**: Búho Computación
+
+### Agregado
+- Tablas para el uso de Shield en la base de datos
+- Inicio formulario de acceso Shield
+- Idioma español y japonés para eventos y errores
+
+### Mejorado
+- Agregar soporte de Email para gestión
+- Personalizar vistas de Shield
+
+### Notas técnicas
+- Base de datos: Shoei
+- Frontend: Formularios por defecto de Shield
+- Backend: Se carga Shield para acceso
+- Commits: inicialización del repositorio
