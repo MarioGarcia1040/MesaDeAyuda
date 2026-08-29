@@ -33,8 +33,8 @@ Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaSc
 
 1. Clona el repositorio:
 ```bash
-   git clone https://github.com/MarioGarcia1040/imadic.git
-   cd imadic
+   git clone https://github.com/MarioGarcia1040/MesaDeAyuda.git
+   cd MesaDeAyuda
 ```
 
 2. Instala las dependencias PHP:
@@ -68,7 +68,7 @@ Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaSc
 
 8. Configura el servidor web:
    - El document root debe apuntar a la carpeta `public/` del proyecto.
-   - Por ejemplo, en Apache usa un VirtualHost que apunte a `/ruta/a/imadic/public`.
+   - Por ejemplo, en Apache usa un VirtualHost que apunte a `/ruta/a/MesaDeAyuda/public`.
 
 9. Inicia la aplicación en modo desarrollo:
 ```bash
