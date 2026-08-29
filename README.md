@@ -1,69 +1,117 @@
-# CodeIgniter 4 Application Starter
+# Sistema de Mesa de Ayuda
 
-## What is CodeIgniter?
+Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaScript, CSS y MySQL. Utiliza Shield para el manejo de acceso y privilegios, y AdminLTE como plantilla de interfaz.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Características principales
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- Registro de tickets de usuarios
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Tecnologías
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- PHP (CodeIgniter 4)
+- MySQL / MariaDB
+- JavaScript, CSS, AdminLTE, Shield
+- Composer para dependencias PHP
 
-## Installation & updates
+## Requisitos del servidor
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
-
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
-
-## Setup
-
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
-
-## Important Change with index.php
-
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
-
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 8.2 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+- PHP 8.1 o superior (se recomienda PHP 8.2+)
+- Extensiones PHP necesarias:
+  - intl
+  - mbstring
+  - json (habilitado por defecto)
+  - mysqlnd (si usas MySQL/MariaDB)
+  - curl / libcurl (si usas HTTP\CURLRequest)
+- (Opcional) Composer instalado globalmente
 
 > [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+> - Fin de soporte de PHP 7.4: 2022-11-28
+> - Fin de soporte de PHP 8.0: 2023-11-28
+> - Fin de soporte de PHP 8.1: 2025-12-31
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## Instalación
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/MarioGarcia1040/imadic.git
+   cd imadic
+   ```
+
+2. Instala las dependencias PHP:
+   ```bash
+   composer install
+   ```
+
+3. Copia el archivo de entorno:
+   ```bash
+   cp env .env
+   ```
+
+4. Edita `.env` y configura:
+   - `APP_BASEURL` (la URL de tu aplicación)
+   - Datos de la base de datos: hostname, username, password, database (por defecto `imadic`)
+   - `APP_ENV`, `APP_DEBUG` según el entorno
+
+5. Crea la base de datos (por ejemplo `escuela`) en MySQL/MariaDB.
+
+6. Ejecuta las migraciones:
+   ```bash
+   php spark migrate
+   ```
+   Si el proyecto no incluye migraciones de CodeIgniter, importa el script SQL proporcionado en `/database` o en la carpeta correspondiente.
+
+7. Ajusta permisos:
+   ```bash
+   chmod -R 755 writable
+   chmod -R 755 public/uploads
+   ```
+
+8. Configura el servidor web:
+   - El document root debe apuntar a la carpeta `public/` del proyecto.
+   - Por ejemplo, en Apache usa un VirtualHost que apunte a `/ruta/a/imadic/public`.
+
+9. Inicia la aplicación en modo desarrollo:
+   ```bash
+   php spark serve --host=0.0.0.0 --port=8080
+   ```
+
+### Configuración importante
+
+- `index.php` se encuentra dentro de la carpeta `public/` por seguridad. Asegúrate de que el servidor web no apunte a la raíz del proyecto.
+- Genera o configura la key de encriptación si el proyecto la requiere (revisa `config/Encryption.php` o `.env`).
+
+### Ejemplo mínimo de `.env`
+
+```env
+APP_ENV = development
+APP_DEBUG = true
+app.baseURL = 'http://localhost:8080/'
+
+database.default.hostname = localhost
+database.default.database = escuela
+database.default.username = tu_usuario
+database.default.password = tu_contraseña
+database.default.DBDriver = MySQLi
+```
+
+## Buenas prácticas y seguridad
+
+- No subas el `.env` con credenciales a repositorios públicos.
+- Mantén actualizado PHP y las dependencias.
+- Limpia permisos y desactiva `APP_DEBUG` en producción.
+- Realiza backups de la base de datos periódicamente.
+
+## Desarrollo y contribuciones
+
+<!-- TODO: agregar instrucciones para ejecutar tests o linters, y describir el flujo para crear issues y pull requests -->
+
+Revisa `CONTRIBUTING.md` para normas de contribución e instrucciones.
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT.
+Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+## Contacto
+
+Desarrollado por: Mario García — mariogarcia1040@gmail.com | Búho Computación
