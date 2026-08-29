@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Sistema de Mesa de Ayuda
 
 Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaScript, CSS y MySQL. Utiliza Shield para el manejo de acceso y privilegios, y AdminLTE como plantilla de interfaz.
@@ -29,7 +29,7 @@ Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaSc
 > - Fin de soporte de PHP 7.4: 2022-11-28
 > - Fin de soporte de PHP 8.0: 2023-11-28
 > - Fin de soporte de PHP 8.1: 2025-12-31
-=======
+
 # Sistema de mesa de ayuda
 ## Sistema de mesa de ayuda por tickets. Está desarrollado con PHP (CodeIgniter 4), JavaScript, CSS, MySQL, Shield para acceso y privilegios, utiliza AdminLTE como plantilla de interfaz.
 
