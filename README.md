@@ -1,8 +1,8 @@
 # MesaDeAyuda
 ## Sistema de mesa de ayuda por tickets. Está desarrollado con PHP (CodeIgniter 4), JavaScript, CSS, MySQL/MariaDB, AdminLTE como plantilla de interfaz y Shield para control de acceso y privilegios.
 
-Características principales
-Registro y seguimiento de tickets de soporte
+## Características principales
+### Registro y seguimiento de tickets de soporte
 
 Tecnologías
 PHP (CodeIgniter 4)
@@ -47,7 +47,7 @@ APP_ENV = development APP_DEBUG = true app.baseURL = 'http://localhost:8080/'
 
 database.default.hostname = localhost database.default.database = escuela database.default.username = tu_usuario database.default.password = tu_contraseña database.default.DBDriver = MySQLi
 
-Buenas prácticas y seguridad
+## Buenas prácticas y seguridad
 No subas el .env con credenciales a repositorios públicos.
 Mantén actualizado PHP y las dependencias.
 Limpia permisos y desactiva APP_DEBUG en producción.
@@ -62,7 +62,7 @@ Incluye un archivo CONTRIBUTING.md para normas de contribución.
 Este proyecto está bajo la licencia MIT.  
 Consulta el archivo [LICENSE](MIT License.txt) para más detalles.
 
-Contacto
+## Contacto
 Desarrollado por: Mario García — mariogarcia1040@gmail.com | Búho Computación 11/Enero/2026 
 
 **Please** read the user guide for a better explanation of how CI4 works!
