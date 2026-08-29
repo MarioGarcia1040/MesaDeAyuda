@@ -32,20 +32,20 @@ Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaSc
 ## Instalación
 
 1. Clona el repositorio:
-   ```bash
+```bash
    git clone https://github.com/MarioGarcia1040/imadic.git
    cd imadic
-   ```
+```
 
 2. Instala las dependencias PHP:
-   ```bash
+```bash
    composer install
-   ```
+```
 
 3. Copia el archivo de entorno:
-   ```bash
+```bash
    cp env .env
-   ```
+```
 
 4. Edita `.env` y configura:
    - `APP_BASEURL` (la URL de tu aplicación)
@@ -55,25 +55,25 @@ Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaSc
 5. Crea la base de datos (por ejemplo `escuela`) en MySQL/MariaDB.
 
 6. Ejecuta las migraciones:
-   ```bash
+```bash
    php spark migrate
-   ```
+```
    Si el proyecto no incluye migraciones de CodeIgniter, importa el script SQL proporcionado en `/database` o en la carpeta correspondiente.
 
 7. Ajusta permisos:
-   ```bash
+```bash
    chmod -R 755 writable
    chmod -R 755 public/uploads
-   ```
+```
 
 8. Configura el servidor web:
    - El document root debe apuntar a la carpeta `public/` del proyecto.
    - Por ejemplo, en Apache usa un VirtualHost que apunte a `/ruta/a/imadic/public`.
 
 9. Inicia la aplicación en modo desarrollo:
-   ```bash
+```bash
    php spark serve --host=0.0.0.0 --port=8080
-   ```
+```
 
 ### Configuración importante
 
@@ -102,8 +102,6 @@ database.default.DBDriver = MySQLi
 - Realiza backups de la base de datos periódicamente.
 
 ## Desarrollo y contribuciones
-
-<!-- TODO: agregar instrucciones para ejecutar tests o linters, y describir el flujo para crear issues y pull requests -->
 
 Revisa `CONTRIBUTING.md` para normas de contribución e instrucciones.
 
