@@ -25,21 +25,21 @@ return [
     'badToken'              => 'El token de acceso no es válido.',
     'oldToken'              => 'El token de acceso ha caducado.',
     'noUserEntity'          => 'Se debe proporcionar una entidad de usuario para la validación de contraseña.',
-    'invalidEmail'          => '(To be translated) Unable to verify the email address "{0}" matches the email on record.',
+    'invalidEmail'          => 'El correo "{0}" no esta registrado.',
     'unableSendEmailToUser' => 'Lo siento, hubo un problema al enviar el correo electrónico. No pudimos enviar un correo electrónico a "{0}".',
     'throttled'             => 'Se han realizado demasiadas solicitudes desde esta dirección IP. Puedes intentarlo de nuevo en {0} segundos.',
     'notEnoughPrivilege'    => 'No tienes los permisos necesarios para realizar la operación deseada.',
     // JWT Exceptions
-    'invalidJWT'     => '(To be translated) The token is invalid.',
-    'expiredJWT'     => '(To be translated) The token has expired.',
-    'beforeValidJWT' => '(To be translated) The token is not yet available.',
+    'invalidJWT'     => 'El token de acceso no es válido.',
+    'expiredJWT'     => 'El token de acceso ha caducado.',
+    'beforeValidJWT' => 'El token de acceso aún no está disponible.',
 
     'email'           => 'Correo Electrónico',
     'username'        => 'Nombre de usuario',
     'password'        => 'Contraseña',
-    'passwordConfirm' => 'Contraseña (otra vez)',
+    'passwordConfirm' => 'Contraseña (repetir)',
     'haveAccount'     => '¿Ya tienes una cuenta?',
-    'token'           => '(To be translated) Token',
+    'token'           => 'Token',
 
     // Botones
     'confirm' => 'Confirmar',
@@ -61,7 +61,7 @@ return [
     'magicLinkExpired'   => 'Lo siento, el enlace ha caducado.',
     'checkYourEmail'     => '¡Revisa tu correo electrónico!',
     'magicLinkDetails'   => 'Acabamos de enviarte un correo electrónico con un enlace de inicio de sesión. Solo es válido durante {0} minutos.',
-    'magicLinkDisabled'  => '(To be translated) Use of MagicLink is currently not allowed.',
+    'magicLinkDisabled'  => 'Actualmente no se permite el uso de enlaces mágicos.',
     'successLogout'      => 'Has cerrado sesión correctamente.',
     'backToLogin'        => 'Volver al inicio de sesión',
 
@@ -83,7 +83,7 @@ return [
     'resetTokenExpired'         => 'Lo siento. Su token de reinicio ha caducado.',
 
     // Email Globals
-    'emailInfo'      => 'Alguna información sobre la persona:',
+    'emailInfo'      => 'Información del usuario:',
     'emailIpAddress' => 'Dirección IP:',
     'emailDevice'    => 'Dispositivo:',
     'emailDate'      => 'Fecha:',
@@ -100,7 +100,7 @@ return [
     'needVerification'    => 'Verifica tu correo electrónico para completar la activación de la cuenta.',
 
     // Activar
-    'emailActivateTitle'    => 'Activación de correo electrónico',
+    'emailActivateTitle'    => 'Activación por correo electrónico',
     'emailActivateBody'     => 'Acabamos de enviarte un correo electrónico con un código para confirmar tu dirección de correo electrónico. Copia ese código y pégalo a continuación.',
     'emailActivateSubject'  => 'Tu código de activación',
     'emailActivateMailBody' => 'Utiliza el código siguiente para activar tu cuenta y comenzar a usar el sitio.',

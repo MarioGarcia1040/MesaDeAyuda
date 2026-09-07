@@ -6,6 +6,18 @@
 # Búho Computación                                                             #
 # ############################################################################ #
 
+
+## [0.0.3] - 2026-08-29
+
+### Agregado
+- Tablas para el uso de Shield en la base de datos
+- Inicio formulario de acceso Shield
+- Idioma español y japonés para eventos y errores
+
+### Mejorado
+- Mensajes de acceso traducidos
+
+
 ## [0.0.3] - 2026-08-29
 
 # Changelog - Mesa de ayuda
