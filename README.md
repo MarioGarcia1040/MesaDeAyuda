@@ -10,7 +10,7 @@ Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaSc
 
 - PHP (CodeIgniter 4)
 - MySQL / MariaDB
-- JavaScript, CSS, AdminLTE, Shield
+- JavaScript, CSS, AdminLTE 4, Shield
 - Composer para dependencias PHP
 
 ## Requisitos del servidor
