@@ -1,4 +1,10 @@
 <?php
+/*
+ * Autor: Mario García - mariogarcia1040@gmail.com
+ * Descripción: Controlador de acceso a la aplicación, principal.
+ * 09-Septiembre-2026
+ * 
+ */
 
 namespace App\Controllers;
 
