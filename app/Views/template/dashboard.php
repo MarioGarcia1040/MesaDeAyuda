@@ -1,1 +1,1 @@
-<?php echo 'hola'; ?>
+<?php echo '<p>¡Login funcionando! Bienvenido, ' . esc(auth()->user()->email) . '</p>' ?>

@@ -7,12 +7,14 @@
 # ############################################################################ #
 
 
-## [0.0.3] - 2026-08-29
+## [0.0.3] - 2026-09-12
 
 ### Agregado
 - Tablas para el uso de Shield en la base de datos
 - Inicio formulario de acceso Shield
 - Idioma español y japonés para eventos y errores
+- Se actualiza controlador Home para gestionar el acceso
+- Rutas de acceso a grupos
 
 ### Mejorado
 - Mensajes de acceso traducidos
