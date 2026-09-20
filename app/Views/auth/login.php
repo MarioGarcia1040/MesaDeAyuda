@@ -1,49 +1,68 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend('auth/layout') ?>
 
-<?= $this->section('title') ?><?= lang('Auth.login') ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= lang('Auth.login') ?><?= $this->endSection() ?>
+
+<?= $this->section('pageStyles') ?>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="<?= base_url('dist/css/adminlte.min.css') ?>">
+
+<?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 
-    <div class="container d-flex justify-content-center p-5">
-        <div class="card col-12 col-md-5 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title mb-5"><?= lang('Auth.login') ?></h5>
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <a href="<?= site_url('/') ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
+            <img src="<?= base_url('dist/assets/img/shoei-logo.png') ?>" alt="Shoei" class="img-fluid d-block mx-auto" style="max-height: 150px;">
+        </a>
+    </div>
+    <div class="card-body login-card-body">
 
-                <?php if (session('error') !== null) : ?>
-                    <div class="alert alert-danger" role="alert"><?= esc(session('error')) ?></div>
-                <?php elseif (session('errors') !== null) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php if (is_array(session('errors'))) : ?>
-                            <?php foreach (session('errors') as $error) : ?>
-                                <?= esc($error) ?>
-                                <br>
-                            <?php endforeach ?>
-                        <?php else : ?>
-                            <?= esc(session('errors')) ?>
-                        <?php endif ?>
-                    </div>
+        <?php if (session('error') !== null) : ?>
+            <div class="alert alert-danger" role="alert"><?= esc(session('error')) ?></div>
+        <?php elseif (session('errors') !== null) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?php if (is_array(session('errors'))) : ?>
+                    <?php foreach (session('errors') as $error) : ?>
+                        <?= esc($error) ?>
+                        <br>
+                    <?php endforeach ?>
+                <?php else : ?>
+                    <?= esc(session('errors')) ?>
                 <?php endif ?>
+            </div>
+        <?php endif ?>
 
-                <?php if (session('message') !== null) : ?>
-                    <div class="alert alert-success" role="alert"><?= esc(session('message')) ?></div>
-                <?php endif ?>
+        <?php if (session('message') !== null) : ?>
+            <div class="alert alert-success" role="alert"><?= esc(session('message')) ?></div>
+        <?php endif ?>
 
-                <form action="<?= url_to('login') ?>" method="post">
-                    <?= csrf_field() ?>
+        <form action="<?= url_to('login') ?>" method="post">
+            <?= csrf_field() ?>
 
-                    <!-- Email -->
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingEmailInput" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required>
-                        <label for="floatingEmailInput"><?= lang('Auth.email') ?></label>
-                    </div>
+            <div class="input-group mb-1">
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="floatingEmailInput" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required>
+                    <label for="floatingEmailInput"><?= lang('Auth.email') ?></label>
+                </div>
+                <div class="input-group-text">
+                    <span class="bi bi-envelope"></span>
+                </div>
+            </div>
 
-                    <!-- Password -->
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPasswordInput" name="password" inputmode="text" autocomplete="current-password" placeholder="<?= lang('Auth.password') ?>" required>
-                        <label for="floatingPasswordInput"><?= lang('Auth.password') ?></label>
-                    </div>
+            <div class="input-group mb-1">
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPasswordInput" name="password" inputmode="text" autocomplete="current-password" placeholder="<?= lang('Auth.password') ?>" required>
+                    <label for="floatingPasswordInput"><?= lang('Auth.password') ?></label>
+                </div>
+                <div class="input-group-text">
+                    <span class="bi bi-lock-fill"></span>
+                </div>
+            </div>
 
-                    <!-- Remember me -->
+            <div class="row">
+                <div class="col-6 d-inline-flex align-items-center">
                     <?php if (setting('Auth.sessionConfig')['allowRemembering']): ?>
                         <div class="form-check">
                             <label class="form-check-label">
@@ -52,22 +71,34 @@
                             </label>
                         </div>
                     <?php endif; ?>
-
-                    <div class="d-grid col-12 col-md-8 mx-auto m-3">
-                        <button type="submit" class="btn btn-primary btn-block"><?= lang('Auth.login') ?></button>
+                </div>
+                <div class="col-6">
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary"><?= lang('Auth.login') ?></button>
                     </div>
-
-                    <?php if (setting('Auth.allowMagicLinkLogins')) : ?>
-                        <p class="text-center"><?= lang('Auth.forgotPassword') ?> <a href="<?= url_to('magic-link') ?>"><?= lang('Auth.useMagicLink') ?></a></p>
-                    <?php endif ?>
-
-                    <?php if (setting('Auth.allowRegistration')) : ?>
-                        <p class="text-center"><?= lang('Auth.needAccount') ?> <a href="<?= url_to('register') ?>"><?= lang('Auth.register') ?></a></p>
-                    <?php endif ?>
-
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
+
+        <?php if (setting('Auth.allowMagicLinkLogins')) : ?>
+            <p class="mb-1 mt-3">
+                <a href="<?= url_to('magic-link') ?>"><?= lang('Auth.forgotPassword') ?></a>
+            </p>
+        <?php endif ?>
+
+        <?php if (setting('Auth.allowRegistration')) : ?>
+            <p class="mb-0">
+                <a href="<?= url_to('register') ?>"><?= lang('Auth.register') ?></a>
+            </p>
+        <?php endif ?>
+
     </div>
+</div>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('pageScripts') ?>
+
+<script src="<?= base_url('dist/js/adminlte.min.js') ?>"></script>
 
 <?= $this->endSection() ?>

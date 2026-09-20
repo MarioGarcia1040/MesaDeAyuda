@@ -54,7 +54,7 @@ return [
     'login'              => 'Iniciar sesión',
     'needAccount'        => '¿Necesitas una cuenta?',
     'rememberMe'         => 'Recordarme',
-    'forgotPassword'     => '¿Olvidaste tu contraseña',
+    'forgotPassword'     => '¿Olvidaste tu contraseña?',
     'useMagicLink'       => 'Usar un enlace de inicio de sesión',
     'magicLinkSubject'   => 'Tu enlace de inicio de sesión',
     'magicTokenNotFound' => 'No se puede verificar el enlace.',
