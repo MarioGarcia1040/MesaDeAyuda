@@ -38,7 +38,7 @@
             <div class="alert alert-success" role="alert"><?= esc(session('message')) ?></div>
         <?php endif ?>
 
-        <form action="<?= url_to('login') ?>" method="post">
+        <form action="<?= url_to('login') ?>" method="post" id="formulario">
             <?= csrf_field() ?>
 
             <div class="input-group mb-1">
@@ -80,6 +80,26 @@
             </div>
         </form>
 
+        <div id="loader-overlay" class="d-none"
+            style="position: fixed;
+         top: 0;
+         left: 0;
+         width: 100vw;
+         height: 100vh;
+         background-color: rgba(0, 0, 0, 0.5);
+         z-index: 1050;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         ">
+            <div class="text-white text-center">
+                <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+                <p class="mt-2">Verificando credenciales...</p>
+            </div>
+        </div>
+
         <?php if (setting('Auth.allowMagicLinkLogins')) : ?>
             <p class="mb-1 mt-3">
                 <a href="<?= url_to('magic-link') ?>"><?= lang('Auth.forgotPassword') ?></a>
@@ -100,5 +120,10 @@
 <?= $this->section('pageScripts') ?>
 
 <script src="<?= base_url('dist/js/adminlte.min.js') ?>"></script>
+<script>
+    document.getElementById('formulario').addEventListener('submit', function() {
+        document.getElementById('loader-overlay').classList.remove('d-none');
+    });
+</script>
 
 <?= $this->endSection() ?>

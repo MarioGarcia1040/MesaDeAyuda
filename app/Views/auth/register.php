@@ -6,6 +6,20 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="<?= base_url('dist/css/adminlte.min.css') ?>">
+<style>
+    .loader-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1050;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
 
 <?= $this->endSection() ?>
 
@@ -34,7 +48,7 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= url_to('register') ?>" method="post">
+        <form action="<?= url_to('register') ?>" method="post" id="formulario">
             <?= csrf_field() ?>
 
             <div class="input-group mb-1">
@@ -47,9 +61,9 @@
                 </div>
             </div>
 
-            <div class="input-group mb-1">
+            <div class="input-group mb-1" hidden>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingUsernameInput" name="username" inputmode="text" autocomplete="username" placeholder="<?= lang('Auth.username') ?>" value="<?= old('username') ?>" required>
+                    <input type="text" class="form-control" id="floatingUsernameInput" name="username" inputmode="text" autocomplete="username" placeholder="<?= lang('Auth.username') ?>" value="<?= old('username') ?>">
                     <label for="floatingUsernameInput"><?= lang('Auth.username') ?></label>
                 </div>
                 <div class="input-group-text">
@@ -78,7 +92,7 @@
             </div>
 
             <div class="row">
-                <div class="col-6 d-inline-flex align-items-center">                    
+                <div class="col-6 d-inline-flex align-items-center">
                 </div>
                 <div class="col-6">
                     <div class="d-grid gap-2">
@@ -88,8 +102,29 @@
             </div>
         </form>
 
+        <div id="loader-overlay" class="loader-overlay d-none" role="status" aria-live="polite">
+            <div class="text-white text-center">
+                <div class="spinner-border text-light" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2">Verificando datos...</p>
+            </div>
+        </div>
+
         <p class="mb-1 mt-3">
             <?= lang('Auth.haveAccount') ?> <a href="<?= url_to('login') ?>"><?= lang('Auth.login') ?></a>
         </p>
+
+        <?= $this->endSection() ?>
+
+        <?= $this->section('pageScripts') ?>
+
+        <script src="<?= base_url('dist/js/adminlte.min.js') ?>"></script>
+        <script>
+            document.getElementById('formulario').addEventListener('submit', function() {
+                document.getElementById('loader-overlay').classList.remove('d-none');
+                this.querySelector('button[type="submit"]').disabled = true;
+            });
+        </script>
 
         <?= $this->endSection() ?>

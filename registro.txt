@@ -7,6 +7,16 @@
 # ############################################################################ #
 
 
+## [0.2.3] - 2026-09-24
+
+### Agregado
+- Loader en formularios de acceso
+- Se crean componentes footer, layout, navbar y sidebar para navegación
+
+### Cambiado
+- Se elimina username en registro
+
+
 ## [0.2.0] - 2026-09-12
 
 ### Agregado
@@ -21,15 +31,6 @@
 
 
 ## [0.0.3] - 2026-08-29
-
-# Changelog - Mesa de ayuda
-
-## Información del Sistema
-- **PHP**: 8.2.4
-- **Framework**: CodeIgniter 4.7.4
-- **Base de datos**: MariaDB 10.4.28
-- **Desarrollador**: Mario García (mariogarcia1040@gmail.com)
-- **Empresa**: Búho Computación
 
 ### Agregado
 - Tablas para el uso de Shield en la base de datos
