@@ -59,7 +59,7 @@ return [
     'magicLinkSubject'   => 'Tu enlace de inicio de sesión',
     'magicTokenNotFound' => 'No se puede verificar el enlace.',
     'magicLinkExpired'   => 'Lo siento, el enlace ha caducado.',
-    'checkYourEmail'     => '¡Revisa tu correo electrónico!',
+    'checkYourEmail'     => '¡Revisa tu correo electrónico',
     'magicLinkDetails'   => 'Acabamos de enviarte un correo electrónico con un enlace de inicio de sesión. Solo es válido durante {0} minutos.',
     'magicLinkDisabled'  => 'Actualmente no se permite el uso de enlaces mágicos.',
     'successLogout'      => 'Has cerrado sesión correctamente.',
