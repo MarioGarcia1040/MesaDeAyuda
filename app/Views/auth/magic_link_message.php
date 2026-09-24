@@ -19,11 +19,7 @@
     </div>
     <div class="card-body login-card-body">
 
-        <h5 class="card-title mb-5"><?= lang('Auth.useMagicLink') ?></h5>
-
-        <div class="alert alert-success" role="alert">
-            <p><b><?= lang('Auth.checkYourEmail') ?></b></p>
-        </div>
+        <h5 class="card-title mb-5"><?= lang('Auth.checkYourEmail') ?></h5>        
 
         <p><?= lang('Auth.magicLinkDetails', [setting('Auth.magicLinkLifetime') / 60]) ?></p>
 
