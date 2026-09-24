@@ -7,6 +7,21 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="<?= base_url('dist/css/adminlte.min.css') ?>">
 
+<style>
+    .loader-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1050;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
@@ -80,23 +95,12 @@
             </div>
         </form>
 
-        <div id="loader-overlay" class="d-none"
-            style="position: fixed;
-         top: 0;
-         left: 0;
-         width: 100vw;
-         height: 100vh;
-         background-color: rgba(0, 0, 0, 0.5);
-         z-index: 1050;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         ">
+        <div id="loader-overlay" class="loader-overlay d-none" role="status" aria-live="polite">
             <div class="text-white text-center">
-                <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Cargando...</span>
+                <div class="spinner-border text-light" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Cargando...</span>
                 </div>
-                <p class="mt-2">Verificando credenciales...</p>
+                <p class="mt-2">Verificando datos...</p>
             </div>
         </div>
 
@@ -123,6 +127,7 @@
 <script>
     document.getElementById('formulario').addEventListener('submit', function() {
         document.getElementById('loader-overlay').classList.remove('d-none');
+        this.querySelector('button[type="submit"]').disabled = true;
     });
 </script>
 
