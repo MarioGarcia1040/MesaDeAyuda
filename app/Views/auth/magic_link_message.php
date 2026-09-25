@@ -19,9 +19,13 @@
     </div>
     <div class="card-body login-card-body">
 
-        <h5 class="card-title mb-5"><?= lang('Auth.checkYourEmail') ?></h5>        
+        <div class="alert alert-success" role="alert"><?= lang('Auth.checkYourEmail') ?></div>
 
-        <p><?= lang('Auth.magicLinkDetails', [setting('Auth.magicLinkLifetime') / 60]) ?></p>
+        <p class="mb-1 mt-3"><?= lang('Auth.magicLinkDetails', [setting('Auth.magicLinkLifetime') / 60]) ?></p>
+
+        <p class="mb-0">
+            <a href="<?= url_to('login') ?>"><?= lang('Auth.backToLogin') ?></a>
+        </p>
 
     </div>
 </div>
