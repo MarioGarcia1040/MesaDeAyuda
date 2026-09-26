@@ -15,6 +15,8 @@ class DashboardController extends BaseController
 {
     public function index()
     {
-        return view('template/dashboard');
+        return view('template/dashboard', [
+            'title' => 'Shoei | Dashboard'
+        ]);
     }
 }

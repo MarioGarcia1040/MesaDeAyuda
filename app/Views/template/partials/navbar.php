@@ -319,7 +319,7 @@
                     <!--begin::Menu Footer-->
                     <li class="user-footer">
                         <a href="#" class="btn btn-outline-secondary">Profile</a>
-                        <a href="<?= route_to('/logout') ?>" class="btn btn-outline-danger float-end">Sign out</a>
+                        <a href="<?= base_url('/logout') ?>" class="btn btn-outline-danger float-end">Cerrar sesión</a>
                     </li>
                     <!--end::Menu Footer-->
                 </ul>

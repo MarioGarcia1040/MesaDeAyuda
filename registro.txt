@@ -12,9 +12,11 @@
 ### Agregado
 - Loader en formularios de acceso
 - Se crean componentes footer, layout, navbar y sidebar para navegación
+- Creación de menú preeliminar
 
 ### Cambiado
 - Se elimina username en registro
+- Optimizan views login y view general
 
 
 ## [0.2.0] - 2026-09-12
@@ -28,6 +30,7 @@
 
 ### Mejorado
 - Mensajes de acceso traducidos
+- Título en vista se carga desde controlador
 
 
 ## [0.0.3] - 2026-08-29

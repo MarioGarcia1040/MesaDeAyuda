@@ -1,7 +1,5 @@
 <?= $this->extend('template/partials/layout') ?>
 
-<?= $this->section('title') ?>Dashboard<?= $this->endSection() ?>
-
 <?= $this->section('content') ?>
 <!--begin::Row-->
 <div class="row">
