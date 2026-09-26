@@ -45,34 +45,11 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-speedometer"></i>
-                        <p>
-                            Dashboard
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
+                        <p>Dashboard</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="./index.html" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v1</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./index2.html" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v2</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v3</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="./starter.html" class="nav-link active">
+                    <a href="./starter.html" class="nav-link">
                         <i class="nav-icon bi bi-people"></i>
                         <p>Usuarios</p>
                     </a>
@@ -98,19 +75,7 @@
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Todos</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./layout/fixed-header.html" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Abiertos</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./layout/fixed-footer.html" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Cerrados</p>
-                            </a>
-                        </li>
+                        </li>                        
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -144,9 +109,9 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-cart2"></i>
+                        <i class="nav-icon bi bi-gear"></i>
                         <p>
-                            Equipo
+                            Configuración
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
@@ -154,19 +119,19 @@
                         <li class="nav-item">
                             <a href="./mailbox/inbox.html" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Inbox</p>
+                                <p>Equipo</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="./mailbox/read.html" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Read Message</p>
+                                <p>Politicas SLA</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="./mailbox/compose.html" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Compose</p>
+                                <p>Mensajes</p>
                             </a>
                         </li>
                     </ul>
@@ -180,7 +145,7 @@
                     href="./docs/introduction.html"
                     class="btn btn-sm btn-outline-light w-100 d-flex align-items-center justify-content-center gap-2">
                     <i class="bi bi-book" aria-hidden="true"></i>
-                    Ver documentación
+                    Documentación
                 </a>
             </div>
         </nav>

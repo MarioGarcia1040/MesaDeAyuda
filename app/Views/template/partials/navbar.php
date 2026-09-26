@@ -283,8 +283,8 @@
                     <img
                         src="<?= base_url('dist/assets/img/user2-160x160.jpg') ?>"
                         class="user-image rounded-circle shadow"
-                        alt="Alexander Pierce" />
-                    <span class="d-none d-md-inline">Alexander Pierce</span>
+                        alt="<?= auth()->user()->email ?>" />
+                    <span class="d-none d-md-inline"><?= auth()->id() ?></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->
@@ -292,10 +292,10 @@
                         <img
                             src="<?= base_url('dist/assets/img/user2-160x160.jpg') ?>"
                             class="rounded-circle shadow"
-                            alt="Alexander Pierce" />
+                            alt="<?= auth()->user()->email ?>" />
                         <p>
-                            Alexander Pierce - Web Developer
-                            <small>Member since Nov. 2023</small>
+                            <?= auth()->user()->email ?> - <?= auth()->user()->username ?>
+                            <small><?= auth()->user()->created_at ?></small>
                         </p>
                     </li>
                     <!--end::User Image-->
@@ -318,7 +318,7 @@
                     <!--end::Menu Body-->
                     <!--begin::Menu Footer-->
                     <li class="user-footer">
-                        <a href="#" class="btn btn-outline-secondary">Profile</a>
+                        <a href="#" class="btn btn-outline-secondary">Mi cuenta</a>
                         <a href="<?= base_url('/logout') ?>" class="btn btn-outline-danger float-end">Cerrar sesión</a>
                     </li>
                     <!--end::Menu Footer-->

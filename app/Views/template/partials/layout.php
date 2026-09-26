@@ -118,13 +118,12 @@
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1 class="mb-0 fs-3"><?= $this->renderSection('titulo') ?: 'Mesa de Ayuda' ?></h1>
+                            <h1 class="mb-0 fs-3"><?= $this->renderSection('titulo') ?: 'Dashboard' ?></h1>
                         </div>
                         <div class="col-sm-6">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb float-sm-end">
-                                    <li class="breadcrumb-item"><a href="<?= site_url('/') ?>">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"><?= $this->renderSection('titulo') ?: 'Mesa de Ayuda' ?></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><?= $this->renderSection('titulo') ?: 'Dashboard' ?></li>
                                 </ol>
                             </nav>
                         </div>
