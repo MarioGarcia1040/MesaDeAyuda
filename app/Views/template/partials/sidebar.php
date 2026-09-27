@@ -1,4 +1,9 @@
 <!--begin::Sidebar-->
+<?php
+$currentUri = trim(uri_string(), '/');
+$isActive = fn(string $segment) => $currentUri === $segment || str_starts_with($currentUri, $segment . '/');
+$isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment);
+?>
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
@@ -43,19 +48,26 @@
                 data-accordion="false"
                 id="navigation">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="<?= site_url('dashboard') ?>" class="nav-link <?= $isActive('dashboard') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./starter.html" class="nav-link">
+                    <a href="<?= site_url('profile') ?>" class="nav-link <?= $isActive('profile') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-person"></i>
+                        <p>Mi cuenta</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= site_url('users') ?>" class="nav-link <?= $isActive('users') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-people"></i>
                         <p>Usuarios</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <?php $ticketsOpen = $isSectionActive('tickets'); ?>
+                <li class="nav-item <?= $ticketsOpen ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= $ticketsOpen ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-ticket"></i>
                         <p>
                             Tickets
@@ -65,21 +77,25 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./layout/unfixed-sidebar.html" class="nav-link">
+                            <a href="<?= site_url('tickets/mios') ?>"
+                                class="nav-link <?= $isActive('tickets/mios') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Mis Tickets</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./layout/fixed-sidebar.html" class="nav-link">
+                            <a href="<?= site_url('tickets') ?>"
+                                class="nav-link <?= $currentUri === 'tickets' ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Todos</p>
                             </a>
-                        </li>                        
+                        </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+
+                <?php $reportesOpen = $isSectionActive('reportes'); ?>
+                <li class="nav-item <?= $reportesOpen ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= $reportesOpen ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-graph-up"></i>
                         <p>
                             Reportes
@@ -88,27 +104,32 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./UI/general.html" class="nav-link">
+                            <a href="<?= site_url('reportes/analisis') ?>"
+                                class="nav-link <?= $isActive('reportes/analisis') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Análisis</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./UI/icons.html" class="nav-link">
+                            <a href="<?= site_url('reportes/sla') ?>"
+                                class="nav-link <?= $isActive('reportes/sla') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>SLA</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./UI/timeline.html" class="nav-link">
+                            <a href="<?= site_url('reportes/calificaciones') ?>"
+                                class="nav-link <?= $isActive('reportes/calificaciones') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Calificaciones</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+
+                <?php $configOpen = $isSectionActive('configuracion'); ?>
+                <li class="nav-item <?= $configOpen ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= $configOpen ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-gear"></i>
                         <p>
                             Configuración
@@ -117,19 +138,22 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./mailbox/inbox.html" class="nav-link">
+                            <a href="<?= site_url('configuracion/equipo') ?>"
+                                class="nav-link <?= $isActive('configuracion/equipo') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Equipo</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./mailbox/read.html" class="nav-link">
+                            <a href="<?= site_url('configuracion/politicas-sla') ?>"
+                                class="nav-link <?= $isActive('configuracion/politicas-sla') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Politicas SLA</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./mailbox/compose.html" class="nav-link">
+                            <a href="<?= site_url('configuracion/mensajes') ?>"
+                                class="nav-link <?= $isActive('configuracion/mensajes') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Mensajes</p>
                             </a>

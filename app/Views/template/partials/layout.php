@@ -108,7 +108,7 @@
         <?php if (auth()->loggedIn()): ?>
             <?= $this->include('template/partials/navbar') ?>
             <?= $this->include('template/partials/sidebar') ?>
-        <?php endif; ?>        
+        <?php endif; ?>
         <!--begin::App Main-->
         <main class="app-main">
             <!--begin::App Content Header-->
@@ -118,12 +118,18 @@
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1 class="mb-0 fs-3"><?= $this->renderSection('titulo') ?: 'Dashboard' ?></h1>
+                            <h1 class="mb-0 fs-3"><?= $this->renderSection('title') ?: 'No definido' ?></h1>
                         </div>
                         <div class="col-sm-6">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb float-sm-end">
-                                    <li class="breadcrumb-item active" aria-current="page"><?= $this->renderSection('titulo') ?: 'Dashboard' ?></li>
+                                    <li class="breadcrumb-item"><a href="<?= site_url('/') ?>">Inicio</a></li>
+                                    <?php $bc = $this->renderSection('breadcrumbs'); ?>
+                                    <?php if ($bc !== ''): ?>
+                                        <?= $bc ?>
+                                    <?php else: ?>
+                                        <li class="breadcrumb-item active" aria-current="page"><?= $this->renderSection('title') ?: 'No definido' ?></li>
+                                    <?php endif; ?>
                                 </ol>
                             </nav>
                         </div>
@@ -137,7 +143,7 @@
             <div class="app-content">
                 <!--begin::Container-->
                 <div class="container-fluid">
-                     <?= $this->renderSection('content') ?>                    
+                    <?= $this->renderSection('content') ?>
                 </div>
                 <!--end::Container-->
             </div>
