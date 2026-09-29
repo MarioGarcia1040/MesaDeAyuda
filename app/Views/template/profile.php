@@ -44,7 +44,7 @@
         <div class="card">
             <div class="card-header p-0 border-bottom-0">
                 <ul class="nav nav-tabs" id="profile-tabs" role="tablist">
-                    
+
                     <li class="nav-item" role="presentation">
                         <button
                             class="nav-link active"
@@ -74,7 +74,7 @@
                 </ul>
             </div>
             <div class="card-body">
-                <div class="tab-content">                   
+                <div class="tab-content">
 
                     <!-- Settings tab -->
                     <div
@@ -126,7 +126,7 @@
                                     class="form-control"
                                     id="profile-fotografia"
                                     value="<?= auth()->user()->fotografia ?? '' ?>" />
-                            </div>                            
+                            </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
                                 <button type="reset" class="btn btn-outline-secondary ms-1">
@@ -154,11 +154,11 @@
                             <div class="col-md-6">
                                 <label class="form-label" for="new-password"> Nueva </label>
                                 <input type="password" class="form-control" id="new-password" value="" />
-                            </div> 
+                            </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="repeat-new-password"> Repetir</label>
-                                <input type="password" class="form-control" id="new-password" value="" />
-                            </div>                          
+                                <input type="password" class="form-control" id="repeat-new-password" value="" />
+                            </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
                                 <button type="reset" class="btn btn-outline-secondary ms-1">

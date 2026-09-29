@@ -47,18 +47,20 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                 data-lte-toggle="treeview"
                 data-accordion="false"
                 id="navigation">
+                <!--
                 <li class="nav-item">
                     <a href="<?= site_url('dashboard') ?>" class="nav-link <?= $isActive('dashboard') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="<?= site_url('profile') ?>" class="nav-link <?= $isActive('profile') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-person"></i>
                         <p>Mi cuenta</p>
                     </a>
                 </li>
+                <!-- 
                 <li class="nav-item">
                     <a href="<?= site_url('users') ?>" class="nav-link <?= $isActive('users') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-people"></i>
@@ -124,7 +126,7 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                                 <p>Calificaciones</p>
                             </a>
                         </li>
-                    </ul>
+                    </ul> 
                 </li>
 
                 <?php $configOpen = $isSectionActive('configuracion'); ?>
@@ -160,10 +162,11 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                         </li>
                     </ul>
                 </li>
-            </ul>
+            </ul> -->
             <!--end::Sidebar Menu-->
 
             <!-- Docs CTA (bottom of sidebar) -->
+             <!-- 
             <div class="p-3 mt-3 border-top border-secondary border-opacity-25">
                 <a
                     href="./docs/introduction.html"
@@ -171,7 +174,7 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                     <i class="bi bi-book" aria-hidden="true"></i>
                     Documentación
                 </a>
-            </div>
+            </div> -->
         </nav>
     </div>
     <!--end::Sidebar Wrapper-->
