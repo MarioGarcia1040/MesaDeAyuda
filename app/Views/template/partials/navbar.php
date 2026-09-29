@@ -318,7 +318,7 @@
                     <!--end::Menu Body-->
                     <!--begin::Menu Footer-->
                     <li class="user-footer">
-                        <a href="#" class="btn btn-outline-secondary">Mi cuenta</a>
+                        <a href="<?= base_url('/profile') ?>" class="btn btn-outline-secondary">Mi cuenta</a>
                         <a href="<?= base_url('/logout') ?>" class="btn btn-outline-danger float-end">Cerrar sesión</a>
                     </li>
                     <!--end::Menu Footer-->

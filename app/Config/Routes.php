@@ -8,7 +8,7 @@ service('auth')->routes($routes);
 
 $routes->get('/', 'Home::index');
 
-$routes->group('', ['filter' => 'group:admin,user'], function ($routes) {
+$routes->group('', ['filter' => ['session', 'group:admin,user']], function ($routes) {
     $routes->get('dashboard', 'DashboardController::index', ['as' => 'dashboard']);
     $routes->get('profile', 'ProfileController::index', ['as' => 'profile']);
     $routes->get('users', 'UsersController::index', ['as' => 'users']);
