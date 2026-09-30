@@ -1,4 +1,10 @@
 <?php
+/*
+ * Autor: Mario García - mariogarcia1040@gmail.com
+ * Descripción: Rutas de la aplicación.
+ * 29-Octubre-2026 |26-Septiembre-2026
+ * 
+ */
 
 use CodeIgniter\Router\RouteCollection;
 
@@ -12,4 +18,8 @@ $routes->group('', ['filter' => ['session', 'group:admin,user']], function ($rou
     $routes->get('dashboard', 'DashboardController::index', ['as' => 'dashboard']);
     $routes->get('profile', 'ProfileController::index', ['as' => 'profile']);
     $routes->get('users', 'UsersController::index', ['as' => 'users']);
+});
+
+$routes->group('cuenta', ['filter' => ['session', 'group:admin,user']], function ($routes) {
+    $routes->post('cambiar-contrasena', 'ProfileController::changePassword');
 });

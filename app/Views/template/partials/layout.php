@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es  ">
+<html lang="es">
 <!--begin::Head-->
 
 <head>
@@ -143,6 +143,7 @@
             <div class="app-content">
                 <!--begin::Container-->
                 <div class="container-fluid">
+                    <?= $this->include('template/partials/alerts') ?>
                     <?= $this->renderSection('content') ?>
                 </div>
                 <!--end::Container-->
