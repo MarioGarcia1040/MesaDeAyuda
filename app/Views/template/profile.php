@@ -93,11 +93,12 @@ $errors    = session('errors') ?? [];
                                     type="text"
                                     class="form-control"
                                     id="profile-first"
-                                    value="Nombre" />
+                                    value=""
+                                    placeholder="Nombre(s)" />
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="profile-last"> Apellido(s) </label>
-                                <input type="text" class="form-control" id="profile-last" value="Apellidos" />
+                                <input type="text" class="form-control" id="profile-last" value="" placeholder="Apellido(s)" />
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="profile-email"> Email </label>
@@ -105,7 +106,8 @@ $errors    = session('errors') ?? [];
                                     type="email"
                                     class="form-control"
                                     id="profile-email"
-                                    value="<?= esc(auth()->user()->email) ?>" />
+                                    pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}"
+                                    value="<?= esc(auth()->user()->email) ?>" required />
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="profile-role"> Rol </label>
@@ -121,15 +123,19 @@ $errors    = session('errors') ?? [];
                                     type="text"
                                     class="form-control"
                                     id="profile-telefono"
+                                    placeholder="(999) 999-9999"
+                                    inputmode="numeric"
+                                    name="profile-telefono"
                                     value="<?= esc(auth()->user()->telefono ?? '') ?>" />
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="profile-fotografia"> Fotografía </label>
                                 <input
-                                    type="text"
+                                    type="file"
                                     class="form-control"
                                     id="profile-fotografia"
-                                    value="<?= esc(auth()->user()->fotografia ?? '') ?>" />
+                                    data-gtm-form-interact-field-id="0"
+                                    value="" />
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -197,7 +203,12 @@ $errors    = session('errors') ?? [];
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
+<script src="https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js"></script>
 <script>
-    // JS específico de esta vista (opcional)   
+    document.addEventListener('DOMContentLoaded', () => {
+        IMask(document.getElementById('profile-telefono'), {
+            mask: '(000) 000-0000'
+        });
+    });
 </script>
 <?= $this->endSection() ?>

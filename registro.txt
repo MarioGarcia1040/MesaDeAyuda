@@ -18,6 +18,8 @@
 - Loader en formularios de acceso
 - Se crean componentes footer, layout, navbar y sidebar para navegación
 - Creación de menú preeliminar
+- Máscara para campos email y teléfono en formulario "Mis datos"
+- Formato en formulario "Mis datos" campo fotografía
 
 ### Cambiado
 - Se elimina username en registro
