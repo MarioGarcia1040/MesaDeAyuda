@@ -47,13 +47,12 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                 data-lte-toggle="treeview"
                 data-accordion="false"
                 id="navigation">
-                <!--
                 <li class="nav-item">
                     <a href="<?= site_url('dashboard') ?>" class="nav-link <?= $isActive('dashboard') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a>
-                </li> -->
+                </li>
                 <li class="nav-item">
                     <a href="<?= site_url('profile') ?>" class="nav-link <?= $isActive('profile') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-person"></i>

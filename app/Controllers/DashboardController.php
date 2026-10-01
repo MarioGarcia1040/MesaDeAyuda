@@ -15,8 +15,12 @@ class DashboardController extends BaseController
 {
     public function index()
     {
+        $provider = auth()->getProvider();
+        $activeUsersTotal = $provider->builder()->where('active', 1)->countAllResults();
+        
         return view('template/dashboard', [
-            'title' => 'Shoei | Dashboard'
+            'title' => 'Shoei | Dashboard',
+            'activeUsersTotal' => $activeUsersTotal
         ]);
     }
 }
