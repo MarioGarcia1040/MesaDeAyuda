@@ -20,6 +20,8 @@
 - Creación de menú preeliminar
 - Máscara para campos email y teléfono en formulario "Mis datos"
 - Formato en formulario "Mis datos" campo fotografía
+- Carga de vista tickets
+- Se crea controlador tickets
 
 ### Cambiado
 - Se elimina username en registro

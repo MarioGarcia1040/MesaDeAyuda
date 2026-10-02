@@ -59,7 +59,6 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                         <p>Mi cuenta</p>
                     </a>
                 </li>
-                <!-- 
                 <li class="nav-item">
                     <a href="<?= site_url('users') ?>" class="nav-link <?= $isActive('users') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-people"></i>
@@ -78,8 +77,8 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= site_url('tickets/mios') ?>"
-                                class="nav-link <?= $isActive('tickets/mios') ? 'active' : '' ?>">
+                            <a href="<?= site_url('tickets') ?>"
+                                class="nav-link <?= $isActive('tickets') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Mis Tickets</p>
                             </a>
@@ -125,9 +124,8 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                                 <p>Calificaciones</p>
                             </a>
                         </li>
-                    </ul> 
+                    </ul>
                 </li>
-
                 <?php $configOpen = $isSectionActive('configuracion'); ?>
                 <li class="nav-item <?= $configOpen ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= $configOpen ? 'active' : '' ?>">
@@ -161,11 +159,11 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                         </li>
                     </ul>
                 </li>
-            </ul> -->
+            </ul>
             <!--end::Sidebar Menu-->
 
             <!-- Docs CTA (bottom of sidebar) -->
-             <!-- 
+            <!-- 
             <div class="p-3 mt-3 border-top border-secondary border-opacity-25">
                 <a
                     href="./docs/introduction.html"

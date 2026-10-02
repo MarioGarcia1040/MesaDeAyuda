@@ -18,6 +18,7 @@ $routes->group('', ['filter' => ['session', 'group:admin,user']], function ($rou
     $routes->get('dashboard', 'DashboardController::index', ['as' => 'dashboard']);
     $routes->get('profile', 'ProfileController::index', ['as' => 'profile']);
     $routes->get('users', 'UsersController::index', ['as' => 'users']);
+    $routes->get('tickets', 'TicketsController::index', ['as' => 'tickets']);
 });
 
 $routes->group('cuenta', ['filter' => ['session', 'group:admin,user']], function ($routes) {
