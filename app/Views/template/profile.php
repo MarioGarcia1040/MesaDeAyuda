@@ -7,10 +7,12 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+
 <?php
 $activeTab = session('tab') ?? 'settings';
 $errors    = session('errors') ?? [];
 ?>
+
 <div class="row g-3">
     <!-- Profile sidebar -->
     <div class="col-md-3">
@@ -59,6 +61,19 @@ $errors    = session('errors') ?? [];
                             role="tab"
                             aria-selected="<?= $activeTab === 'settings' ? 'true' : 'false' ?>">
                             Mis datos
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link <?= $activeTab === 'access_registration' ? 'active' : '' ?>"
+                            id="access-registration-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#access-registration"
+                            type="button"
+                            role="tab"
+                            aria-selected="<?= $activeTab === 'access_registration' ? 'true' : 'false' ?>">
+                            Registro de accesos
                         </button>
                     </li>
 
@@ -144,6 +159,46 @@ $errors    = session('errors') ?? [];
                                 </button>
                             </div>
                         </form>
+                    </div>
+
+                    <!-- Access Registration tab -->
+                    <div
+                        class="tab-pane fade <?= ($activeTab ?? '') === 'access_registration' ? 'show active' : '' ?>"
+                        id="access-registration"
+                        role="tabpanel"
+                        aria-labelledby="access-registration-tab">
+                        <?php if (empty($accesses)): ?>
+                            <p class="text-secondary mb-0">Aún no hay accesos registrados.</p>
+                        <?php else: ?>
+                            <?php
+                            $seeUserAgent = auth()->user()->inGroup('admin', 'superadmin');
+                            $total        = count($accesses);
+                            ?>
+                            <ul class="list-unstyled mb-0">
+                                <?php foreach ($accesses as $i => $a): ?>
+                                    <li class="d-flex gap-3 <?= $i < $total - 1 ? 'mb-3' : '' ?>">
+                                        <span class="badge <?= $a->success ? 'text-bg-success' : 'text-bg-danger' ?> rounded-pill flex-shrink-0 align-self-start mt-1">
+                                            <i class="bi <?= $a->success ? 'bi-check-lg' : 'bi-x-lg' ?>" aria-hidden="true"></i>
+                                        </span>
+                                        <div style="min-width: 0">
+                                            <p class="mb-0 fw-semibold">
+                                                <?= $a->success ? 'Inicio de sesión exitoso' : 'Intento fallido' ?>
+                                            </p>
+                                            <small class="text-secondary d-block">
+                                                <?= esc($a->date->setTimezone('America/Mexico_City')->format('d/m/Y H:i')) ?>
+                                                &middot; IP <?= esc($a->ip_address) ?>
+                                            </small>
+                                            <?php if ($seeUserAgent): ?>
+                                                <small class="text-secondary d-block text-truncate"
+                                                    title="<?= esc($a->user_agent) ?>">
+                                                    <?= esc($a->user_agent) ?>
+                                                </small>
+                                            <?php endif; ?>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Password tab -->

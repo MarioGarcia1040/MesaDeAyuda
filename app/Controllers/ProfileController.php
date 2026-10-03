@@ -2,22 +2,33 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Controlador muestra los datos de la cuenta del usuario.
- * 26-Septiembre-2026 | 30-Septiembre-2026
+ * 26-Septiembre-2026 | 03-Octubre-2026
  * 
  */
 
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use CodeIgniter\Shield\Models\LoginModel;
 use CodeIgniter\HTTP\ResponseInterface;
-use PhpParser\Node\Stmt\Label;
 
 class ProfileController extends BaseController
 {
     public function index()
     {
+        $user = auth()->user();
+
+        $acceses = (new LoginModel())
+            ->groupStart()
+            ->where('user_id', $user->id)
+            ->orWhere('identifier', $user->email)
+            ->groupEnd()
+            ->orderBy('date', 'DESC')
+            ->findAll(5);
+
         return view('template/profile', [
-            'title' => 'Shoei | Mi Cuenta'
+            'title' => 'Shoei | Mi Cuenta',
+            'accesses' => $acceses,
         ]);
     }
 

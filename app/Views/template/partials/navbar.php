@@ -93,8 +93,8 @@
                     <img
                         src="<?= base_url('dist/assets/img/user2-160x160.jpg') ?>"
                         class="user-image rounded-circle shadow"
-                        alt="<?= auth()->user()->email ?>" />
-                    <span class="d-none d-md-inline"><?= auth()->id() ?></span>
+                        alt="<?= esc(auth()->user()->email) ?>" />
+                    <span class="d-none d-md-inline"><?= esc(auth()->id()) ?></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->
@@ -102,10 +102,11 @@
                         <img
                             src="<?= base_url('dist/assets/img/user2-160x160.jpg') ?>"
                             class="rounded-circle shadow"
-                            alt="<?= auth()->user()->email ?>" />
+                            alt="<?= esc(auth()->user()->email) ?>" />
                         <p>
-                            <?= auth()->user()->email ?> - <?= auth()->user()->username ?>
-                            <small><?= auth()->user()->created_at ?></small>
+                            <?= esc(auth()->user()->username) ?> <br />
+                            <?= esc(auth()->user()->email) ?>
+                            <small><?= esc(auth()->user()->created_at->toLocalizedString('d MMM yyyy, HH:mm')) ?></small>
                         </p>
                     </li>
                     <!--end::User Image-->

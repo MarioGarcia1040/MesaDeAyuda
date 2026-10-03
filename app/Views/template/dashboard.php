@@ -66,9 +66,9 @@
         <!--begin::Small Box Widget 3-->
         <div class="small-box text-bg-warning">
             <div class="inner">
-                <h3><?= esc($activeUsersTotal) ?></h3>
+                <h3><?= esc($usersTotal) ?></h3>
 
-                <p>Usuarios Activos</p>
+                <p>Usuarios</p>
             </div>
             <svg
                 class="small-box-icon"

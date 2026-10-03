@@ -12,7 +12,7 @@
 - Actualizar contraseña desde Mi cuenta
 
 
-## [0.2.3] - 2026-09-24
+## [0.3.3] - 2026-10-03
 
 ### Agregado
 - Loader en formularios de acceso
@@ -22,6 +22,9 @@
 - Formato en formulario "Mis datos" campo fotografía
 - Carga de vista tickets
 - Se crea controlador tickets
+- Muestra accesos registrados en módulo "Mi cuenta"
+- Mejoras menores en datos de usuario
+- Vista usuarios
 
 ### Cambiado
 - Se elimina username en registro
