@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Rutas de la aplicación.
- * 29-Octubre-2026 |26-Septiembre-2026
+ * 29-Septiembre-2026 | 06-Octubre-2026
  * 
  */
 
