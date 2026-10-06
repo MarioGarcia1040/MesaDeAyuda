@@ -13,12 +13,12 @@
                     aria-label="Toggle sidebar">
                     <i class="bi bi-list"></i>
                 </a>
-            </li>            
+            </li>
         </ul>
-        <!--end::Start Navbar Links-->       
+        <!--end::Start Navbar Links-->
 
         <!--begin::End Navbar Links-->
-        <ul class="navbar-nav ms-auto">            
+        <ul class="navbar-nav ms-auto">
 
             <!--begin::Fullscreen Toggle-->
             <li class="nav-item">
@@ -90,28 +90,24 @@
             <!--begin::User Menu Dropdown-->
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img
-                        src="<?= base_url('dist/assets/img/user2-160x160.jpg') ?>"
-                        class="user-image rounded-circle shadow"
-                        alt="<?= esc(auth()->user()->email) ?>" />
-                    <span class="d-none d-md-inline"><?= esc(auth()->id()) ?></span>
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+                        <?= user_avatar(32, 'shadow') ?>
+                        <span class="d-none d-md-inline"><?= esc(fullname()) ?></span>
+                    </a>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->
                     <li class="user-header text-bg-primary">
-                        <img
-                            src="<?= base_url('dist/assets/img/user2-160x160.jpg') ?>"
-                            class="rounded-circle shadow"
-                            alt="<?= esc(auth()->user()->email) ?>" />
+                        <?= user_avatar(90, 'shadow') ?>
                         <p>
-                            <?= esc(auth()->user()->username) ?> <br />
-                            <?= esc(auth()->user()->email) ?>
-                            <small><?= esc(auth()->user()->created_at->toLocalizedString('d MMM yyyy, HH:mm')) ?></small>
+                            <?= esc(fullname()) ?> <br />
+                            <small><?= esc(auth()->user()->email) ?></small>
+                            <small>Miembro desde <?= esc(auth()->user()->created_at?->toLocalizedString('d MMM yyyy') ?? '—') ?></small>
                         </p>
                     </li>
                     <!--end::User Image-->
                     <!--begin::Menu Body-->
-                    <li class="user-body">                        
+                    <li class="user-body">
                     </li>
                     <!--end::Menu Body-->
                     <!--begin::Menu Footer-->

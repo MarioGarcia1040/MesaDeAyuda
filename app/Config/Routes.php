@@ -21,6 +21,8 @@ $routes->group('', ['filter' => ['session', 'group:admin,user']], function ($rou
     $routes->get('tickets', 'TicketsController::index', ['as' => 'tickets']);
 });
 
-$routes->group('cuenta', ['filter' => ['session', 'group:admin,user']], function ($routes) {
-    $routes->post('cambiar-contrasena', 'ProfileController::changePassword');
+$routes->group('profile', ['filter' => ['session', 'group:admin,user']], function ($routes) {
+    $routes->post('update-password', 'ProfileController::changePassword');
+    $routes->post('update-email', 'ProfileController::updateEmail');
+    $routes->post('update-profile', 'ProfileController::updateProfile');
 });

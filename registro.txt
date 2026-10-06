@@ -6,10 +6,18 @@
 # Búho Computación                                                             #
 # ############################################################################ #
 
-## [0.2.4] - 2026-09-30
+## [0.4.5] - 2026-10-06
 
 ### Agregado
-- Actualizar contraseña desde Mi cuenta
+- Se crea tabla "user_profiles" para campos adicionales del usuario
+- Creación de UserProfilesModel
+- Controlador para captura y actualización de "user_profiles"
+- Actualizar email desde módulo "Mi cuenta"
+- Permite actualizar datos desde "Mi cuenta"
+- Generador de imagen con iniciales
+
+### Eliminado
+- Campo "email" y "rol" en pestaña "Mis datos" módulo "Mi cuenta"
 
 
 ## [0.3.3] - 2026-10-03
@@ -29,6 +37,12 @@
 ### Cambiado
 - Se elimina username en registro
 - Optimizan views login y view general
+
+
+## [0.2.4] - 2026-09-30
+
+### Agregado
+- Actualizar contraseña desde Mi cuenta
 
 
 ## [0.2.0] - 2026-09-12

@@ -9,8 +9,9 @@
 <?= $this->section('content') ?>
 
 <?php
-$activeTab = session('tab') ?? 'settings';
 $errors    = session('errors') ?? [];
+$flashTab  = $activeTab ?? session('tab');
+$activeTab = $flashTab ?? 'settings';
 ?>
 
 <div class="row g-3">
@@ -19,13 +20,15 @@ $errors    = session('errors') ?? [];
         <!-- About card -->
         <div class="card">
             <div class="card-body text-center">
-                <div
-                    class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center mb-3"
-                    style="width: 96px; height: 96px; font-size: 2rem"
-                    aria-hidden="true">
-                    <?= esc(mb_strtoupper(mb_substr(auth()->user()->username, 0, 2))) ?>
-                </div>
-                <h3 class="h5 mb-0"><?= esc(auth()->user()->username) ?></h3>
+                <?= user_avatar(96, 'mb-3') ?>
+
+                <?php $tieneNombre = ! empty($profileData['nombre']) || ! empty($profileData['apellido']); ?>
+                <h3 class="h5 mb-0"><?= esc(fullname()) ?></h3>
+                <?php if ($tieneNombre): ?>
+                    <p class="text-secondary mb-3"><?= esc(auth()->user()->email) ?></p>
+                <?php else: ?>
+                    <div class="mb-3"></div>
+                <?php endif ?>
                 <p class="text-secondary mb-3"><?= esc(auth()->user()->email) ?></p>
                 <ul class="list-group list-group-flush text-start small">
                     <li class="list-group-item d-flex justify-content-between px-0">
@@ -49,7 +52,8 @@ $errors    = session('errors') ?? [];
     <div class="col-md-9">
         <div class="card">
             <div class="card-header p-0 border-bottom-0">
-                <ul class="nav nav-tabs" id="profile-tabs" role="tablist">
+                <ul class="nav nav-tabs" id="profile-tabs" role="tablist"
+                    <?= $flashTab ? 'data-server-tab="' . esc($flashTab) . '"' : '' ?>>
 
                     <li class="nav-item" role="presentation">
                         <button
@@ -66,14 +70,14 @@ $errors    = session('errors') ?? [];
 
                     <li class="nav-item" role="presentation">
                         <button
-                            class="nav-link <?= $activeTab === 'access_registration' ? 'active' : '' ?>"
-                            id="access-registration-tab"
+                            class="nav-link <?= $activeTab === 'email' ? 'active' : '' ?>"
+                            id="email-tab"
                             data-bs-toggle="tab"
-                            data-bs-target="#access-registration"
+                            data-bs-target="#email"
                             type="button"
                             role="tab"
-                            aria-selected="<?= $activeTab === 'access_registration' ? 'true' : 'false' ?>">
-                            Registro de accesos
+                            aria-selected="<?= $activeTab === 'email' ? 'true' : 'false' ?>">
+                            Email
                         </button>
                     </li>
 
@@ -90,6 +94,20 @@ $errors    = session('errors') ?? [];
                         </button>
                     </li>
 
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link <?= $activeTab === 'access_registration' ? 'active' : '' ?>"
+                            id="access-registration-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#access-registration"
+                            type="button"
+                            role="tab"
+                            aria-selected="<?= $activeTab === 'access_registration' ? 'true' : 'false' ?>">
+                            Registro de accesos
+                        </button>
+                    </li>
+
+
                 </ul>
             </div>
             <div class="card-body">
@@ -101,62 +119,162 @@ $errors    = session('errors') ?? [];
                         id="settings"
                         role="tabpanel"
                         aria-labelledby="settings-tab">
-                        <form class="row g-3">
+                        <form class="row g-3" action="<?= base_url('profile/update-profile') ?>" method="POST" enctype="multipart/form-data" novalidate>
+                            <?= csrf_field() ?>
                             <div class="col-md-6">
-                                <label class="form-label" for="profile-first"> Nombre(s) </label>
+                                <label class="form-label" for="profile-first-name"> Nombre(s) </label>
                                 <input
                                     type="text"
-                                    class="form-control"
-                                    id="profile-first"
-                                    value=""
+                                    class="form-control <?= isset($errors['profile-first-name']) ? 'is-invalid' : '' ?>"
+                                    id="profile-first-name"
+                                    name="profile-first-name"
+                                    value="<?= esc(old('profile-first-name', $profileData['nombre'] ?? '')) ?>"
                                     placeholder="Nombre(s)" />
+                                <?php if (isset($errors['profile-first-name'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['profile-first-name']) ?></div>
+                                <?php endif ?>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="profile-last"> Apellido(s) </label>
-                                <input type="text" class="form-control" id="profile-last" value="" placeholder="Apellido(s)" />
+                                <label class="form-label" for="profile-last-name"> Apellido(s) </label>
+                                <input type="text" class="form-control <?= isset($errors['profile-last-name']) ? 'is-invalid' : '' ?>" id="profile-last-name" name="profile-last-name" value="<?= esc(old('profile-last-name', $profileData['apellido'] ?? '')) ?>" placeholder="Apellido(s)" />
+                                <?php if (isset($errors['profile-last-name'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['profile-last-name']) ?></div>
+                                <?php endif ?>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="profile-email"> Email </label>
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    id="profile-email"
-                                    pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}"
-                                    value="<?= esc(auth()->user()->email) ?>" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="profile-role"> Rol </label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="profile-role"
-                                    value="<?= esc(auth()->user()->getGroups()[0] ?? '-') ?>" readonly />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="profile-telefono"> Teléfono </label>
+                                <label class="form-label" for="profile-phone"> Teléfono </label>
+                                <?php
+                                $tel = $profileData['telefono'] ?? '';
+                                $telFormateado = strlen($tel) === 10
+                                    ? sprintf('(%s)%s-%s', substr($tel, 0, 3), substr($tel, 3, 3), substr($tel, 6))
+                                    : '';
+                                ?>
                                 <input
                                     type="text"
-                                    class="form-control"
-                                    id="profile-telefono"
+                                    class="form-control <?= isset($errors['profile-phone']) ? 'is-invalid' : '' ?>"
+                                    id="profile-phone"
                                     placeholder="(999) 999-9999"
                                     inputmode="numeric"
-                                    name="profile-telefono"
-                                    value="<?= esc(auth()->user()->telefono ?? '') ?>" />
+                                    name="profile-phone"
+                                    value="<?= esc(old('profile-phone', $telFormateado)) ?>" />
+                                <?php if (isset($errors['profile-phone'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['profile-phone']) ?></div>
+                                <?php endif ?>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="profile-fotografia"> Fotografía </label>
+                                <label class="form-label" for="profile-photo"> Fotografía </label>
                                 <input
                                     type="file"
-                                    class="form-control"
-                                    id="profile-fotografia"
+                                    class="form-control <?= isset($errors['profile-photo']) ? 'is-invalid' : '' ?>"
+                                    id="profile-photo"
                                     data-gtm-form-interact-field-id="0"
-                                    value="" />
+                                    name="profile-photo"
+                                    accept="image/jpeg,image/png" />
+                                <?php if (isset($errors['profile-photo'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['profile-photo']) ?></div>
+                                <?php endif ?>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                <button type="submit" class="btn btn-primary"> Actualizar </button>
                                 <button type="reset" class="btn btn-outline-secondary ms-1">
                                     Cancelar
                                 </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Email tab -->
+                    <div
+                        class="tab-pane fade <?= $activeTab === 'email' ? 'show active' : '' ?>"
+                        id="email"
+                        role="tabpanel"
+                        aria-labelledby="email-tab">
+                        <form class="row g-3" action="<?= base_url('profile/update-email') ?>" method="POST" novalidate>
+                            <?= csrf_field() ?>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="profile-new-email"> Nuevo </label>
+                                <input
+                                    type="email"
+                                    class="form-control <?= isset($errors['profile-new-email']) ? 'is-invalid' : '' ?>"
+                                    id="profile-new-email"
+                                    name="profile-new-email"
+                                    pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}"
+                                    value=""
+                                    placeholder="Nuevo email"
+                                    required />
+                                <?php if (isset($errors['profile-new-email'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['profile-new-email']) ?></div>
+                                <?php endif ?>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="new-email-password-verification"> Contraseña </label>
+                                <input type="password"
+                                    class="form-control <?= isset($errors['new-email-password-verification']) ? 'is-invalid' : '' ?>"
+                                    id="new-email-password-verification" name="new-email-password-verification"
+                                    autocomplete="current-password" required>
+                                <?php if (isset($errors['new-email-password-verification'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['new-email-password-verification']) ?></div>
+                                <?php endif ?>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p class="mb-0">Actual: <b><?= esc(auth()->user()->email) ?></b></p>
+                            </div>
+
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                <button type="reset" class="btn btn-outline-secondary ms-1">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Password tab -->
+                    <div
+                        class="tab-pane fade <?= $activeTab === 'password' ? 'show active' : '' ?>"
+                        id="password"
+                        role="tabpanel"
+                        aria-labelledby="password-tab">
+                        <form class="row g-3" action="<?= base_url('profile/update-password') ?>" method="POST" novalidate>
+                            <?= csrf_field() ?>
+
+                            <div class="col-md-12">
+                                <label class="form-label" for="actual-password">Actual</label>
+                                <input type="password"
+                                    class="form-control <?= isset($errors['actual-password']) ? 'is-invalid' : '' ?>"
+                                    id="actual-password" name="actual-password"
+                                    autocomplete="current-password" required>
+                                <?php if (isset($errors['actual-password'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['actual-password']) ?></div>
+                                <?php endif ?>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label" for="new-password">Nueva</label>
+                                <input type="password"
+                                    class="form-control <?= isset($errors['new-password']) ? 'is-invalid' : '' ?>"
+                                    id="new-password" name="new-password"
+                                    autocomplete="new-password" required>
+                                <?php if (isset($errors['new-password'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['new-password']) ?></div>
+                                <?php endif ?>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label" for="confirm-password">Repetir</label>
+                                <input type="password"
+                                    class="form-control <?= isset($errors['confirm-password']) ? 'is-invalid' : '' ?>"
+                                    id="confirm-password" name="confirm-password"
+                                    autocomplete="new-password" required>
+                                <?php if (isset($errors['confirm-password'])): ?>
+                                    <div class="invalid-feedback"><?= esc($errors['confirm-password']) ?></div>
+                                <?php endif ?>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                <button type="reset" class="btn btn-outline-secondary ms-1">Cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -201,55 +319,6 @@ $errors    = session('errors') ?? [];
                         <?php endif; ?>
                     </div>
 
-                    <!-- Password tab -->
-                    <div
-                        class="tab-pane fade <?= $activeTab === 'password' ? 'show active' : '' ?>"
-                        id="password"
-                        role="tabpanel"
-                        aria-labelledby="password-tab">
-                        <form class="row g-3" action="<?= base_url('cuenta/cambiar-contrasena') ?>" method="POST" novalidate>
-                            <?= csrf_field() ?>
-
-                            <div class="col-md-12">
-                                <label class="form-label" for="actual-password">Actual</label>
-                                <input type="password"
-                                    class="form-control <?= isset($errors['actual-password']) ? 'is-invalid' : '' ?>"
-                                    id="actual-password" name="actual-password"
-                                    autocomplete="current-password" required>
-                                <?php if (isset($errors['actual-password'])): ?>
-                                    <div class="invalid-feedback"><?= esc($errors['actual-password']) ?></div>
-                                <?php endif ?>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label class="form-label" for="new-password">Nueva</label>
-                                <input type="password"
-                                    class="form-control <?= isset($errors['new-password']) ? 'is-invalid' : '' ?>"
-                                    id="new-password" name="new-password"
-                                    autocomplete="new-password" required>
-                                <?php if (isset($errors['new-password'])): ?>
-                                    <div class="invalid-feedback"><?= esc($errors['new-password']) ?></div>
-                                <?php endif ?>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label class="form-label" for="confirm-password">Repetir</label>
-                                <input type="password"
-                                    class="form-control <?= isset($errors['confirm-password']) ? 'is-invalid' : '' ?>"
-                                    id="confirm-password" name="confirm-password"
-                                    autocomplete="new-password" required>
-                                <?php if (isset($errors['confirm-password'])): ?>
-                                    <div class="invalid-feedback"><?= esc($errors['confirm-password']) ?></div>
-                                <?php endif ?>
-                            </div>
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
-                                <button type="reset" class="btn btn-outline-secondary ms-1">Cancelar</button>
-                            </div>
-                        </form>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -261,8 +330,29 @@ $errors    = session('errors') ?? [];
 <script src="https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        IMask(document.getElementById('profile-telefono'), {
+        IMask(document.getElementById('profile-phone'), {
             mask: '(000) 000-0000'
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const KEY = 'profile-active-tab';
+        const tabs = document.getElementById('profile-tabs');
+
+        if (tabs.dataset.serverTab) {
+            // El servidor manda: guarda esa pestaña como la actual
+            const active = tabs.querySelector('.nav-link.active');
+            if (active) sessionStorage.setItem(KEY, active.dataset.bsTarget);
+        } else {
+            // Recarga normal: restaura la última pestaña
+            const saved = sessionStorage.getItem(KEY);
+            const btn = saved && tabs.querySelector(`[data-bs-target="${saved}"]`);
+            if (btn) bootstrap.Tab.getOrCreateInstance(btn).show();
+        }
+
+        tabs.addEventListener('shown.bs.tab', (e) => {
+            sessionStorage.setItem(KEY, e.target.dataset.bsTarget);
         });
     });
 </script>
