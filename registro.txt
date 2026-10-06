@@ -15,6 +15,7 @@
 - Actualizar email desde módulo "Mi cuenta"
 - Permite actualizar datos desde "Mi cuenta"
 - Generador de imagen con iniciales
+- Helper para u
 
 ### Eliminado
 - Campo "email" y "rol" en pestaña "Mis datos" módulo "Mi cuenta"
