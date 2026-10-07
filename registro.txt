@@ -10,7 +10,11 @@
 
 
 ### Agregado
-- Vista usuarios
+- Vista usuarios con tabla cargada
+
+### Eliminado
+- UserProfilesModel.php 
+
 
 ## [0.4.8] - 2026-10-07
 

@@ -70,456 +70,82 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/user1-128x128.jpg') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium">Alexander Pierce</span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:alexander.pierce@example.com">alexander.pierce@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-danger"> Administrator </span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-success">Active</span>
-                                </td>
-                                <td>Mar 12, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Alexander Pierce">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Alexander Pierce">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/user3-128x128.jpg') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium">Sarah Bullock</span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:sarah.bullock@example.com">sarah.bullock@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-primary">Editor</span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-success">Active</span>
-                                </td>
-                                <td>Apr 3, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Sarah Bullock">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Sarah Bullock">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/user6-128x128.jpg') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium">Daniel Cooper</span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:daniel.cooper@example.com">daniel.cooper@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-info">Author</span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-warning">Pending</span>
-                                </td>
-                                <td>Apr 28, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Daniel Cooper">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Daniel Cooper">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/user4-128x128.jpg') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium">Nora Vans</span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:nora.vans@example.com">nora.vans@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-primary">Editor</span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-success">Active</span>
-                                </td>
-                                <td>May 9, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Nora Vans">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Nora Vans">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/user7-128x128.jpg') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium">Jane Holland</span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:jane.holland@example.com">jane.holland@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-secondary"> Subscriber </span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-success">Active</span>
-                                </td>
-                                <td>May 21, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Jane Holland">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Jane Holland">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/user8-128x128.jpg') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium">Kenneth Miles</span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:kenneth.miles@example.com">kenneth.miles@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-info">Author</span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-danger"> Suspended </span>
-                                </td>
-                                <td>Jun 2, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Kenneth Miles">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Kenneth Miles">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/user2-160x160.jpg') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium"> Nadia Carmichael </span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:nadia.carmichael@example.com">nadia.carmichael@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-secondary"> Subscriber </span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-success">Active</span>
-                                </td>
-                                <td>Jun 15, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Nadia Carmichael">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Nadia Carmichael">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/user5-128x128.jpg') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium">Marcus Reed</span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:marcus.reed@example.com">marcus.reed@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-primary">Editor</span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-warning">Pending</span>
-                                </td>
-                                <td>Jun 24, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Marcus Reed">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Marcus Reed">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img
-                                            src="<?= base_url('dist/assets/img/avatar5.png') ?>"
-                                            alt=""
-                                            class="img-size-32 rounded-circle me-2" />
-                                        <span class="fw-medium">Elena Weber</span>
-                                    </div>
-                                </td>
-                                <td><a href="mailto:elena.weber@example.com">elena.weber@example.com</a></td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-success"
-                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
-                                            aria-label="WhatsApp">
-                                            <i class="bi bi-whatsapp" aria-hidden="true">
-                                                (477) 117-4322
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-secondary"> Subscriber </span>
-                                </td>
-                                <td>
-                                    <span class="badge text-bg-success">Active</span>
-                                </td>
-                                <td>Jul 1, 2025</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            aria-label="Edit Elena Weber">
-                                            <i class="bi bi-pencil" aria-hidden="true"> </i>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-delete-user"
-                                            aria-label="Delete Elena Weber">
-                                            <i class="bi bi-trash" aria-hidden="true"> </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <?php foreach ($users as $user): ?>
+                                <?php
+                                $nombreCompleto = trim(($user['nombre'] ?? '') . ' ' . ($user['apellido'] ?? ''));
+                                $email          = $user['email'] ?? null;
+                                $telefono       = preg_replace('/\D/', '', $user['telefono'] ?? '');
+                                $grupos         = ! empty($user['grupos']) ? explode(',', $user['grupos']) : [];
+                                $fecha          = ! empty($user['created_at'])
+                                    ? date('d/m/Y', strtotime($user['created_at']))
+                                    : 'Fecha no disponible';
+                                ?>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <?= user_avatar(32, 'shadow') ?>
+                                            <span class="fw-medium"><?= esc($nombreCompleto) ?></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <?php if ($email): ?>
+                                            <a href="mailto:<?= esc($email, 'attr') ?>"><?= esc($email) ?></a>
+                                        <?php else: ?>
+                                            <span class="text-muted">Email no disponible</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($telefono !== ''): ?>
+                                            <a class="btn btn-sm btn-outline-success"
+                                                href="https://wa.me/52<?= esc($telefono, 'url') ?>"
+                                                target="_blank" rel="noopener noreferrer"
+                                                aria-label="WhatsApp de <?= esc($nombreCompleto, 'attr') ?>">
+                                                <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                                                <?= esc($user['telefono']) ?>
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="text-muted">—</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($grupos): ?>
+                                            <?php foreach ($grupos as $grupo): ?>
+                                                <span class="badge text-bg-secondary"><?= esc(ucfirst($grupo)) ?></span>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <span class="badge text-bg-light text-dark">Sin grupo</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if (($user['status'] ?? null) === 'banned'): ?>
+                                            <span class="badge text-bg-danger" title="<?= esc($user['status_message'] ?? '', 'attr') ?>">Bloqueado</span>
+                                        <?php elseif (! $user['active']): ?>
+                                            <span class="badge text-bg-warning">Inactivo</span>
+                                        <?php else: ?>
+                                            <span class="badge text-bg-success">Activo</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= esc($fecha) ?></td>
+                                    <td class="text-end">
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="<?= site_url('users/edit/' . (int) $user['user_id']) ?>"
+                                                class="btn btn-outline-secondary"
+                                                aria-label="Editar <?= esc($nombreCompleto, 'attr') ?>">
+                                                <i class="bi bi-pencil" aria-hidden="true"></i>
+                                            </a>
+                                            <button type="button"
+                                                class="btn btn-outline-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-delete-user"
+                                                data-user-id="<?= (int) $user['user_id'] ?>"
+                                                data-user-name="<?= esc($nombreCompleto, 'attr') ?>"
+                                                aria-label="Eliminar <?= esc($nombreCompleto, 'attr') ?>">
+                                                <i class="bi bi-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

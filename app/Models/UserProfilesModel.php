@@ -4,7 +4,7 @@
  * Descripción: Model para la tabla de perfiles de usuario.
  * Tabla: user_profiles
  * Extensión de shield para agregar campos adicionales al perfil de usuario.
- * 05-Octubre-2026 | 06-Octubre-2026
+ * 05-Octubre-2026 | 07-Octubre-2026
  * 
  */
 
@@ -51,4 +51,20 @@ class UserProfilesModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getUserProfileWithDetails(): array
+    {
+        return $this->select("user_profiles.*,
+                          users.created_at,
+                          users.active,
+                          users.status,
+                          users.status_message,
+                          ai.secret AS email,
+                          (SELECT GROUP_CONCAT(agu.`group` ORDER BY agu.`group` SEPARATOR ',')
+                             FROM auth_groups_users agu
+                            WHERE agu.user_id = users.id) AS grupos", false)
+            ->join('users', 'users.id = user_profiles.user_id')
+            ->join('auth_identities ai', "ai.user_id = users.id AND ai.type = 'email_password'", 'left')
+            ->findAll();
+    }
 }
