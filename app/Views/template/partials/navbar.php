@@ -89,11 +89,9 @@
 
             <!--begin::User Menu Dropdown-->
             <li class="nav-item dropdown user-menu">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
-                        <?= user_avatar(32, 'shadow') ?>
-                        <span class="d-none d-md-inline"><?= esc(fullname()) ?></span>
-                    </a>
+                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+                    <?= user_avatar(32, 'shadow') ?>
+                    <span class="d-none d-md-inline"><?= esc(fullname()) ?></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->

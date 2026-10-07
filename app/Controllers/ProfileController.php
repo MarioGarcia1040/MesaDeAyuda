@@ -189,22 +189,37 @@ class ProfileController extends BaseController
                 'rules'  => 'permit_empty|regex_match[/^[0-9]{10}$/]',
                 'errors' => ['regex_match' => 'El teléfono debe tener 10 dígitos.'],
             ],
-            'profile-photo' => [
-                'label'  => 'Foto',
-                'rules'  => 'max_size[profile-photo,4096]|is_image[profile-photo]|mime_in[profile-photo,image/jpeg,image/png]|max_dims[profile-photo,4000,4000]',
-                'errors' => [
-                    'is_image' => 'El archivo seleccionado no es una imagen válida.',
-                    'max_size' => 'La imagen no puede pesar más de 4MB.',
-                    'mime_in'  => 'El archivo seleccionado no es un tipo de imagen permitido.',
-                    'max_dims' => 'La imagen no puede superar los 4000x4000 píxeles.',
-                ],
-            ],
         ];
 
         if (! $this->validateData($data, $rules)) {
             return redirect()->back()->withInput()
                 ->with('errors', $this->validator->getErrors())
                 ->with('tab', 'settings');
+        }
+
+        $file = $this->request->getFile('profile-photo');
+        $hasPhoto = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
+
+        if ($hasPhoto) {
+            $photoRules = [
+                'profile-photo' => [
+                    'label'  => 'Foto',
+                    'rules'  => 'uploaded[profile-photo]|max_size[profile-photo,4096]|is_image[profile-photo]|mime_in[profile-photo,image/jpeg,image/png]|max_dims[profile-photo,4000,4000]',
+                    'errors' => [
+                        'uploaded' => 'No se pudo subir la imagen.',
+                        'is_image' => 'El archivo seleccionado no es una imagen válida.',
+                        'max_size' => 'La imagen no puede pesar más de 4MB.',
+                        'mime_in'  => 'El archivo seleccionado no es un tipo de imagen permitido.',
+                        'max_dims' => 'La imagen no puede superar los 4000x4000 píxeles.',
+                    ],
+                ],
+            ];
+
+            if (! $this->validate($photoRules)) {
+                return redirect()->back()->withInput()
+                    ->with('errors', $this->validator->getErrors())
+                    ->with('tab', 'settings');
+            }
         }
 
         $profileData = [
@@ -214,13 +229,48 @@ class ProfileController extends BaseController
             'telefono' => $data['profile-phone'] ?: null,
         ];
 
-        $file = $this->request->getFile('profile-photo');
-        
-        if ($file && $file->isValid() && ! $file->hasMoved()) {
-            $profileData['foto'] = $file->getRandomName();
-        }
-
         $profile = $userProfiles->where('user_id', $user->id)->first();
+
+        if ($hasPhoto && $file->isValid() && ! $file->hasMoved()) {
+            $baseDir  = WRITEPATH . 'uploads/profile_photos';
+            $realDir  = $baseDir . '/real';
+            $smallDir = $baseDir . '/small';
+
+            foreach ([$realDir, $smallDir] as $dir) {
+                if (! is_dir($dir)) {
+                    mkdir($dir, 0755, true);
+                }
+            }
+
+            $newName = $file->getRandomName();
+
+            if (! $file->move($realDir, $newName)) {
+                return redirect()->back()->withInput()
+                    ->with('errors', ['profile-photo' => 'No se pudo guardar la imagen.'])
+                    ->with('tab', 'settings');
+            }
+
+            try {
+                \Config\Services::image()
+                    ->withFile($realDir . '/' . $newName)
+                    ->fit(200, 200, 'center')
+                    ->save($smallDir . '/' . $newName, 85);
+            } catch (\Throwable $e) {
+                @unlink($realDir . '/' . $newName);
+                log_message('error', 'Error creando miniatura: ' . $e->getMessage());
+
+                return redirect()->back()->withInput()
+                    ->with('errors', ['profile-photo' => 'No se pudo procesar la imagen.'])
+                    ->with('tab', 'settings');
+            }
+
+            if ($profile && ! empty($profile['foto'])) {
+                @unlink($realDir . '/' . $profile['foto']);
+                @unlink($smallDir . '/' . $profile['foto']);
+            }
+
+            $profileData['foto'] = $newName;
+        }
 
         if ($profile) {
             $userProfiles->update($profile['id'], $profileData);
@@ -233,13 +283,18 @@ class ProfileController extends BaseController
             ->with('tab', 'settings');
     }
 
-    private function photoUpload($file)
+    public function avatar(string $type, string $filename)
     {
-        if ($file && $file->isValid() && ! $file->hasMoved()) {
-            $newName = $file->getRandomName();
-            $file->move(WRITEPATH . 'uploads', $newName);
-            return $newName;
+        $type = $type === 'small' ? 'small' : 'real';
+        $path = WRITEPATH . 'uploads/profile_photos/' . $type . '/' . basename($filename);
+
+        if (! is_file($path)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-        return null;
+
+        return $this->response
+            ->setHeader('Content-Type', mime_content_type($path))
+            ->setHeader('Cache-Control', 'private, max-age=86400')
+            ->setBody(file_get_contents($path));
     }
 }

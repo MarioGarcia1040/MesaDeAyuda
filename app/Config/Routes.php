@@ -25,4 +25,5 @@ $routes->group('profile', ['filter' => ['session', 'group:admin,user']], functio
     $routes->post('update-password', 'ProfileController::changePassword');
     $routes->post('update-email', 'ProfileController::updateEmail');
     $routes->post('update-profile', 'ProfileController::updateProfile');
+    $routes->get('avatar/(:segment)/(:segment)', 'ProfileController::avatar/$1/$2');
 });

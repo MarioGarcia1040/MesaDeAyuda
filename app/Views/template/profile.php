@@ -20,7 +20,7 @@ $activeTab = $flashTab ?? 'settings';
         <!-- About card -->
         <div class="card">
             <div class="card-body text-center">
-                <?= user_avatar(96, 'mb-3') ?>
+                <?= user_avatar(96, 'mb-3', true) ?>
 
                 <?php $tieneNombre = ! empty($profileData['nombre']) || ! empty($profileData['apellido']); ?>
                 <h3 class="h5 mb-0"><?= esc(fullname()) ?></h3>
@@ -29,7 +29,6 @@ $activeTab = $flashTab ?? 'settings';
                 <?php else: ?>
                     <div class="mb-3"></div>
                 <?php endif ?>
-                <p class="text-secondary mb-3"><?= esc(auth()->user()->email) ?></p>
                 <ul class="list-group list-group-flush text-start small">
                     <li class="list-group-item d-flex justify-content-between px-0">
                         <span class="text-secondary">Registro</span>
@@ -324,6 +323,15 @@ $activeTab = $flashTab ?? 'settings';
         </div>
     </div>
 </div>
+
+<!-- Modal foto de perfil -->
+<div class="modal fade" id="avatarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <img id="avatarModalImg" src="" class="img-fluid rounded" alt="Foto de perfil">
+        </div>
+    </div>
+</div>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
@@ -354,6 +362,15 @@ $activeTab = $flashTab ?? 'settings';
         tabs.addEventListener('shown.bs.tab', (e) => {
             sessionStorage.setItem(KEY, e.target.dataset.bsTarget);
         });
+    });
+</script>
+<script>
+    document.addEventListener('click', (e) => {
+        const img = e.target.closest('.avatar-zoom');
+        if (!img) return;
+
+        document.getElementById('avatarModalImg').src = img.dataset.full;
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('avatarModal')).show();
     });
 </script>
 <?= $this->endSection() ?>

@@ -6,6 +6,15 @@
 # Búho Computación                                                             #
 # ############################################################################ #
 
+## [0.4.8] - 2026-10-07
+
+
+### Agregado
+- Carga de imagen de usuario desde "Mi cuenta"
+- Muestra imagen usuario optimizada en iconos del sistema
+- Imagen real con zoom en un modal
+
+
 ## [0.4.5] - 2026-10-06
 
 ### Agregado
@@ -15,7 +24,7 @@
 - Actualizar email desde módulo "Mi cuenta"
 - Permite actualizar datos desde "Mi cuenta"
 - Generador de imagen con iniciales
-- Helper para u
+- Helper para user_profiles
 
 ### Eliminado
 - Campo "email" y "rol" en pestaña "Mis datos" módulo "Mi cuenta"

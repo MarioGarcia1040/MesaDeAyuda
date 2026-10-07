@@ -35,7 +35,7 @@ if (! function_exists('fullname')) {
 }
 
 if (! function_exists('user_avatar')) {
-    function user_avatar(int $size = 96, string $class = ''): string
+    function user_avatar(int $size = 96, string $class = '', bool $zoom = false): string
     {
         $user = auth()->user();
 
@@ -45,16 +45,27 @@ if (! function_exists('user_avatar')) {
 
         $profile = actual_profile();
 
-        // Pendiente: Implementar la lógica para mostrar la foto de perfil si está disponible.
-        /*if (! empty($profile['foto'])) {
+        if (! empty($profile['foto'])) {
+            $foto  = rawurlencode($profile['foto']);
+            $attrs = '';
+            $style = 'object-fit: cover';
+
+            if ($zoom) {
+                $attrs  = ' data-full="' . esc(site_url('profile/avatar/real/' . $foto)) . '"';
+                $class .= ' avatar-zoom';
+                $style .= '; cursor: zoom-in';
+            }
+
             return sprintf(
-                '<img src="%s" class="rounded-circle %s" width="%d" height="%d" style="object-fit: cover" alt="">',
-                esc(site_url('images/small/' . rawurlencode($profile['foto']))),
-                esc($class),
+                '<img src="%s"%s class="rounded-circle %s" width="%d" height="%d" style="%s" alt="Foto de perfil">',
+                esc(site_url('profile/avatar/small/' . $foto)),
+                $attrs,
+                esc(trim($class)),
                 $size,
-                $size
+                $size,
+                $style
             );
-        }*/
+        }
 
         $nombre   = trim($profile['nombre'] ?? '');
         $apellido = trim($profile['apellido'] ?? '');
