@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row g-2 align-items-center">
                     <div class="col-12 col-md-4">
-                        <h3 class="card-title">User Directory</h3>
+                        <h3 class="card-title">Directorio</h3>
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="d-flex flex-wrap justify-content-md-end gap-2">
@@ -28,19 +28,18 @@
                                     type="search"
                                     id="user-search"
                                     class="form-control"
-                                    placeholder="Search users"
-                                    aria-label="Search users"
+                                    placeholder="Buscar..."
+                                    aria-label="Buscar..."
                                     style="width: 180px" />
                             </div>
                             <select
                                 id="user-role-filter"
                                 class="form-select form-select-sm w-auto"
                                 aria-label="Filter by role">
-                                <option value="all" selected>All roles</option>
-                                <option value="administrator">Administrator</option>
-                                <option value="editor">Editor</option>
-                                <option value="author">Author</option>
-                                <option value="subscriber">Subscriber</option>
+                                <option value="all" selected>Todos los roles</option>
+                                <option value="administrator">Administrador</option>
+                                <option value="author">Soporte TI</option>
+                                <option value="subscriber">Usuario</option>
                             </select>
                             <button
                                 type="button"
@@ -48,7 +47,7 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#modal-add-user">
                                 <i class="bi bi-person-plus-fill me-1" aria-hidden="true"> </i>
-                                New user
+                                Nuevo usuario
                             </button>
                         </div>
                     </div>
@@ -61,12 +60,13 @@
                     <table class="table table-hover align-middle m-0">
                         <thead>
                             <tr>
-                                <th>User</th>
+                                <th>Usuario</th>
                                 <th>Email</th>
-                                <th>Role</th>
-                                <th>Status</th>
-                                <th>Created</th>
-                                <th class="text-end">Actions</th>
+                                <th>Teléfono</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Registro</th>
+                                <th class="text-end">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,13 +74,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/user1-128x128.jpg"
+                                            src="<?= base_url('dist/assets/img/user1-128x128.jpg') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium">Alexander Pierce</span>
                                     </div>
                                 </td>
-                                <td>alexander.pierce@example.com</td>
+                                <td><a href="mailto:alexander.pierce@example.com">alexander.pierce@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-danger"> Administrator </span>
                                 </td>
@@ -111,13 +124,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/user3-128x128.jpg"
+                                            src="<?= base_url('dist/assets/img/user3-128x128.jpg') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium">Sarah Bullock</span>
                                     </div>
                                 </td>
-                                <td>sarah.bullock@example.com</td>
+                                <td><a href="mailto:sarah.bullock@example.com">sarah.bullock@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-primary">Editor</span>
                                 </td>
@@ -148,13 +174,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/user6-128x128.jpg"
+                                            src="<?= base_url('dist/assets/img/user6-128x128.jpg') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium">Daniel Cooper</span>
                                     </div>
                                 </td>
-                                <td>daniel.cooper@example.com</td>
+                                <td><a href="mailto:daniel.cooper@example.com">daniel.cooper@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-info">Author</span>
                                 </td>
@@ -185,13 +224,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/user4-128x128.jpg"
+                                            src="<?= base_url('dist/assets/img/user4-128x128.jpg') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium">Nora Vans</span>
                                     </div>
                                 </td>
-                                <td>nora.vans@example.com</td>
+                                <td><a href="mailto:nora.vans@example.com">nora.vans@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-primary">Editor</span>
                                 </td>
@@ -222,13 +274,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/user7-128x128.jpg"
+                                            src="<?= base_url('dist/assets/img/user7-128x128.jpg') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium">Jane Holland</span>
                                     </div>
                                 </td>
-                                <td>jane.holland@example.com</td>
+                                <td><a href="mailto:jane.holland@example.com">jane.holland@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-secondary"> Subscriber </span>
                                 </td>
@@ -259,13 +324,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/user8-128x128.jpg"
+                                            src="<?= base_url('dist/assets/img/user8-128x128.jpg') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium">Kenneth Miles</span>
                                     </div>
                                 </td>
-                                <td>kenneth.miles@example.com</td>
+                                <td><a href="mailto:kenneth.miles@example.com">kenneth.miles@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-info">Author</span>
                                 </td>
@@ -296,13 +374,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/user2-160x160.jpg"
+                                            src="<?= base_url('dist/assets/img/user2-160x160.jpg') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium"> Nadia Carmichael </span>
                                     </div>
                                 </td>
-                                <td>nadia.carmichael@example.com</td>
+                                <td><a href="mailto:nadia.carmichael@example.com">nadia.carmichael@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-secondary"> Subscriber </span>
                                 </td>
@@ -333,13 +424,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/user5-128x128.jpg"
+                                            src="<?= base_url('dist/assets/img/user5-128x128.jpg') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium">Marcus Reed</span>
                                     </div>
                                 </td>
-                                <td>marcus.reed@example.com</td>
+                                <td><a href="mailto:marcus.reed@example.com">marcus.reed@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-primary">Editor</span>
                                 </td>
@@ -370,13 +474,26 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img
-                                            src="./assets/img/avatar5.png"
+                                            src="<?= base_url('dist/assets/img/avatar5.png') ?>"
                                             alt=""
                                             class="img-size-32 rounded-circle me-2" />
                                         <span class="fw-medium">Elena Weber</span>
                                     </div>
                                 </td>
-                                <td>elena.weber@example.com</td>
+                                <td><a href="mailto:elena.weber@example.com">elena.weber@example.com</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-success"
+                                            onclick="window.open('https://wa.me/524771174322', '_blank')"
+                                            aria-label="WhatsApp">
+                                            <i class="bi bi-whatsapp" aria-hidden="true">
+                                                (477) 117-4322
+                                            </i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="badge text-bg-secondary"> Subscriber </span>
                                 </td>
