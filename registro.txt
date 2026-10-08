@@ -1,97 +1,85 @@
-﻿# ############################################################################ #
-# Registro de cambios y modificaciones                                         #
-# Sistema de tickets/Mesa de ayuda Shoei                                       #                                             
-# PHP 8.2.4 | CodeIgniter 4.7.4 | MariaDB 10.4.28                              #
-# Desarrollado por: Mario García (mariogarcia1040@gmail.com)                   #
-# Búho Computación                                                             #
-# ############################################################################ #
+﻿============================================================================
+REGISTRO DE CAMBIOS
+Sistema de tickets / Mesa de ayuda Shoei
+PHP 8.2.4 | CodeIgniter 4.7.4 | MariaDB 10.4.28
+Desarrollado por: Mario Garcia (mariogarcia1040@gmail.com)
+Buho Computacion
+============================================================================
 
-## [0.4.9] - 2026-10-08
+POLITICA DE VERSIONADO
+----------------------------------------------------------------------------
+Este proyecto sigue Versionado Semantico 2.0.0 (https://semver.org/lang/es/)
+y el formato Keep a Changelog (https://keepachangelog.com/es-ES/1.1.0/).
 
+Formato de version: MAJOR.MINOR.PATCH
 
-### Agregado
-- Vista usuarios con tabla cargada
+  MAJOR  Cambios incompatibles (rompen esquema de BD, rutas o API).
+         Mientras sea 0.y.z el proyecto esta en desarrollo inicial y
+         cualquier cambio puede ser incompatible.
+  MINOR  Funcionalidad nueva compatible (vistas, modulos, modelos).
+  PATCH  Correcciones de errores compatibles. No incluye funcionalidad nueva.
 
-### Eliminado
-- UserProfilesModel.php 
+Reglas:
+  - Las entradas se ordenan de la mas reciente a la mas antigua.
+  - Cada version se publica con fecha (AAAA-MM-DD).
+  - Los cambios aun no publicados van en la seccion [Sin publicar].
+  - Las refactorizaciones sin cambio de comportamiento se registran una sola
+    vez, en "Cambiado".
 
-
-## [0.4.8] - 2026-10-07
-
-
-### Agregado
-- Carga de imagen de usuario desde "Mi cuenta"
-- Muestra imagen usuario optimizada en iconos del sistema
-- Imagen real con zoom en un modal
-
-
-## [0.4.5] - 2026-10-06
-
-### Agregado
-- Se crea tabla "user_profiles" para campos adicionales del usuario
-- Creación de UserProfilesModel
-- Controlador para captura y actualización de "user_profiles"
-- Actualizar email desde módulo "Mi cuenta"
-- Permite actualizar datos desde "Mi cuenta"
-- Generador de imagen con iniciales
-- Helper para user_profiles
-
-### Eliminado
-- Campo "email" y "rol" en pestaña "Mis datos" módulo "Mi cuenta"
+Secciones permitidas: Agregado, Cambiado, Obsoleto, Eliminado, Corregido,
+Seguridad.
 
 
-## [0.3.3] - 2026-10-03
-
-### Agregado
-- Loader en formularios de acceso
-- Se crean componentes footer, layout, navbar y sidebar para navegación
-- Creación de menú preeliminar
-- Máscara para campos email y teléfono en formulario "Mis datos"
-- Formato en formulario "Mis datos" campo fotografía
-- Carga de vista tickets
-- Se crea controlador tickets
-- Muestra accesos registrados en módulo "Mi cuenta"
-- Mejoras menores en datos de usuario
-- Vista usuarios
-
-### Cambiado
-- Se elimina username en registro
-- Optimizan views login y view general
+[Sin publicar]
+----------------------------------------------------------------------------
+(sin cambios pendientes)
 
 
-## [0.2.4] - 2026-09-30
+[0.4.0] - 2026-10-08
+----------------------------------------------------------------------------
+Agregado
+  - Vista de usuarios con tabla de datos.
+  - Zoom de imagenes en la vista de usuarios.
+  - Modelos UserModel y AccessLogModel, que reemplazan las consultas SQL
+    directas en ProfileController.
 
-### Agregado
-- Actualizar contraseña desde Mi cuenta
+Cambiado
+  - Refactorizacion de UsersController y ProfileController.
+  - profile_helper muestra la imagen del usuario en la tabla de usuarios.
+  - Consultas de UserProfilesModel actualizadas como parte de la
+    refactorizacion.
+
+Eliminado
+  - UserProfilesController.php; su logica se absorbio en la refactorizacion
+    del modulo de perfiles.
 
 
-## [0.2.0] - 2026-09-12
+[0.3.0] - 2026-09-23
+----------------------------------------------------------------------------
+Agregado
+  - Loader en los formularios de acceso.
 
-### Agregado
-- Tablas para el uso de Shield en la base de datos
-- Inicio formulario de acceso Shield
-- Idioma español y japonés para eventos y errores
-- Se actualiza controlador Home para gestionar el acceso
-- Rutas de acceso a grupos
-
-### Mejorado
-- Mensajes de acceso traducidos
-- Título en vista se carga desde controlador
+Cambiado
+  - Se elimina el campo username del formulario de registro.
 
 
-## [0.0.3] - 2026-08-29
+[0.2.0] - 2026-09-12
+----------------------------------------------------------------------------
+Agregado
+  - Rutas de acceso a grupos.
 
-### Agregado
-- Tablas para el uso de Shield en la base de datos
-- Inicio formulario de acceso Shield
-- Idioma español y japonés para eventos y errores
+Cambiado
+  - Controlador Home actualizado para gestionar el acceso.
+  - Mensajes de acceso traducidos.
 
-### Mejorado
-- Agregar soporte de Email para gestión
-- Personalizar vistas de Shield
 
-### Notas técnicas
-- Base de datos: Shoei
-- Frontend: Formularios por defecto de Shield
-- Backend: Se carga Shield para acceso
-- Commits: inicialización del repositorio
+[0.1.0] - 2026-08-29
+----------------------------------------------------------------------------
+Primera version funcional.
+
+Agregado
+  - Tablas de Shield en la base de datos.
+  - Formulario de acceso con Shield.
+  - Idioma espanol y japones para eventos y errores.
+  - Soporte de Email para gestion.
+  - Vistas de Shield personalizadas.

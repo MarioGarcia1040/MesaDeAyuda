@@ -4,7 +4,7 @@
  * Descripción: Model para la tabla de perfiles de usuario.
  * Tabla: user_profiles
  * Extensión de shield para agregar campos adicionales al perfil de usuario.
- * 05-Octubre-2026 | 07-Octubre-2026
+ * 05-Octubre-2026 | 08-Octubre-2026
  * 
  */
 
@@ -55,7 +55,7 @@ class UserProfilesModel extends Model
     public function getUserProfileWithDetails(): array
     {
         return $this->select("user_profiles.*,
-                          users.created_at,
+                          users.created_at AS register_date,
                           users.active,
                           users.status,
                           users.status_message,
@@ -66,5 +66,20 @@ class UserProfilesModel extends Model
             ->join('users', 'users.id = user_profiles.user_id')
             ->join('auth_identities ai', "ai.user_id = users.id AND ai.type = 'email_password'", 'left')
             ->findAll();
+    }
+
+    public function findByUserId(int $userId): ?array
+    {
+        return $this->where('user_id', $userId)->first();
+    }
+
+    public function saveForUser(int $userId, array $data): bool
+    {
+        $profile        = $this->findByUserId($userId);
+        $data['user_id'] = $userId;
+
+        return $profile
+            ? $this->update($profile['id'], $data)
+            : (bool) $this->insert($data);
     }
 }

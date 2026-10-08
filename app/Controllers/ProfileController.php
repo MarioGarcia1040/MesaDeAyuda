@@ -8,6 +8,9 @@
 
 namespace App\Controllers;
 
+use App\Models\AccessLogModel;
+use App\Models\UserModel;
+use App\Models\UserProfilesModel;
 use App\Controllers\BaseController;
 use CodeIgniter\Shield\Models\LoginModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -17,22 +20,11 @@ class ProfileController extends BaseController
     public function index()
     {
         $user = auth()->user();
-        $userProfiles = new \App\Models\UserProfilesModel();
-
-        $profileData = $userProfiles->where('user_id', $user->id)->first();
-
-        $acceses = (new LoginModel())
-            ->groupStart()
-            ->where('user_id', $user->id)
-            ->orWhere('identifier', $user->email)
-            ->groupEnd()
-            ->orderBy('date', 'DESC')
-            ->findAll(5);
 
         return view('template/profile', [
-            'title' => 'Shoei | Mi Cuenta',
-            'accesses' => $acceses,
-            'profileData' => $profileData,
+            'title'       => 'Shoei | Mi Cuenta',
+            'accesses'    => model(AccessLogModel::class)->recentForUser($user),
+            'profileData' => model(UserProfilesModel::class)->findByUserId($user->id),
         ]);
     }
 
@@ -129,7 +121,7 @@ class ProfileController extends BaseController
             ->where('user_id !=', $user->id)
             ->first();
 
-        if ($enUso) {
+        if (model(UserModel::class)->emailInUse($newEmail, $user->id)) {
             return redirect()->back()->withInput()
                 ->with('errors', ['profile-new-email' => 'Este email ya está registrado.'])
                 ->with('tab', 'email');
@@ -167,7 +159,7 @@ class ProfileController extends BaseController
     public function updateProfile()
     {
         $user         = auth()->user();
-        $userProfiles = new \App\Models\UserProfilesModel();
+        $userProfiles = model(UserProfilesModel::class);
 
         $data = [
             'profile-first-name' => trim((string) $this->request->getPost('profile-first-name')),
@@ -197,7 +189,7 @@ class ProfileController extends BaseController
                 ->with('tab', 'settings');
         }
 
-        $file = $this->request->getFile('profile-photo');
+        $file     = $this->request->getFile('profile-photo');
         $hasPhoto = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
 
         if ($hasPhoto) {
@@ -229,7 +221,7 @@ class ProfileController extends BaseController
             'telefono' => $data['profile-phone'] ?: null,
         ];
 
-        $profile = $userProfiles->where('user_id', $user->id)->first();
+        $profile = $userProfiles->findByUserId($user->id);
 
         if ($hasPhoto && $file->isValid() && ! $file->hasMoved()) {
             $baseDir  = WRITEPATH . 'uploads/profile_photos';
@@ -273,7 +265,7 @@ class ProfileController extends BaseController
         }
 
         if ($profile) {
-            $userProfiles->update($profile['id'], $profileData);
+            $userProfiles->saveForUser($user->id, $profileData);
         } else {
             $userProfiles->insert($profileData);
         }

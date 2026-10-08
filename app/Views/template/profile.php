@@ -21,7 +21,6 @@ $activeTab = $flashTab ?? 'settings';
         <div class="card">
             <div class="card-body text-center">
                 <?= user_avatar(96, 'mb-3', true) ?>
-
                 <?php $tieneNombre = ! empty($profileData['nombre']) || ! empty($profileData['apellido']); ?>
                 <h3 class="h5 mb-0"><?= esc(fullname()) ?></h3>
                 <?php if ($tieneNombre): ?>

@@ -76,15 +76,17 @@
                                 $email          = $user['email'] ?? null;
                                 $telefono       = preg_replace('/\D/', '', $user['telefono'] ?? '');
                                 $grupos         = ! empty($user['grupos']) ? explode(',', $user['grupos']) : [];
-                                $fecha          = ! empty($user['created_at'])
-                                    ? date('d/m/Y', strtotime($user['created_at']))
+                                $fecha          = ! empty($user['register_date'])
+                                    ? date('d/m/Y', strtotime($user['register_date']))
                                     : 'Fecha no disponible';
                                 ?>
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <?= user_avatar(32, 'shadow') ?>
+                                            <?= user_avatar(32, 'shadow me-2', zoom: true, profile: $user) ?>
                                             <span class="fw-medium"><?= esc($nombreCompleto) ?></span>
+                                        </div>
+                                        <div class="d-flex align-items-center">
                                         </div>
                                     </td>
                                     <td>
@@ -187,8 +189,43 @@
     </div>
     <!-- /.col -->
 </div>
+<div class="modal fade" id="modal-avatar-zoom" tabindex="-1" aria-label="Foto de perfil" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-body p-0 text-center">
+                <img id="avatar-zoom-img" src="" alt="Foto de perfil ampliada"
+                    class="img-fluid rounded shadow" style="max-height: 80vh;">
+            </div>
+        </div>
+    </div>
+</div>
 <!--end::Row-->
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
+<!-- components/avatar_zoom.php -->
+<div class="modal fade" id="modal-avatar-zoom" tabindex="-1" aria-label="Foto de perfil" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-body p-0 text-center">
+                <img id="avatar-zoom-img" src="" alt="Foto de perfil ampliada"
+                    class="img-fluid rounded shadow" style="max-height: 80vh;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('click', (e) => {
+        const avatar = e.target.closest('.avatar-zoom');
+        if (!avatar) return;
+
+        document.getElementById('avatar-zoom-img').src = avatar.dataset.full;
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('modal-avatar-zoom')).show();
+    });
+
+    document.getElementById('modal-avatar-zoom').addEventListener('hidden.bs.modal', () => {
+        document.getElementById('avatar-zoom-img').src = '';
+    });
+</script>
 <?= $this->endSection() ?>

@@ -35,15 +35,21 @@ if (! function_exists('fullname')) {
 }
 
 if (! function_exists('user_avatar')) {
-    function user_avatar(int $size = 96, string $class = '', bool $zoom = false): string
+    function user_avatar(int $size = 96, string $class = '', bool $zoom = false, ?array $profile = null): string
     {
-        $user = auth()->user();
+        // Sin perfil explícito: se usa el del usuario activo (comportamiento actual)
+        if ($profile === null) {
+            $user = auth()->user();
 
-        if (! $user) {
-            return '';
+            if (! $user) {
+                return '';
+            }
+
+            $profile = actual_profile();
+            $email   = (string) $user->email;
+        } else {
+            $email = (string) ($profile['email'] ?? '');
         }
-
-        $profile = actual_profile();
 
         if (! empty($profile['foto'])) {
             $foto  = rawurlencode($profile['foto']);
@@ -72,7 +78,7 @@ if (! function_exists('user_avatar')) {
 
         $iniciales = ($nombre !== '' || $apellido !== '')
             ? mb_substr($nombre, 0, 1) . mb_substr($apellido, 0, 1)
-            : mb_substr(trim((string) $user->email), 0, 2);
+            : mb_substr(trim($email), 0, 2);
 
         $iniciales = mb_strtoupper($iniciales) ?: '?';
 
