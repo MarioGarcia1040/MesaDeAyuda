@@ -15,11 +15,11 @@ class UsersController extends BaseController
 {
     public function index()
     {
-        $userProfiles = new \App\Models\UserProfilesModel();
+        $userProfiles = new \App\Models\UserModel();
 
         return view('template/users', [
             'title' => 'Shoei | Usuarios',
-            'users' => $userProfiles->getUserProfileWithDetails(),
+            'users' => $userProfiles->getUsersWithProfileDetails(),
         ]);
     }   
 }

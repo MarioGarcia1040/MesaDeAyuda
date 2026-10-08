@@ -35,7 +35,7 @@ Seguridad.
 (sin cambios pendientes)
 
 
-[0.4.0] - 2026-10-08
+[0.4.1] - 2026-10-08
 ----------------------------------------------------------------------------
 Agregado
   - Vista de usuarios con tabla de datos.
@@ -52,6 +52,10 @@ Cambiado
 Eliminado
   - UserProfilesController.php; su logica se absorbio en la refactorizacion
     del modulo de perfiles.
+
+Errores
+- Cambio en consulta de tabla usuarios para mostrar registros aunque no 
+  tengan actualización de datos
 
 
 [0.3.0] - 2026-09-23

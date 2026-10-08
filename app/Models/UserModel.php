@@ -21,4 +21,34 @@ class UserModel extends ShieldUserModel
             ->where('user_id !=', $exceptUserId)
             ->countAllResults() > 0;
     }
+
+    public function getUsersWithProfileDetails(): array
+    {
+        return $this->select("
+            users.*,
+            user_profiles.nombre,
+            user_profiles.apellido,
+            user_profiles.telefono,
+            user_profiles.foto,
+            users.created_at AS register_date,
+            ai.secret AS email,
+            (
+                SELECT GROUP_CONCAT(
+                    agu.`group`
+                    ORDER BY agu.`group`
+                    SEPARATOR ','
+                )
+                FROM auth_groups_users agu
+                WHERE agu.user_id = users.id
+            ) AS grupos
+        ", false)
+            ->join('user_profiles', 'user_profiles.user_id = users.id', 'left')
+            ->join(
+                'auth_identities ai',
+                "ai.user_id = users.id AND ai.type = 'email_password'",
+                'left'
+            )
+            ->findAll();
+    }
+
 }

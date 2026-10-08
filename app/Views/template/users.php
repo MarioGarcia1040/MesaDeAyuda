@@ -72,19 +72,19 @@
                         <tbody>
                             <?php foreach ($users as $user): ?>
                                 <?php
-                                $nombreCompleto = trim(($user['nombre'] ?? '') . ' ' . ($user['apellido'] ?? ''));
-                                $email          = $user['email'] ?? null;
-                                $telefono       = preg_replace('/\D/', '', $user['telefono'] ?? '');
-                                $grupos         = ! empty($user['grupos']) ? explode(',', $user['grupos']) : [];
-                                $fecha          = ! empty($user['register_date'])
-                                    ? date('d/m/Y', strtotime($user['register_date']))
+                                $nombreCompleto = trim(($user->nombre ?? '') . ' ' . ($user->apellido ?? ''));
+                                $email          = $user->email ?? null;
+                                $telefono       = preg_replace('/\D/', '', $user->telefono ?? '');
+                                $grupos         = ! empty($user->grupos) ? explode(',', $user->grupos) : [];
+                                $fecha          = ! empty($user->register_date)
+                                    ? date('d/m/Y', strtotime($user->register_date))
                                     : 'Fecha no disponible';
                                 ?>
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <?= user_avatar(32, 'shadow me-2', zoom: true, profile: $user) ?>
-                                            <span class="fw-medium"><?= esc($nombreCompleto) ?></span>
+                                            <span class="fw-medium"><?= esc($nombreCompleto ?: 'Nombre no disponible') ?></span>
                                         </div>
                                         <div class="d-flex align-items-center">
                                         </div>
@@ -103,7 +103,7 @@
                                                 target="_blank" rel="noopener noreferrer"
                                                 aria-label="WhatsApp de <?= esc($nombreCompleto, 'attr') ?>">
                                                 <i class="bi bi-whatsapp" aria-hidden="true"></i>
-                                                <?= esc($user['telefono']) ?>
+                                                <?= esc($user->telefono) ?>
                                             </a>
                                         <?php else: ?>
                                             <span class="text-muted">—</span>
@@ -119,9 +119,9 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <?php if (($user['status'] ?? null) === 'banned'): ?>
-                                            <span class="badge text-bg-danger" title="<?= esc($user['status_message'] ?? '', 'attr') ?>">Bloqueado</span>
-                                        <?php elseif (! $user['active']): ?>
+                                        <?php if (($user->status ?? null) === 'banned'): ?>
+                                            <span class="badge text-bg-danger" title="<?= esc($user->status_message ?? '', 'attr') ?>">Bloqueado</span>
+                                        <?php elseif (! $user->active): ?>
                                             <span class="badge text-bg-warning">Inactivo</span>
                                         <?php else: ?>
                                             <span class="badge text-bg-success">Activo</span>
@@ -130,7 +130,7 @@
                                     <td><?= esc($fecha) ?></td>
                                     <td class="text-end">
                                         <div class="btn-group btn-group-sm">
-                                            <a href="<?= site_url('users/edit/' . (int) $user['user_id']) ?>"
+                                            <a href="<?= site_url('users/edit/' . (int) $user->user_id) ?>"
                                                 class="btn btn-outline-secondary"
                                                 aria-label="Editar <?= esc($nombreCompleto, 'attr') ?>">
                                                 <i class="bi bi-pencil" aria-hidden="true"></i>
@@ -139,7 +139,7 @@
                                                 class="btn btn-outline-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modal-delete-user"
-                                                data-user-id="<?= (int) $user['user_id'] ?>"
+                                                data-user-id="<?= (int) $user->user_id ?>"
                                                 data-user-name="<?= esc($nombreCompleto, 'attr') ?>"
                                                 aria-label="Eliminar <?= esc($nombreCompleto, 'attr') ?>">
                                                 <i class="bi bi-trash" aria-hidden="true"></i>

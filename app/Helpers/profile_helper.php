@@ -35,9 +35,12 @@ if (! function_exists('fullname')) {
 }
 
 if (! function_exists('user_avatar')) {
-    function user_avatar(int $size = 96, string $class = '', bool $zoom = false, ?array $profile = null): string
-    {
-        // Sin perfil explícito: se usa el del usuario activo (comportamiento actual)
+    function user_avatar(
+        int $size = 96,
+        string $class = '',
+        bool $zoom = false,
+        array|object|null $profile = null
+    ): string {
         if ($profile === null) {
             $user = auth()->user();
 
@@ -48,11 +51,35 @@ if (! function_exists('user_avatar')) {
             $profile = actual_profile();
             $email   = (string) $user->email;
         } else {
+            if (is_object($profile)) {
+                if (method_exists($profile, 'toArray')) {
+                    $profile = $profile->toArray();
+                } else {
+                    $profile = (array) $profile;
+                }
+            }
+
             $email = (string) ($profile['email'] ?? '');
         }
 
-        if (! empty($profile['foto'])) {
-            $foto  = rawurlencode($profile['foto']);
+        $foto = $profile['foto']
+            ?? $profile['photo']
+            ?? null;
+
+        $nombre = trim(
+            $profile['nombre']
+                ?? $profile['first_name']
+                ?? ''
+        );
+
+        $apellido = trim(
+            $profile['apellido']
+                ?? $profile['last_name']
+                ?? ''
+        );
+
+        if (! empty($foto)) {
+            $foto  = rawurlencode($foto);
             $attrs = '';
             $style = 'object-fit: cover';
 
@@ -73,9 +100,6 @@ if (! function_exists('user_avatar')) {
             );
         }
 
-        $nombre   = trim($profile['nombre'] ?? '');
-        $apellido = trim($profile['apellido'] ?? '');
-
         $iniciales = ($nombre !== '' || $apellido !== '')
             ? mb_substr($nombre, 0, 1) . mb_substr($apellido, 0, 1)
             : mb_substr(trim($email), 0, 2);
@@ -83,7 +107,7 @@ if (! function_exists('user_avatar')) {
         $iniciales = mb_strtoupper($iniciales) ?: '?';
 
         return sprintf(
-            '<div class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center %s" style="width: %dpx; height: %dpx; font-size: %dpx" aria-hidden="true">%s</div>',
+            '<div class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center %s" style="width:%dpx;height:%dpx;font-size:%dpx" aria-hidden="true">%s</div>',
             esc($class),
             $size,
             $size,
