@@ -104,7 +104,7 @@ $activeTab = $flashTab ?? 'settings';
                             Registro de accesos
                         </button>
                     </li>
-
+                    <!-- Tab logs -->
                     <li class="nav-item" role="presentation">
                         <button
                             class="nav-link <?= $activeTab === 'logs' ? 'active' : '' ?>"
@@ -118,6 +118,7 @@ $activeTab = $flashTab ?? 'settings';
                         </button>
                     </li>
 
+                    <!-- Tab roles and permissions -->
                     <li class="nav-item" role="presentation">
                         <button
                             class="nav-link <?= $activeTab === 'roles_permissions' ? 'active' : '' ?>"
@@ -130,7 +131,6 @@ $activeTab = $flashTab ?? 'settings';
                             Roles y permisos
                         </button>
                     </li>
-
 
                 </ul>
             </div>
@@ -390,22 +390,22 @@ $activeTab = $flashTab ?? 'settings';
                         role="tabpanel"
                         aria-labelledby="roles-permissions-tab">
                         <form method="post" action="<?= base_url('profile/update-roles-permissions') ?>">
-      <?= csrf_field() ?>
+                            <?= csrf_field() ?>
 
-      
-        <div class="form-check form-switch mb-2">
-          <input class="form-check-input" type="checkbox" role="switch"
-                 name="groups[]" value="prueba" id="g-prueba"
-                 checked disabled>
-          <label class="form-check-label" for="g-prueba">
-            <strong>prueba</strong>
-            <small class="text-muted d-block">prueba</small>
-          </label>
-        </div>
-     
 
-      <button type="submit" class="btn btn-primary mt-2">Guardar</button>
-    </form>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    name="groups[]" value="prueba" id="g-prueba"
+                                    checked disabled>
+                                <label class="form-check-label" for="g-prueba">
+                                    <strong>prueba</strong>
+                                    <small class="text-muted d-block">prueba</small>
+                                </label>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+                        </form>
                     </div>
 
                 </div>

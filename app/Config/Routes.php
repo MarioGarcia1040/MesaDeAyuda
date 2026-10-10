@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Rutas de la aplicación.
- * 29-Septiembre-2026 | 06-Octubre-2026
+ * 29-Septiembre-2026 | 10-Octubre-2026
  * 
  */
 
@@ -18,7 +18,6 @@ $routes->group('', ['filter' => ['session', 'group:admin,user']], function ($rou
     $routes->get('dashboard', 'DashboardController::index', ['as' => 'dashboard']);
     $routes->get('profile', 'ProfileController::index', ['as' => 'profile']);
     $routes->get('users', 'UsersController::index', ['as' => 'users']);
-    $routes->get('tickets', 'TicketsController::index', ['as' => 'tickets']);
 });
 
 $routes->group('profile', ['filter' => ['session', 'group:admin,user']], function ($routes) {
@@ -26,4 +25,10 @@ $routes->group('profile', ['filter' => ['session', 'group:admin,user']], functio
     $routes->post('update-email', 'ProfileController::updateEmail');
     $routes->post('update-profile', 'ProfileController::updateProfile');
     $routes->get('avatar/(:segment)/(:segment)', 'ProfileController::avatar/$1/$2');
+});
+
+$routes->group('tickets', ['filter' => ['session', 'group:admin,user']], function ($routes) {
+    $routes->get('tickets', 'TicketsController::index', ['as' => 'tickets']);
+    $routes->get('my-tickets', 'TicketsController::myTickets', ['as' => 'tickets.my-tickets']);
+    $routes->get('all', 'TicketsController::all', ['as' => 'tickets.all']);
 });

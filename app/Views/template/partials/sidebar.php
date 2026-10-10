@@ -77,15 +77,15 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="<?= site_url('tickets') ?>"
-                                class="nav-link <?= $isActive('tickets') ? 'active' : '' ?>">
+                            <a href="<?= site_url('tickets/my-tickets') ?>"
+                                class="nav-link <?= $isActive('tickets/my-tickets') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Mis Tickets</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= site_url('tickets') ?>"
-                                class="nav-link <?= $currentUri === 'tickets' ? 'active' : '' ?>">
+                            <a href="<?= site_url('tickets/all') ?>"
+                                class="nav-link <?= $isActive('tickets/all') ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Todos</p>
                             </a>

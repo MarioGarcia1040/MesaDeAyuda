@@ -11,14 +11,126 @@
 <?php
 // DATOS DE EJEMPLO: bórralos cuando tengas tu modelo
 $tickets = [
-    ['id' => 1, 'asunto' => 'No puedo acceder al correo', 'solicitante' => 'Laura Pérez', 'categoria' => 'Correo',
-     'estado' => 'abierto', 'prioridad' => 'alta', 'asignado' => 'Mario', 'created_at' => '2026-10-01 09:15:00'],
-    ['id' => 2, 'asunto' => 'Impresora de recepción sin tinta', 'solicitante' => 'Carlos Ruiz', 'categoria' => 'Hardware',
-     'estado' => 'en_proceso', 'prioridad' => 'media', 'asignado' => 'Mario', 'created_at' => '2026-09-30 16:40:00'],
-    ['id' => 3, 'asunto' => 'Solicitud de alta de usuario', 'solicitante' => 'Ana Torres', 'categoria' => 'Accesos',
-     'estado' => 'pendiente', 'prioridad' => 'baja', 'asignado' => null, 'created_at' => '2026-09-29 11:05:00'],
-    ['id' => 4, 'asunto' => 'Internet lento en sala de estudios', 'solicitante' => 'Jorge Díaz', 'categoria' => 'Red',
-     'estado' => 'resuelto', 'prioridad' => 'media', 'asignado' => 'Mario', 'created_at' => '2026-09-28 08:30:00'],
+    [
+        'id' => 1,
+        'asunto' => 'No puedo acceder al correo',
+        'solicitante' => 'Laura Pérez',
+        'categoria' => 'Correo',
+        'estado' => 'abierto',
+        'prioridad' => 'alta',
+        'asignado' => 'Mario',
+        'created_at' => '2026-10-01 09:15:00'
+    ],
+    [
+        'id' => 2,
+        'asunto' => 'Impresora de recepción sin tinta',
+        'solicitante' => 'Carlos Ruiz',
+        'categoria' => 'Hardware',
+        'estado' => 'en_proceso',
+        'prioridad' => 'media',
+        'asignado' => 'Mario',
+        'created_at' => '2026-09-30 16:40:00'
+    ],
+    [
+        'id' => 3,
+        'asunto' => 'Solicitud de alta de usuario',
+        'solicitante' => 'Ana Torres',
+        'categoria' => 'Accesos',
+        'estado' => 'pendiente',
+        'prioridad' => 'baja',
+        'asignado' => null,
+        'created_at' => '2026-09-29 11:05:00'
+    ],
+    [
+        'id' => 4,
+        'asunto' => 'Internet lento en sala de estudios',
+        'solicitante' => 'Jorge Díaz',
+        'categoria' => 'Red',
+        'estado' => 'resuelto',
+        'prioridad' => 'media',
+        'asignado' => 'Mario',
+        'created_at' => '2026-09-28 08:30:00'
+    ],
+    [
+        'id' => 5,
+        'asunto' => 'Error al abrir archivo PDF',
+        'solicitante' => 'Lucía Gómez',
+        'categoria' => 'Software',
+        'estado' => 'cerrado',
+        'prioridad' => 'alta',
+        'asignado' => 'Mario',
+        'created_at' => '2026-09-27 14:20:00'
+    ],
+    [
+        'id' => 6,
+        'asunto' => 'Problema con la VPN',
+        'solicitante' => 'Pedro Martínez',
+        'categoria' => 'Red',
+        'estado' => 'abierto',
+        'prioridad' => 'alta',
+        'asignado' => null,
+        'created_at' => '2026-09-26 10:45:00'
+    ],
+    [
+        'id' => 7,
+        'asunto' => 'Solicitud de cambio de contraseña',
+        'solicitante' => 'María López',
+        'categoria' => 'Accesos',
+        'estado' => 'en_proceso',
+        'prioridad' => 'media',
+        'asignado' => 'Mario',
+        'created_at' => '2026-09-25 13:10:00'
+    ],
+    [
+        'id' => 8,
+        'asunto' => 'Problema con la impresora láser',
+        'solicitante' => 'Javier Fernández',
+        'categoria' => 'Hardware',
+        'estado' => 'pendiente',
+        'prioridad' => 'baja',
+        'asignado' => null,
+        'created_at' => '2026-09-24 15:55:00'
+    ],
+    [
+        'id' => 9,
+        'asunto' => 'Solicitud de instalación de software',
+        'solicitante' => 'Sofía Ramírez',
+        'categoria' => 'Software',
+        'estado' => 'resuelto',
+        'prioridad' => 'media',
+        'asignado' => 'Mario',
+        'created_at' => '2026-09-23 09:30:00'
+    ],
+    [
+        'id' => 10,
+        'asunto' => 'Problema con la conexión Wi-Fi',
+        'solicitante' => 'Diego Torres',
+        'categoria' => 'Red',
+        'estado' => 'cerrado',
+        'prioridad' => 'alta',
+        'asignado' => null,
+        'created_at' => '2026-09-22 11:45:00'
+    ],
+    [
+        'id' => 11,
+        'asunto' => 'Solicitud de actualización de software',
+        'solicitante' => 'Valeria Sánchez',
+        'categoria' => 'Software',
+        'estado' => 'abierto',
+        'prioridad' => 'media',
+        'asignado' => null,
+        'created_at' => '2026-09-21 14:20:00'
+    ],
+    [
+        'id' => 12,
+        'asunto' => 'Problema con la impresora multifunción',
+        'solicitante' => 'Andrés Morales',
+        'categoria' => 'Hardware',
+        'estado' => 'en_proceso',
+        'prioridad' => 'alta',
+        'asignado' => 'Mario',
+        'created_at' => '2026-09-20 10:10:00'
+    ],
 ];
 
 $estadoBadge = [
@@ -74,11 +186,11 @@ $conteo = array_count_values(array_column($tickets, 'estado'));
         <div class="input-group input-group-sm" style="width: 16rem">
             <span class="input-group-text"><i class="bi bi-search" aria-hidden="true"></i></span>
             <input type="search" id="ticket-search" class="form-control"
-                   placeholder="Buscar tickets&hellip;" aria-label="Buscar tickets">
+                placeholder="Buscar tickets&hellip;" aria-label="Buscar tickets">
         </div>
 
         <select id="ticket-filter-estado" class="form-select form-select-sm" style="width: 10rem"
-                aria-label="Filtrar por estado">
+            aria-label="Filtrar por estado">
             <option value="">Todos los estados</option>
             <?php foreach ($estadoLabel as $valor => $texto): ?>
                 <option value="<?= $valor ?>"><?= $texto ?></option>
@@ -106,39 +218,39 @@ $conteo = array_count_values(array_column($tickets, 'estado'));
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($tickets as $t): ?>
-                    <tr data-estado="<?= esc($t['estado']) ?>">
-                        <td class="text-nowrap fw-semibold">#<?= esc($t['id']) ?></td>
-                        <td>
-                            <a href="#" class="fw-semibold text-decoration-none"><?= esc($t['asunto']) ?></a>
-                            <div class="small text-secondary">
-                                <?= esc($t['solicitante']) ?> &middot; <?= esc($t['categoria']) ?>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge <?= $estadoBadge[$t['estado']] ?>">
-                                <?= $estadoLabel[$t['estado']] ?>
-                            </span>
-                        </td>
-                        <td>
-                            <span class="badge <?= $prioridadBadge[$t['prioridad']] ?>">
-                                <?= esc(ucfirst($t['prioridad'])) ?>
-                            </span>
-                        </td>
-                        <td class="text-nowrap"><?= esc($t['asignado'] ?? 'Sin asignar') ?></td>
-                        <td class="text-nowrap"><?= date('d/m/Y H:i', strtotime($t['created_at'])) ?></td>
-                        <td class="text-end">
-                            <div class="btn-group btn-group-sm">
-                                <button class="btn btn-outline-secondary" type="button" title="Ver">
-                                    <i class="bi bi-eye" aria-hidden="true"></i>
-                                </button>
-                                <button class="btn btn-outline-secondary" type="button" title="Editar">
-                                    <i class="bi bi-pencil" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+                    <?php foreach ($tickets as $t): ?>
+                        <tr data-estado="<?= esc($t['estado']) ?>">
+                            <td class="text-nowrap fw-semibold">#<?= esc($t['id']) ?></td>
+                            <td>
+                                <a href="#" class="fw-semibold text-decoration-none"><?= esc($t['asunto']) ?></a>
+                                <div class="small text-secondary">
+                                    <?= esc($t['solicitante']) ?> &middot; <?= esc($t['categoria']) ?>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge <?= $estadoBadge[$t['estado']] ?>">
+                                    <?= $estadoLabel[$t['estado']] ?>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge <?= $prioridadBadge[$t['prioridad']] ?>">
+                                    <?= esc(ucfirst($t['prioridad'])) ?>
+                                </span>
+                            </td>
+                            <td class="text-nowrap"><?= esc($t['asignado'] ?? 'Sin asignar') ?></td>
+                            <td class="text-nowrap"><?= date('d/m/Y H:i', strtotime($t['created_at'])) ?></td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-secondary" type="button" title="Ver">
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="btn btn-outline-secondary" type="button" title="Editar">
+                                        <i class="bi bi-pencil" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -155,14 +267,14 @@ $conteo = array_count_values(array_column($tickets, 'estado'));
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const buscador = document.getElementById('ticket-search');
-        const filtro   = document.getElementById('ticket-filter-estado');
-        const filas    = document.querySelectorAll('#tickets-table tbody tr[data-estado]');
+        const filtro = document.getElementById('ticket-filter-estado');
+        const filas = document.querySelectorAll('#tickets-table tbody tr[data-estado]');
 
         const filtrar = () => {
-            const texto  = buscador.value.trim().toLowerCase();
+            const texto = buscador.value.trim().toLowerCase();
             const estado = filtro.value;
             filas.forEach(fila => {
-                const coincideTexto  = fila.textContent.toLowerCase().includes(texto);
+                const coincideTexto = fila.textContent.toLowerCase().includes(texto);
                 const coincideEstado = !estado || fila.dataset.estado === estado;
                 fila.hidden = !(coincideTexto && coincideEstado);
             });

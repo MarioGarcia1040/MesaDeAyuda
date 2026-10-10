@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Controlador muestra la lista de tickets.
- * 2-Octubre-2026
+ * 2-Octubre-2026 | 10-Octubre-2026
  * 
  */
 
@@ -17,6 +17,20 @@ class TicketsController extends BaseController
     {
         return view('template/tickets', [
             'title' => 'Shoei | Tickets'
+        ]);
+    }
+
+    public function myTickets()
+    {
+        return view('template/tickets', [
+            'title' => 'Shoei | Mis Tickets'
+        ]);
+    }
+
+    public function all()
+    {
+        return view('template/tickets', [
+            'title' => 'Shoei | Todos los Tickets'
         ]);
     }
 }
