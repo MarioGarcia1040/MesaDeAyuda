@@ -105,6 +105,32 @@ $activeTab = $flashTab ?? 'settings';
                         </button>
                     </li>
 
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link <?= $activeTab === 'logs' ? 'active' : '' ?>"
+                            id="logs-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#logs"
+                            type="button"
+                            role="tab"
+                            aria-selected="<?= $activeTab === 'logs' ? 'true' : 'false' ?>">
+                            Bitácora
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link <?= $activeTab === 'roles_permissions' ? 'active' : '' ?>"
+                            id="roles-permissions-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#roles-permissions"
+                            type="button"
+                            role="tab"
+                            aria-selected="<?= $activeTab === 'roles_permissions' ? 'true' : 'false' ?>">
+                            Roles y permisos
+                        </button>
+                    </li>
+
 
                 </ul>
             </div>
@@ -315,6 +341,71 @@ $activeTab = $flashTab ?? 'settings';
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
+                    </div>
+
+                    <!-- Logs tab -->
+                    <div
+                        class="tab-pane fade <?= ($activeTab ?? '') === 'logs' ? 'show active' : '' ?>"
+                        id="logs"
+                        role="tabpanel"
+                        aria-labelledby="logs-tab">
+                        <?php if (empty($accesses)): ?>
+                            <p class="text-secondary mb-0">Aún no hay accesos registrados.</p>
+                        <?php else: ?>
+                            <?php
+                            $seeUserAgent = auth()->user()->inGroup('admin', 'superadmin');
+                            $total        = count($accesses);
+                            ?>
+                            <ul class="list-unstyled mb-0">
+                                <?php foreach ($accesses as $i => $a): ?>
+                                    <li class="d-flex gap-3 <?= $i < $total - 1 ? 'mb-3' : '' ?>">
+                                        <span class="badge <?= $a->success ? 'text-bg-success' : 'text-bg-danger' ?> rounded-pill flex-shrink-0 align-self-start mt-1">
+                                            <i class="bi <?= $a->success ? 'bi-check-lg' : 'bi-x-lg' ?>" aria-hidden="true"></i>
+                                        </span>
+                                        <div style="min-width: 0">
+                                            <p class="mb-0 fw-semibold">
+                                                <?= $a->success ? 'Inicio de sesión exitoso' : 'Intento fallido' ?>
+                                            </p>
+                                            <small class="text-secondary d-block">
+                                                <?= esc($a->date->setTimezone('America/Mexico_City')->format('d/m/Y H:i')) ?>
+                                                &middot; IP <?= esc($a->ip_address) ?>
+                                            </small>
+                                            <?php if ($seeUserAgent): ?>
+                                                <small class="text-secondary d-block text-truncate"
+                                                    title="<?= esc($a->user_agent) ?>">
+                                                    <?= esc($a->user_agent) ?>
+                                                </small>
+                                            <?php endif; ?>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Roles permissions tab -->
+                    <div
+                        class="tab-pane fade <?= $activeTab === 'roles_permissions' ? 'show active' : '' ?>"
+                        id="roles-permissions"
+                        role="tabpanel"
+                        aria-labelledby="roles-permissions-tab">
+                        <form method="post" action="<?= base_url('profile/update-roles-permissions') ?>">
+      <?= csrf_field() ?>
+
+      
+        <div class="form-check form-switch mb-2">
+          <input class="form-check-input" type="checkbox" role="switch"
+                 name="groups[]" value="prueba" id="g-prueba"
+                 checked disabled>
+          <label class="form-check-label" for="g-prueba">
+            <strong>prueba</strong>
+            <small class="text-muted d-block">prueba</small>
+          </label>
+        </div>
+     
+
+      <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+    </form>
                     </div>
 
                 </div>
