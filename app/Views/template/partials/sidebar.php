@@ -93,6 +93,7 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                     </ul>
                 </li>
 
+                <!-- reportes 
                 <?php $reportesOpen = $isSectionActive('reportes'); ?>
                 <li class="nav-item <?= $reportesOpen ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= $reportesOpen ? 'active' : '' ?>">
@@ -125,7 +126,9 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
+
+                <!-- configuracion
                 <?php $configOpen = $isSectionActive('configuracion'); ?>
                 <li class="nav-item <?= $configOpen ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= $configOpen ? 'active' : '' ?>">
@@ -158,7 +161,7 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
             <!--end::Sidebar Menu-->
 

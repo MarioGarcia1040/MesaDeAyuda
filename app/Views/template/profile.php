@@ -104,7 +104,8 @@ $activeTab = $flashTab ?? 'settings';
                             Registro de accesos
                         </button>
                     </li>
-                    <!-- Tab logs -->
+
+                    <!-- Tab logs
                     <li class="nav-item" role="presentation">
                         <button
                             class="nav-link <?= $activeTab === 'logs' ? 'active' : '' ?>"
@@ -116,9 +117,9 @@ $activeTab = $flashTab ?? 'settings';
                             aria-selected="<?= $activeTab === 'logs' ? 'true' : 'false' ?>">
                             Bitácora
                         </button>
-                    </li>
+                    </li> -->
 
-                    <!-- Tab roles and permissions -->
+                    <!-- Tab roles and permissions
                     <li class="nav-item" role="presentation">
                         <button
                             class="nav-link <?= $activeTab === 'roles_permissions' ? 'active' : '' ?>"
@@ -130,7 +131,7 @@ $activeTab = $flashTab ?? 'settings';
                             aria-selected="<?= $activeTab === 'roles_permissions' ? 'true' : 'false' ?>">
                             Roles y permisos
                         </button>
-                    </li>
+                    </li> -->
 
                 </ul>
             </div>
@@ -343,7 +344,7 @@ $activeTab = $flashTab ?? 'settings';
                         <?php endif; ?>
                     </div>
 
-                    <!-- Logs tab -->
+                    <!-- Logs tab 
                     <div
                         class="tab-pane fade <?= ($activeTab ?? '') === 'logs' ? 'show active' : '' ?>"
                         id="logs"
@@ -381,9 +382,9 @@ $activeTab = $flashTab ?? 'settings';
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
-                    </div>
+                    </div> -->
 
-                    <!-- Roles permissions tab -->
+                    <!-- Roles permissions tab
                     <div
                         class="tab-pane fade <?= $activeTab === 'roles_permissions' ? 'show active' : '' ?>"
                         id="roles-permissions"
@@ -406,7 +407,7 @@ $activeTab = $flashTab ?? 'settings';
 
                             <button type="submit" class="btn btn-primary mt-2">Guardar</button>
                         </form>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

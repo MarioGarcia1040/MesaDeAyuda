@@ -49,7 +49,7 @@ Sistema de mesa de ayuda (helpdesk) desarrollado con PHP (CodeIgniter 4), JavaSc
 
 4. Edita `.env` y configura:
    - `APP_BASEURL` (la URL de tu aplicación)
-   - Datos de la base de datos: hostname, username, password, database (por defecto `imadic`)
+   - Datos de la base de datos: hostname, username, password, database (por defecto `root`)
    - `APP_ENV`, `APP_DEBUG` según el entorno
 
 5. Crea la base de datos (por ejemplo `escuela`) en MySQL/MariaDB.
