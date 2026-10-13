@@ -197,7 +197,7 @@ $conteo = array_count_values(array_column($tickets, 'estado'));
             <?php endforeach; ?>
         </select>
 
-        <button type="button" class="btn btn-primary btn-sm">
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#demoModalScrollable">
             <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>
             Nuevo ticket
         </button>
@@ -264,6 +264,55 @@ $conteo = array_count_values(array_column($tickets, 'estado'));
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
+<div
+    class="modal fade"
+    id="demoModalScrollable"
+    tabindex="-1"
+    aria-labelledby="demoModalScrollableLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="demoModalScrollableLabel">
+                    Scrollable body
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    With <code>.modal-dialog-scrollable</code> the body scrolls instead of
+                    the page, so the header and footer stay put.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                    posuere erat a ante.
+                </p>
+                <p>
+                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                    dapibus ac facilisis in.
+                </p>
+                <p>
+                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+                    magna.
+                </p>
+                <p class="mb-0">
+                    Donec ullamcorper nulla non metus auctor fringilla. Nullam quis risus
+                    eget urna mollis.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const buscador = document.getElementById('ticket-search');
