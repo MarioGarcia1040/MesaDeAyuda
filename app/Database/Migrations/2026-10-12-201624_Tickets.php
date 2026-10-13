@@ -17,7 +17,7 @@ class Tickets extends Migration
     {
         $this->forge->addField([
             'id'             => ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
-            'asset'          => ['type' => 'VARCHAR', 'constraint' => 150],
+            'subject'        => ['type' => 'VARCHAR', 'constraint' => 150],
             'description'    => ['type' => 'TEXT', 'null' => true],
             'category_id'    => ['type' => 'INT', 'unsigned' => true, 'null' => true],
             'status'         => ['type' => 'ENUM', 'constraint' => ['abierto', 'en_proceso', 'pendiente', 'resuelto'], 'default' => 'abierto'],
@@ -36,7 +36,7 @@ class Tickets extends Migration
         $this->forge->addKey('applicant_id');
         $this->forge->addForeignKey('applicant_id', 'users', 'id', 'RESTRICT', 'RESTRICT');
         $this->forge->addForeignKey('assigned_id', 'users', 'id', 'SET NULL', 'CASCADE');
-        $this->forge->addForeignKey('category_id', 'categorias', 'id', 'SET NULL', 'CASCADE');
+        $this->forge->addForeignKey('category_id', 'categories', 'id', 'SET NULL', 'CASCADE');
         $this->forge->createTable('tickets');
     }
 

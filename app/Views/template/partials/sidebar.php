@@ -66,12 +66,13 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                     </a>
                 </li>
                 <?php $ticketsOpen = $isSectionActive('tickets'); ?>
+                <?php helper('tickets'); $activos = active_tickets_count(); ?>
                 <li class="nav-item <?= $ticketsOpen ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= $ticketsOpen ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-ticket"></i>
                         <p>
                             Tickets
-                            <span class="nav-badge badge text-bg-secondary me-3">12</span>
+                            <span class="nav-badge badge text-bg-secondary me-3"><?= $activos ?></span>
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>

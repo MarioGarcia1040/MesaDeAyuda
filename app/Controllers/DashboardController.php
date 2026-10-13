@@ -9,18 +9,23 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class DashboardController extends BaseController
 {
     public function index()
     {
-        $provider = auth()->getProvider();
-        $usersTotal = $provider->builder()->countAllResults();
-        
+        $usersTotal = auth()->getProvider()->countAllResults();
+        $ticketsModel = new \App\Models\TicketsModel();
+
+        $activeTicketsCount = array_merge(
+            array_fill_keys(\App\Models\TicketsModel::ACTIVE_STATUSES, 0),
+            $ticketsModel->countByStatus($ticketsModel->scopeFor(auth()->getUser()))
+        );
+               
         return view('template/dashboard', [
             'title' => 'Shoei | Dashboard',
-            'usersTotal' => $usersTotal
+            'usersTotal' => $usersTotal,
+            'activeTicketsCount' => array_sum($activeTicketsCount),
         ]);
     }
 }

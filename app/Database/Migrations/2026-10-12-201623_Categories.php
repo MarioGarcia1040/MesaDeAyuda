@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Migración para la tabla de categorías.
- * Tabla: categorias
+ * Tabla: categories
  * 12-Octubre-2026
  * 
  */
@@ -17,16 +17,16 @@ class Categories extends Migration
     {
         $this->forge->addField([
             'id'      => ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
-            'nombre'  => ['type' => 'VARCHAR', 'constraint' => 50],
-            'activa'  => ['type' => 'TINYINT', 'constraint' => 1, 'default' => 1],
+            'name'  => ['type' => 'VARCHAR', 'constraint' => 50],
+            'active'  => ['type' => 'TINYINT', 'constraint' => 1, 'default' => 1],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addUniqueKey('nombre');
-        $this->forge->createTable('categorias');
+        $this->forge->addUniqueKey('name');
+        $this->forge->createTable('categories');
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('categories');
     }
 }
