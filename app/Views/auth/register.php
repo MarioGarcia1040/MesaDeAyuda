@@ -61,16 +61,6 @@
                 </div>
             </div>
 
-            <div class="input-group mb-1" hidden>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingUsernameInput" name="username" inputmode="text" autocomplete="username" placeholder="<?= lang('Auth.username') ?>" value="<?= old('username') ?>">
-                    <label for="floatingUsernameInput"><?= lang('Auth.username') ?></label>
-                </div>
-                <div class="input-group-text">
-                    <span class="bi bi-person"></span>
-                </div>
-            </div>
-
             <div class="input-group mb-1">
                 <div class="form-floating">
                     <input type="password" class="form-control" id="floatingPasswordInput" name="password" inputmode="text" autocomplete="new-password" placeholder="<?= lang('Auth.password') ?>" required>
