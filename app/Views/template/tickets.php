@@ -274,39 +274,57 @@ $conteo = array_count_values(array_column($tickets, 'estado'));
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="demoModalScrollableLabel">
-                    Scrollable body
+                    Nuevo Ticket
                 </h1>
                 <button
                     type="button"
                     class="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                    aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
-                <p>
-                    With <code>.modal-dialog-scrollable</code> the body scrolls instead of
-                    the page, so the header and footer stay put.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                    posuere erat a ante.
-                </p>
-                <p>
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                    dapibus ac facilisis in.
-                </p>
-                <p>
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-                    magna.
-                </p>
-                <p class="mb-0">
-                    Donec ullamcorper nulla non metus auctor fringilla. Nullam quis risus
-                    eget urna mollis.
-                </p>
+                <form>
+                    <div class="row mb-3">
+                        <label for="email" class="col-sm-3 col-form-label">Email address</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">
+                                We'll never share your email with anyone else.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="password" class="col-sm-3 col-form-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="archivo" class="col-sm-3 col-form-label">Upload</label>
+                        <div class="col-sm-9">
+                            <input type="file" class="form-control" id="archivo" name="archivo">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="check" class="col-sm-3 col-form-label">Check me out</label>
+                        <div class="col-sm-9 d-flex align-items-center">
+                            <input type="checkbox" class="form-check-input" id="check" name="check" value="1">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-9 offset-sm-3">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    Guardar
                 </button>
             </div>
         </div>
@@ -333,4 +351,5 @@ $conteo = array_count_values(array_column($tickets, 'estado'));
         filtro.addEventListener('change', filtrar);
     });
 </script>
+
 <?= $this->endSection() ?>
