@@ -8,155 +8,6 @@
 
 <?= $this->section('content') ?>
 
-<?php
-// DATOS DE EJEMPLO: bórralos cuando tengas tu modelo
-$tickets = [
-    [
-        'id' => 1,
-        'asunto' => 'No puedo acceder al correo',
-        'solicitante' => 'Laura Pérez',
-        'categoria' => 'Correo',
-        'estado' => 'abierto',
-        'prioridad' => 'alta',
-        'asignado' => 'Mario',
-        'created_at' => '2026-10-01 09:15:00'
-    ],
-    [
-        'id' => 2,
-        'asunto' => 'Impresora de recepción sin tinta',
-        'solicitante' => 'Carlos Ruiz',
-        'categoria' => 'Hardware',
-        'estado' => 'en_proceso',
-        'prioridad' => 'media',
-        'asignado' => 'Mario',
-        'created_at' => '2026-09-30 16:40:00'
-    ],
-    [
-        'id' => 3,
-        'asunto' => 'Solicitud de alta de usuario',
-        'solicitante' => 'Ana Torres',
-        'categoria' => 'Accesos',
-        'estado' => 'pendiente',
-        'prioridad' => 'baja',
-        'asignado' => null,
-        'created_at' => '2026-09-29 11:05:00'
-    ],
-    [
-        'id' => 4,
-        'asunto' => 'Internet lento en sala de estudios',
-        'solicitante' => 'Jorge Díaz',
-        'categoria' => 'Red',
-        'estado' => 'resuelto',
-        'prioridad' => 'media',
-        'asignado' => 'Mario',
-        'created_at' => '2026-09-28 08:30:00'
-    ],
-    [
-        'id' => 5,
-        'asunto' => 'Error al abrir archivo PDF',
-        'solicitante' => 'Lucía Gómez',
-        'categoria' => 'Software',
-        'estado' => 'cerrado',
-        'prioridad' => 'alta',
-        'asignado' => 'Mario',
-        'created_at' => '2026-09-27 14:20:00'
-    ],
-    [
-        'id' => 6,
-        'asunto' => 'Problema con la VPN',
-        'solicitante' => 'Pedro Martínez',
-        'categoria' => 'Red',
-        'estado' => 'abierto',
-        'prioridad' => 'alta',
-        'asignado' => null,
-        'created_at' => '2026-09-26 10:45:00'
-    ],
-    [
-        'id' => 7,
-        'asunto' => 'Solicitud de cambio de contraseña',
-        'solicitante' => 'María López',
-        'categoria' => 'Accesos',
-        'estado' => 'en_proceso',
-        'prioridad' => 'media',
-        'asignado' => 'Mario',
-        'created_at' => '2026-09-25 13:10:00'
-    ],
-    [
-        'id' => 8,
-        'asunto' => 'Problema con la impresora láser',
-        'solicitante' => 'Javier Fernández',
-        'categoria' => 'Hardware',
-        'estado' => 'pendiente',
-        'prioridad' => 'baja',
-        'asignado' => null,
-        'created_at' => '2026-09-24 15:55:00'
-    ],
-    [
-        'id' => 9,
-        'asunto' => 'Solicitud de instalación de software',
-        'solicitante' => 'Sofía Ramírez',
-        'categoria' => 'Software',
-        'estado' => 'resuelto',
-        'prioridad' => 'media',
-        'asignado' => 'Mario',
-        'created_at' => '2026-09-23 09:30:00'
-    ],
-    [
-        'id' => 10,
-        'asunto' => 'Problema con la conexión Wi-Fi',
-        'solicitante' => 'Diego Torres',
-        'categoria' => 'Red',
-        'estado' => 'cerrado',
-        'prioridad' => 'alta',
-        'asignado' => null,
-        'created_at' => '2026-09-22 11:45:00'
-    ],
-    [
-        'id' => 11,
-        'asunto' => 'Solicitud de actualización de software',
-        'solicitante' => 'Valeria Sánchez',
-        'categoria' => 'Software',
-        'estado' => 'abierto',
-        'prioridad' => 'media',
-        'asignado' => null,
-        'created_at' => '2026-09-21 14:20:00'
-    ],
-    [
-        'id' => 12,
-        'asunto' => 'Problema con la impresora multifunción',
-        'solicitante' => 'Andrés Morales',
-        'categoria' => 'Hardware',
-        'estado' => 'en_proceso',
-        'prioridad' => 'alta',
-        'asignado' => 'Mario',
-        'created_at' => '2026-09-20 10:10:00'
-    ],
-];
-
-$estadoBadge = [
-    'abierto'    => 'text-bg-primary',
-    'en_proceso' => 'text-bg-warning',
-    'pendiente'  => 'text-bg-info',
-    'resuelto'   => 'text-bg-success',
-    'cerrado'    => 'text-bg-secondary',
-];
-$estadoLabel = [
-    'abierto'    => 'Abierto',
-    'en_proceso' => 'En proceso',
-    'pendiente'  => 'Pendiente',
-    'resuelto'   => 'Resuelto',
-    'cerrado'    => 'Cerrado',
-];
-$prioridadBadge = [
-    'alta'  => 'text-bg-danger',
-    'media' => 'text-bg-info',
-    'baja'  => 'text-bg-secondary',
-];
-
-// Contadores calculados a partir del arreglo
-$conteo = array_count_values(array_column($tickets, 'estado'));
-?>
-
 <!-- Tarjetas resumen -->
 <div class="row g-3 mb-3">
     <?php
@@ -285,47 +136,46 @@ $conteo = array_count_values(array_column($tickets, 'estado'));
             <div class="modal-body">
                 <form>
                     <div class="row mb-3">
-                        <label for="email" class="col-sm-3 col-form-label">Email address</label>
+                        <label for="email" class="col-sm-3 col-form-label">Solicita</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">
-                                We'll never share your email with anyone else.
-                            </div>
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">                            
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="password" class="col-sm-3 col-form-label">Password</label>
+                        <label for="password" class="col-sm-3 col-form-label">Categoría</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" id="password" name="password">
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="archivo" class="col-sm-3 col-form-label">Upload</label>
+                        <label for="password" class="col-sm-3 col-form-label">Asunto</label>
                         <div class="col-sm-9">
-                            <input type="file" class="form-control" id="archivo" name="archivo">
+                            <input type="password" class="form-control" id="password" name="password">
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="check" class="col-sm-3 col-form-label">Check me out</label>
-                        <div class="col-sm-9 d-flex align-items-center">
-                            <input type="checkbox" class="form-check-input" id="check" name="check" value="1">
+                        <label for="password" class="col-sm-3 col-form-label">Descripción</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" aria-label="With textarea"></textarea>
                         </div>
                     </div>
 
+                    <div class="row mb-3">
+                        <label for="password" class="col-sm-3 col-form-label">Prioridad</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                    </div>
+                    
                     <div class="row">
-                        <div class="col-sm-9 offset-sm-3">
+                        <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                    Guardar
-                </button>
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Modelo para consultar los tickets
- * 08-Octubre-2026 | 13-Octubre-2026
+ * 08-Octubre-2026 | 21-Octubre-2026
  * 
  */
 

@@ -8,7 +8,7 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
     <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
         <!--begin::Brand Link-->
-        <a href="./index.html" class="brand-link">
+        <a href="<?= base_url() ?>" class="brand-link">
             <!--begin::Brand Image-->
             <img
                 src="<?= base_url('dist/assets/img/shoei-logo-pequeno.png') ?>"
