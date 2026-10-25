@@ -7,22 +7,47 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<?php
+
+$estadoBadge = [
+    'abierto'    => 'text-bg-primary',
+    'en_proceso' => 'text-bg-warning',
+    'pendiente'  => 'text-bg-info',
+    'resuelto'   => 'text-bg-success',
+    'cerrado'    => 'text-bg-secondary',
+];
+$estadoLabel = [
+    'abierto'    => 'Abierto',
+    'en_proceso' => 'En proceso',
+    'pendiente'  => 'Pendiente',
+    'resuelto'   => 'Resuelto',
+    'cerrado'    => 'Cerrado',
+];
+$prioridadBadge = [
+    'alta'  => 'text-bg-danger',
+    'media' => 'text-bg-info',
+    'baja'  => 'text-bg-secondary',
+];
+
+// Contadores calculados a partir del arreglo
+//$conteo = array_count_values(array_column($tickets, 'estado'));
+?>
 
 <!-- Tarjetas resumen -->
 <div class="row g-3 mb-3">
     <?php
-    $resumen = [
-        ['Abiertos',   $conteo['abierto']    ?? 0, 'text-primary'],
-        ['En proceso', $conteo['en_proceso'] ?? 0, 'text-warning'],
-        ['Pendientes', $conteo['pendiente']  ?? 0, 'text-info'],
-        ['Resueltos',  $conteo['resuelto']   ?? 0, 'text-success'],
+    $resume = [
+        ['Abiertos',   $countTicketsByStatus['abierto']    ?? 0, 'text-primary'],
+        ['En proceso', $countTicketsByStatus['en_proceso'] ?? 0, 'text-warning'],
+        ['Pendientes', $countTicketsByStatus['pendiente']  ?? 0, 'text-info'],
+        ['Resueltos',  $countTicketsByStatus['resuelto']   ?? 0, 'text-success'],
     ];
-    foreach ($resumen as [$titulo, $valor, $color]): ?>
+    foreach ($resume as [$title, $value, $color]): ?>
         <div class="col-md-3 col-6">
             <div class="card h-100">
                 <div class="card-body">
-                    <p class="text-secondary small mb-1"><?= $titulo ?></p>
-                    <h3 class="mb-0 fw-bold <?= $color ?>"><?= $valor ?></h3>
+                    <p class="text-secondary small mb-1"><?= $title ?></p>
+                    <h3 class="mb-0 fw-bold <?= $color ?>"><?= $value ?></h3>
                 </div>
             </div>
         </div>
@@ -70,25 +95,25 @@
                 </thead>
                 <tbody>
                     <?php foreach ($tickets as $t): ?>
-                        <tr data-estado="<?= esc($t['estado']) ?>">
+                        <tr data-estado="<?= esc($t['status']) ?>">
                             <td class="text-nowrap fw-semibold">#<?= esc($t['id']) ?></td>
                             <td>
-                                <a href="#" class="fw-semibold text-decoration-none"><?= esc($t['asunto']) ?></a>
+                                <a href="#" class="fw-semibold text-decoration-none"><?= esc($t['subject']) ?></a>
                                 <div class="small text-secondary">
-                                    <?= esc($t['solicitante']) ?> &middot; <?= esc($t['categoria']) ?>
+                                    <?= esc($t['applicant_name']) ?> &middot; <?= esc($t['category_name']) ?>
                                 </div>
                             </td>
                             <td>
-                                <span class="badge <?= $estadoBadge[$t['estado']] ?>">
-                                    <?= $estadoLabel[$t['estado']] ?>
+                                <span class="badge <?= $estadoBadge[$t['status']] ?>">
+                                    <?= $estadoLabel[$t['status']] ?>
                                 </span>
                             </td>
                             <td>
-                                <span class="badge <?= $prioridadBadge[$t['prioridad']] ?>">
-                                    <?= esc(ucfirst($t['prioridad'])) ?>
+                                <span class="badge <?= $prioridadBadge[$t['priority']] ?>">
+                                    <?= esc(ucfirst($t['priority'])) ?>
                                 </span>
                             </td>
-                            <td class="text-nowrap"><?= esc($t['asignado'] ?? 'Sin asignar') ?></td>
+                            <td class="text-nowrap"><?= esc($t['assigned_name'] ?: 'Sin asignar') ?></td>
                             <td class="text-nowrap"><?= date('d/m/Y H:i', strtotime($t['created_at'])) ?></td>
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">
@@ -135,17 +160,28 @@
             </div>
             <div class="modal-body">
                 <form>
+                    
                     <div class="row mb-3">
-                        <label for="email" class="col-sm-3 col-form-label">Solicita</label>
+                        <label for="applicant" class="col-sm-3 col-form-label">Solicita</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">                            
+                            <select id="applicant" name="applicant" class="form-select">
+                                <option value="">Todos los estados</option>
+                                <?php foreach ($estadoLabel as $valor => $texto): ?>
+                                    <option value="<?= $valor ?>"><?= $texto ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="password" class="col-sm-3 col-form-label">Categoría</label>
+                        <label for="category" class="col-sm-3 col-form-label">Categoria</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="password" name="password">
+                            <select id="category" name="category" class="form-select">
+                                <option value="">Todos los estados</option>
+                                <?php foreach ($estadoLabel as $valor => $texto): ?>
+                                    <option value="<?= $valor ?>"><?= $texto ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
 
@@ -164,12 +200,17 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="password" class="col-sm-3 col-form-label">Prioridad</label>
+                        <label for="priority" class="col-sm-3 col-form-label">Prioridad</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="password" name="password">
+                            <select id="priority" name="priority" class="form-select">
+                                <option value="">Todos los estados</option>
+                                <?php foreach ($estadoLabel as $valor => $texto): ?>
+                                    <option value="<?= $valor ?>"><?= $texto ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>

@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Modelo para consultar los tickets
- * 08-Octubre-2026 | 21-Octubre-2026
+ * 08-Octubre-2026 | 25-Octubre-2026
  * 
  */
 
@@ -21,6 +21,13 @@ class TicketsModel extends Model
         self::STATUS_OPEN,
         self::STATUS_IN_PROGRESS,
         self::STATUS_PENDING,
+    ];
+
+    public const STATUS_LABELS = [
+        self::STATUS_OPEN        => 'Abierto',
+        self::STATUS_IN_PROGRESS => 'En proceso',
+        self::STATUS_PENDING     => 'Pendiente',
+        self::STATUS_RESOLVED    => 'Resuelto',
     ];
 
     protected $table            = 'tickets';
@@ -107,11 +114,30 @@ class TicketsModel extends Model
         return array_column($rows, 'total', 'status');
     }
 
+    public function filterByStatus(?string $status): self
+    {
+        if ($status !== null && $status !== '' && array_key_exists($status, self::STATUS_LABELS)) {
+            $this->where('status', $status);
+        }
+
+        return $this;
+    }
+
     public function scopeFor(\CodeIgniter\Shield\Entities\User $user): array
     {
-        return $user->inGroup('admin', 'user') 
+        return $user->inGroup('admin', 'user')
             ? []
             : ['applicant_id' => $user->id];
     }
-    
+
+    public function withRelations(): self
+    {
+        return $this->select("tickets.*,
+            categories.name AS category_name,
+            CONCAT_WS(' ', applicant_p.nombre, applicant_p.apellido) AS applicant_name,
+            CONCAT_WS(' ', assigned_p.nombre, assigned_p.apellido)   AS assigned_name")
+            ->join('categories', 'categories.id = tickets.category_id', 'left')
+            ->join('user_profiles AS applicant_p', 'applicant_p.user_id = tickets.applicant_id', 'left')
+            ->join('user_profiles AS assigned_p', 'assigned_p.user_id = tickets.assigned_id', 'left');
+    }
 }
