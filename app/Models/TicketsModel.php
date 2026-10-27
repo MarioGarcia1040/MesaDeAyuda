@@ -17,6 +17,10 @@ class TicketsModel extends Model
     public const STATUS_PENDING     = 'pendiente';
     public const STATUS_RESOLVED    = 'resuelto';
 
+    public const PRIORITY_HIGH   = 'alta';
+    public const PRIORITY_MEDIUM = 'media';
+    public const PRIORITY_LOW    = 'baja';
+
     public const ACTIVE_STATUSES = [
         self::STATUS_OPEN,
         self::STATUS_IN_PROGRESS,
@@ -28,6 +32,12 @@ class TicketsModel extends Model
         self::STATUS_IN_PROGRESS => 'En proceso',
         self::STATUS_PENDING     => 'Pendiente',
         self::STATUS_RESOLVED    => 'Resuelto',
+    ];
+
+    public const PRIORITY_LABELS = [
+        self::PRIORITY_HIGH   => 'Alta',
+        self::PRIORITY_MEDIUM => 'Media',    
+        self::PRIORITY_LOW    => 'Baja',
     ];
 
     protected $table            = 'tickets';

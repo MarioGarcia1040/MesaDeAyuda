@@ -66,4 +66,5 @@ class UserProfilesModel extends Model
             ? $this->update($profile['id'], $data)
             : (bool) $this->insert($data);
     }
+    
 }

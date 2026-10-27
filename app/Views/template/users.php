@@ -192,9 +192,7 @@
     <!-- /.col -->
 </div>
 <!--end::Row-->
-<?= $this->endSection() ?>
 
-<?= $this->section('js') ?>
 <!-- components/avatar_zoom.php -->
 <div class="modal fade" id="modal-avatar-zoom" tabindex="-1" aria-label="Foto de perfil" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -206,6 +204,10 @@
         </div>
     </div>
 </div>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('js') ?>
 
 <script>
     document.addEventListener('click', (e) => {

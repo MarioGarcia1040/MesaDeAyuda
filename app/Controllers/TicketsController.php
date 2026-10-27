@@ -28,6 +28,7 @@ class TicketsController extends BaseController
             'title'                 => 'Shoei | Todos los Tickets',
             'countTicketsByStatus'  => $ticketModel->countByStatus(),
             'tickets'               => $ticketModel->withRelations()->findAll(),
+            'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
         ]);
     }
 }

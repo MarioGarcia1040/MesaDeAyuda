@@ -29,8 +29,6 @@ $prioridadBadge = [
     'baja'  => 'text-bg-secondary',
 ];
 
-// Contadores calculados a partir del arreglo
-//$conteo = array_count_values(array_column($tickets, 'estado'));
 ?>
 
 <!-- Tarjetas resumen -->
@@ -137,9 +135,6 @@ $prioridadBadge = [
     </div>
 </div>
 
-<?= $this->endSection() ?>
-
-<?= $this->section('js') ?>
 <div
     class="modal fade"
     id="demoModalScrollable"
@@ -160,7 +155,7 @@ $prioridadBadge = [
             </div>
             <div class="modal-body">
                 <form>
-                    
+
                     <div class="row mb-3">
                         <label for="applicant" class="col-sm-3 col-form-label">Solicita</label>
                         <div class="col-sm-9">
@@ -202,10 +197,12 @@ $prioridadBadge = [
                     <div class="row mb-3">
                         <label for="priority" class="col-sm-3 col-form-label">Prioridad</label>
                         <div class="col-sm-9">
-                            <select id="priority" name="priority" class="form-select">
-                                <option value="">Todos los estados</option>
-                                <?php foreach ($estadoLabel as $valor => $texto): ?>
-                                    <option value="<?= $valor ?>"><?= $texto ?></option>
+                            <select id="priority" name="priority" class="form-select" required>
+                                <?php foreach ($priorityLabel as $valor => $texto): ?>
+                                    <option value="<?= esc($valor) ?>"
+                                        <?= old('priority', \App\Models\TicketsModel::PRIORITY_MEDIUM) === $valor ? 'selected' : '' ?>>
+                                        <?= esc($texto) ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -221,6 +218,10 @@ $prioridadBadge = [
         </div>
     </div>
 </div>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('js') ?>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

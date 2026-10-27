@@ -53,7 +53,7 @@ class CategoriesModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getActivas(): array
+    public function getActives(): array
     {
         return $this->where('active', 1)->orderBy('name')->findAll();
     }
