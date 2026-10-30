@@ -253,6 +253,25 @@
      module (since 4.1) — no page script needed. Only the no-flash snippet
      in <head> stays inline, because it must run before first paint. -->
     <!--end::Color Mode Toggle-->
+    <script>
+        // Aplicar el estado guardado lo antes posible (evita el parpadeo)
+        if (localStorage.getItem("sidebar-collapsed") === "true") {
+            document.body.classList.add("sidebar-collapse");
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggleButtons = document.querySelectorAll('[data-lte-toggle="sidebar"]');
+
+            toggleButtons.forEach(function(btn) {
+                btn.addEventListener("click", function() {
+                    setTimeout(() => {
+                        const newState = document.body.classList.contains("sidebar-collapse");
+                        localStorage.setItem("sidebar-collapsed", newState);
+                    }, 10);
+                });
+            });
+        });
+    </script>
     <?= $this->renderSection('js') ?>
     <!--end::Script-->
 </body>

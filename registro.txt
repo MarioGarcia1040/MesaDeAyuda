@@ -35,6 +35,19 @@ Seguridad.
 (sin cambios pendientes)
 
 
+
+[0.6.0] - 2026-10-30
+----------------------------------------------------------------------------
+Agregado
+  - Sidebar se mantiene colapsado o abierto al cambiar pagina
+  - Constante de categorias para carga dinamica
+  - Infobox con contador de ticket por estado
+  - Carga dinamica de tickets en listado
+
+Cambiado
+   - Modales y scripts se cambian de ubicación siguiendo la arquitectura
+
+
 [0.5.0] - 2026-10-14
 ----------------------------------------------------------------------------
 Agregado
