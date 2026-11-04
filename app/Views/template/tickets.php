@@ -172,9 +172,9 @@ $prioridadBadge = [
                         <label for="category" class="col-sm-3 col-form-label">Categoria</label>
                         <div class="col-sm-9">
                             <select id="category" name="category" class="form-select">
-                                <option value="">Todos los estados</option>
-                                <?php foreach ($estadoLabel as $valor => $texto): ?>
-                                    <option value="<?= $valor ?>"><?= $texto ?></option>
+                                <option value="">Seleccione una categoría</option>
+                                <?php foreach ($categories as $category): ?>
+                                    <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

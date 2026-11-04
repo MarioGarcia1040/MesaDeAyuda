@@ -10,6 +10,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\TicketsModel;
+use App\Models\CategoriesModel;
 
 class TicketsController extends BaseController
 {
@@ -23,12 +24,14 @@ class TicketsController extends BaseController
     public function all()
     {
         $ticketModel = new TicketsModel();
+        $categoriesModel = new CategoriesModel();
 
         return view('template/tickets', [
             'title'                 => 'Shoei | Todos los Tickets',
             'countTicketsByStatus'  => $ticketModel->countByStatus(),
             'tickets'               => $ticketModel->withRelations()->findAll(),
             'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
+            'categories'            => $categoriesModel->findAll(),
         ]);
     }
 }
