@@ -11,6 +11,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\TicketsModel;
 use App\Models\CategoriesModel;
+use App\Models\UserModel;
 
 class TicketsController extends BaseController
 {
@@ -25,6 +26,7 @@ class TicketsController extends BaseController
     {
         $ticketModel = new TicketsModel();
         $categoriesModel = new CategoriesModel();
+        $userModel = new UserModel();
 
         return view('template/tickets', [
             'title'                 => 'Shoei | Todos los Tickets',
@@ -32,6 +34,7 @@ class TicketsController extends BaseController
             'tickets'               => $ticketModel->withRelations()->findAll(),
             'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
             'categories'            => $categoriesModel->findAll(),
+            'users'                 => $userModel->getUsersWithProfileDetails(),
         ]);
     }
 }

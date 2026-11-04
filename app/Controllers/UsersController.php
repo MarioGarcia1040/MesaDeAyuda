@@ -9,14 +9,14 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\UserModel;
+
 
 class UsersController extends BaseController
 {
     public function index()
     {
-        $userProfiles = new \App\Models\UserModel();
-
+        $userProfiles = new UserModel();
         return view('template/users', [
             'title' => 'Shoei | Usuarios',
             'users' => $userProfiles->getUsersWithProfileDetails(),

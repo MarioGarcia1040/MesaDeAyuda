@@ -44,8 +44,8 @@ $prioridadBadge = [
         <div class="col-md-3 col-6">
             <div class="card h-100">
                 <div class="card-body">
-                    <p class="text-secondary small mb-1"><?= $title ?></p>
-                    <h3 class="mb-0 fw-bold <?= $color ?>"><?= $value ?></h3>
+                    <p class="text-secondary small mb-1"><?= esc($title) ?></p>
+                    <h3 class="mb-0 fw-bold <?= esc($color) ?>"><?= esc($value) ?></h3>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@ $prioridadBadge = [
             aria-label="Filtrar por estado">
             <option value="">Todos los estados</option>
             <?php foreach ($estadoLabel as $valor => $texto): ?>
-                <option value="<?= $valor ?>"><?= $texto ?></option>
+                <option value="<?= esc($valor) ?>"><?= esc($texto) ?></option>
             <?php endforeach; ?>
         </select>
 
@@ -102,17 +102,17 @@ $prioridadBadge = [
                                 </div>
                             </td>
                             <td>
-                                <span class="badge <?= $estadoBadge[$t['status']] ?>">
-                                    <?= $estadoLabel[$t['status']] ?>
+                                <span class="badge <?= esc($estadoBadge[$t['status']]) ?>">
+                                    <?= esc($estadoLabel[$t['status']]) ?>
                                 </span>
                             </td>
                             <td>
-                                <span class="badge <?= $prioridadBadge[$t['priority']] ?>">
+                                <span class="badge <?= esc($prioridadBadge[$t['priority']]) ?>">
                                     <?= esc(ucfirst($t['priority'])) ?>
                                 </span>
                             </td>
                             <td class="text-nowrap"><?= esc($t['assigned_name'] ?: 'Sin asignar') ?></td>
-                            <td class="text-nowrap"><?= date('d/m/Y H:i', strtotime($t['created_at'])) ?></td>
+                            <td class="text-nowrap"><?= date('d/m/Y H:i', strtotime(esc($t['created_at']))) ?></td>
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">
                                     <button class="btn btn-outline-secondary" type="button" title="Ver">
@@ -160,9 +160,14 @@ $prioridadBadge = [
                         <label for="applicant" class="col-sm-3 col-form-label">Solicita</label>
                         <div class="col-sm-9">
                             <select id="applicant" name="applicant" class="form-select">
-                                <option value="">Todos los estados</option>
-                                <?php foreach ($estadoLabel as $valor => $texto): ?>
-                                    <option value="<?= $valor ?>"><?= $texto ?></option>
+                                <option value="">Seleccione un usuario</option>
+                                <?php foreach ($users as $user): ?>
+                                    <?php $nombreCompleto = trim(($user->nombre ?? '') . ' ' . ($user->apellido ?? '')); 
+                                      if (empty($nombreCompleto) || $nombreCompleto === '') {
+                                          $nombreCompleto = $user->email ?? 'Usuario sin nombre';
+                                      }
+                                    ?>                             
+                                    <option value="<?= $user->id ?>"><?= $nombreCompleto ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
