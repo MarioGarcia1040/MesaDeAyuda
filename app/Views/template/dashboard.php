@@ -7,6 +7,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<?php helper('tickets'); ?>
 <!--begin::Row-->
 <div class="row">
     <!--begin::Col-->
@@ -14,9 +15,9 @@
         <!--begin::Small Box Widget 1-->
         <div class="small-box text-bg-primary">
             <div class="inner">
-                <h3><?= esc($activeTicketsCount) ?></h3>
+                <h3><?= active_tickets_count(); ?></h3>
 
-                <p>Tickets Abiertos</p>
+                <p>Tickets Pendientes</p>
             </div>
             <svg
                 class="small-box-icon"

@@ -41,6 +41,8 @@ Seguridad.
 Agregado
   - Se termina modal nuevo ticket
 
+Corregido
+  - Error en conteo de tickets activos en dashboard
 
 
 [0.6.0] - 2026-10-30

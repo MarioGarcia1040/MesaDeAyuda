@@ -36,7 +36,7 @@ class TicketsModel extends Model
 
     public const PRIORITY_LABELS = [
         self::PRIORITY_HIGH   => 'Alta',
-        self::PRIORITY_MEDIUM => 'Media',    
+        self::PRIORITY_MEDIUM => 'Media',
         self::PRIORITY_LOW    => 'Baja',
     ];
 
@@ -150,4 +150,5 @@ class TicketsModel extends Model
             ->join('user_profiles AS applicant_p', 'applicant_p.user_id = tickets.applicant_id', 'left')
             ->join('user_profiles AS assigned_p', 'assigned_p.user_id = tickets.assigned_id', 'left');
     }
+
 }

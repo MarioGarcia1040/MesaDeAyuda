@@ -163,7 +163,7 @@ $prioridadBadge = [
                                 <option value="">Seleccione un usuario</option>
                                 <?php foreach ($users as $user): ?>
                                     <?php $nombreCompleto = trim(($user->nombre ?? '') . ' ' . ($user->apellido ?? '')); 
-                                      if (empty($nombreCompleto) || $nombreCompleto === '') {
+                                      if (empty($nombreCompleto)) {
                                           $nombreCompleto = $user->email ?? 'Usuario sin nombre';
                                       }
                                     ?>                             
