@@ -16,8 +16,8 @@ class AccessLogModel extends LoginModel
     public function recentForUser(User $user, int $limit = 5): array
     {
         return $this->groupStart()
-                ->where('user_id', $user->id)
-                ->orWhere('identifier', $user->email)
+            ->where('user_id', $user->id)
+            ->orWhere('identifier', $user->email)
             ->groupEnd()
             ->orderBy('date', 'DESC')
             ->findAll($limit);

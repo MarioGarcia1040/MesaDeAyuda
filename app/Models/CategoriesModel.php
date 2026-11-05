@@ -35,7 +35,7 @@ class CategoriesModel extends Model
 
     // Validation
     protected $validationRules      = [
-        'name' => 'required|max_length[50]|is_unique[categories.name,id,{id}]',
+        'name'   => 'required|max_length[50]|is_unique[categories.name,id,{id}]',
         'active' => 'permit_empty|in_list[0,1]',
     ];
     protected $validationMessages   = [];
