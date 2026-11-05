@@ -36,13 +36,15 @@ Seguridad.
 
 
 
-[0.7.0] - 2026-11-03
+[0.7.1] - 2026-11-05
 ----------------------------------------------------------------------------
 Agregado
   - Se termina modal nuevo ticket
+  - Validaciones en config\validation.php
 
 Corregido
   - Error en conteo de tickets activos en dashboard
+  - Refactorizacion en controladores Dashboard y profile
 
 
 [0.6.0] - 2026-10-30

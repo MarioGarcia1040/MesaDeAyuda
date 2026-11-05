@@ -1,4 +1,10 @@
 <?php
+/*
+ * Autor: Mario García - mariogarcia1040@gmail.com
+ * Descripción: Reglas de validación para llamado desde diferentes controladores.
+ * 05-Noviembre-2026
+ * 
+ */
 
 namespace Config;
 
@@ -41,4 +47,65 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+
+    public array $changePassword = [
+        'actual-password' => [
+            'label' => 'Contraseña actual',
+            'rules' => 'required',
+        ],
+        'new-password' => [
+            'label'  => 'Nueva contraseña',
+            'rules'  => 'required|max_length[100]|strong_password[]|differs[actual-password]',
+            'errors' => [
+                'differs' => 'La nueva contraseña debe ser distinta a la actual',
+            ],
+        ],
+        'confirm-password' => [
+            'label' => 'Confirmar contraseña',
+            'rules' => 'required|matches[new-password]',
+        ],
+    ];
+
+    public array $updateEmail = [
+        'profile-new-email' => [
+            'label'  => 'Nuevo email',
+            'rules'  => 'required|valid_email|max_length[100]',
+            'errors' => ['valid_email' => 'El email ingresado no es válido.'],
+        ],
+        'new-email-password-verification' => [
+            'label' => 'Contraseña',
+            'rules' => 'required',
+        ],
+    ];
+
+    public array $updateProfile = [
+        'profile-first-name' => [
+            'label' => 'Nombre(s)',
+            'rules' => "required|min_length[2]|max_length[100]|regex_match[/^[\p{L}\s'\-]+$/u]",
+        ],
+        'profile-last-name' => [
+            'label' => 'Apellido(s)',
+            'rules' => "required|min_length[2]|max_length[100]|regex_match[/^[\p{L}\s'\-]+$/u]",
+        ],
+        'profile-phone' => [
+            'label'  => 'Teléfono',
+            'rules'  => 'permit_empty|regex_match[/^[0-9]{10}$/]',
+            'errors' => ['regex_match' => 'El teléfono debe tener 10 dígitos.'],
+        ],
+    ];
+
+    public array $updateProfilePhoto = [
+        'profile-photo' => [
+            'label'  => 'Foto',
+            'rules'  => 'uploaded[profile-photo]|max_size[profile-photo,4096]|is_image[profile-photo]|mime_in[profile-photo,image/jpeg,image/png]|max_dims[profile-photo,4000,4000]',
+            'errors' => [
+                'uploaded' => 'No se pudo subir la imagen.',
+                'is_image' => 'El archivo seleccionado no es una imagen válida.',
+                'max_size' => 'La imagen no puede pesar más de 4MB.',
+                'mime_in'  => 'El archivo seleccionado no es un tipo de imagen permitido.',
+                'max_dims' => 'La imagen no puede superar los 4000x4000 píxeles.',
+            ],
+        ],
+    ];
+    
 }

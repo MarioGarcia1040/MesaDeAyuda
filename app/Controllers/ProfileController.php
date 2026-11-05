@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Controlador muestra los datos de la cuenta del usuario.
- * 26-Septiembre-2026 | 06-Octubre-2026
+ * 26-Septiembre-2026 | 05-Noviembre-2026
  * 
  */
 
@@ -12,8 +12,6 @@ use App\Models\AccessLogModel;
 use App\Models\UserModel;
 use App\Models\UserProfilesModel;
 use App\Controllers\BaseController;
-use CodeIgniter\Shield\Models\LoginModel;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class ProfileController extends BaseController
 {
@@ -32,25 +30,7 @@ class ProfileController extends BaseController
     {
         $user = auth()->user();
 
-        $rules = [
-            'actual-password' => [
-                'label' => 'Contraseña actual',
-                'rules' => 'required',
-            ],
-            'new-password' => [
-                'label'  => 'Nueva contraseña',
-                'rules'  => 'required|max_length[100]|strong_password[]|differs[actual-password]',
-                'errors' => [
-                    'differs' => 'La nueva contraseña debe ser distinta a la actual',
-                ],
-            ],
-            'confirm-password' => [
-                'label' => 'Confirmar contraseña',
-                'rules' => 'required|matches[new-password]',
-            ],
-        ];
-
-        if (! $this->validate($rules)) {
+        if (! $this->validate('changePassword')) {
             return redirect()->back()
                 ->with('errors', $this->validator->getErrors())
                 ->with('tab', 'password');
@@ -89,19 +69,7 @@ class ProfileController extends BaseController
         $post['profile-new-email'] = strtolower(trim($post['profile-new-email'] ?? ''));
         $this->request->setGlobal('post', $post);
 
-        $rules = [
-            'profile-new-email' => [
-                'label'  => 'Nuevo email',
-                'rules'  => 'required|valid_email|max_length[100]',
-                'errors' => ['valid_email' => 'El email ingresado no es válido.'],
-            ],
-            'new-email-password-verification' => [
-                'label' => 'Contraseña',
-                'rules' => 'required',
-            ],
-        ];
-
-        if (! $this->validate($rules)) {
+        if (! $this->validate('updateEmail')) {
             return redirect()->back()->withInput()
                 ->with('errors', $this->validator->getErrors())
                 ->with('tab', 'email');
@@ -114,12 +82,6 @@ class ProfileController extends BaseController
                 ->with('errors', ['profile-new-email' => 'El email es igual al actual.'])
                 ->with('tab', 'email');
         }
-
-        $enUso = model(\CodeIgniter\Shield\Models\UserIdentityModel::class)
-            ->where('type', 'email_password')
-            ->where('secret', $newEmail)
-            ->where('user_id !=', $user->id)
-            ->first();
 
         if (model(UserModel::class)->emailInUse($newEmail, $user->id)) {
             return redirect()->back()->withInput()
@@ -162,56 +124,13 @@ class ProfileController extends BaseController
         $userProfiles = model(UserProfilesModel::class);
 
         $data = [
-            'profile-first-name' => trim((string) $this->request->getPost('profile-first-name')),
-            'profile-last-name'  => trim((string) $this->request->getPost('profile-last-name')),
+            'profile-first-name' => $this->normalizeName((string) $this->request->getPost('profile-first-name')),
+            'profile-last-name'  => $this->normalizeName((string) $this->request->getPost('profile-last-name')),
             'profile-phone'      => preg_replace('/\D/', '', (string) $this->request->getPost('profile-phone')),
         ];
 
-        $rules = [
-            'profile-first-name' => [
-                'label' => 'Nombre(s)',
-                'rules' => "required|min_length[2]|max_length[100]|regex_match[/^[\p{L}\s'\-]+$/u]",
-            ],
-            'profile-last-name' => [
-                'label' => 'Apellido(s)',
-                'rules' => "required|min_length[2]|max_length[100]|regex_match[/^[\p{L}\s'\-]+$/u]",
-            ],
-            'profile-phone' => [
-                'label'  => 'Teléfono',
-                'rules'  => 'permit_empty|regex_match[/^[0-9]{10}$/]',
-                'errors' => ['regex_match' => 'El teléfono debe tener 10 dígitos.'],
-            ],
-        ];
-
-        if (! $this->validateData($data, $rules)) {
-            return redirect()->back()->withInput()
-                ->with('errors', $this->validator->getErrors())
-                ->with('tab', 'settings');
-        }
-
-        $file     = $this->request->getFile('profile-photo');
-        $hasPhoto = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
-
-        if ($hasPhoto) {
-            $photoRules = [
-                'profile-photo' => [
-                    'label'  => 'Foto',
-                    'rules'  => 'uploaded[profile-photo]|max_size[profile-photo,4096]|is_image[profile-photo]|mime_in[profile-photo,image/jpeg,image/png]|max_dims[profile-photo,4000,4000]',
-                    'errors' => [
-                        'uploaded' => 'No se pudo subir la imagen.',
-                        'is_image' => 'El archivo seleccionado no es una imagen válida.',
-                        'max_size' => 'La imagen no puede pesar más de 4MB.',
-                        'mime_in'  => 'El archivo seleccionado no es un tipo de imagen permitido.',
-                        'max_dims' => 'La imagen no puede superar los 4000x4000 píxeles.',
-                    ],
-                ],
-            ];
-
-            if (! $this->validate($photoRules)) {
-                return redirect()->back()->withInput()
-                    ->with('errors', $this->validator->getErrors())
-                    ->with('tab', 'settings');
-            }
+        if (! $this->validateData($data, 'updateProfile')) {
+            return $this->backWithErrors($this->validator->getErrors());
         }
 
         $profileData = [
@@ -221,58 +140,101 @@ class ProfileController extends BaseController
             'telefono' => $data['profile-phone'] ?: null,
         ];
 
-        $profile = $userProfiles->findByUserId($user->id);
+        $profile  = $userProfiles->findByUserId($user->id);
+        $oldPhoto = $profile['foto'] ?? null;
 
-        if ($hasPhoto && $file->isValid() && ! $file->hasMoved()) {
-            $baseDir  = WRITEPATH . 'uploads/profile_photos';
-            $realDir  = $baseDir . '/real';
-            $smallDir = $baseDir . '/small';
+        $file     = $this->request->getFile('profile-photo');
+        $hasPhoto = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
 
-            foreach ([$realDir, $smallDir] as $dir) {
-                if (! is_dir($dir)) {
-                    mkdir($dir, 0755, true);
-                }
-            }
-
-            $newName = $file->getRandomName();
-
-            if (! $file->move($realDir, $newName)) {
-                return redirect()->back()->withInput()
-                    ->with('errors', ['profile-photo' => 'No se pudo guardar la imagen.'])
-                    ->with('tab', 'settings');
+        if ($hasPhoto) {
+            if (! $this->validate('updateProfilePhoto')) {
+                return $this->backWithErrors($this->validator->getErrors());
             }
 
             try {
-                \Config\Services::image()
-                    ->withFile($realDir . '/' . $newName)
-                    ->fit(200, 200, 'center')
-                    ->save($smallDir . '/' . $newName, 85);
+                $profileData['foto'] = $this->savePhoto($file);
             } catch (\Throwable $e) {
-                @unlink($realDir . '/' . $newName);
-                log_message('error', 'Error creando miniatura: ' . $e->getMessage());
+                log_message('error', 'Error procesando foto de perfil: ' . $e->getMessage());
 
-                return redirect()->back()->withInput()
-                    ->with('errors', ['profile-photo' => 'No se pudo procesar la imagen.'])
-                    ->with('tab', 'settings');
+                return $this->backWithErrors(['profile-photo' => 'No se pudo procesar la imagen.']);
             }
-
-            if ($profile && ! empty($profile['foto'])) {
-                @unlink($realDir . '/' . $profile['foto']);
-                @unlink($smallDir . '/' . $profile['foto']);
-            }
-
-            $profileData['foto'] = $newName;
         }
 
-        if ($profile) {
-            $userProfiles->saveForUser($user->id, $profileData);
-        } else {
-            $userProfiles->insert($profileData);
+        try {
+            if ($profile) {
+                $userProfiles->saveForUser($user->id, $profileData);
+            } else {
+                $userProfiles->insert($profileData);
+            }
+        } catch (\Throwable $e) {
+            if (isset($profileData['foto'])) {
+                $this->deletePhoto($profileData['foto']);
+            }
+            log_message('error', 'Error guardando perfil: ' . $e->getMessage());
+
+            return $this->backWithErrors(['general' => 'No se pudo guardar el perfil.']);
+        }
+
+        if ($oldPhoto && isset($profileData['foto'])) {
+            $this->deletePhoto($oldPhoto);
         }
 
         return redirect()->back()
             ->with('success', 'Perfil actualizado correctamente')
             ->with('tab', 'settings');
+    }
+
+    private const PHOTO_BASE_DIR = WRITEPATH . 'uploads/profile_photos';
+
+    private function savePhoto(\CodeIgniter\HTTP\Files\UploadedFile $file): string
+    {
+        if (! $file->isValid() || $file->hasMoved()) {
+            throw new \RuntimeException('Archivo no válido o ya movido.');
+        }
+
+        $realDir  = self::PHOTO_BASE_DIR . '/real';
+        $smallDir = self::PHOTO_BASE_DIR . '/small';
+
+        foreach ([$realDir, $smallDir] as $dir) {
+            if (! is_dir($dir) && ! mkdir($dir, 0755, true) && ! is_dir($dir)) {
+                throw new \RuntimeException("No se pudo crear el directorio {$dir}");
+            }
+        }
+
+        $newName = $file->getRandomName();
+        $file->move($realDir, $newName);
+
+        try {
+            \Config\Services::image()
+                ->withFile($realDir . '/' . $newName)
+                ->fit(200, 200, 'center')
+                ->save($smallDir . '/' . $newName, 85);
+        } catch (\Throwable $e) {
+            $this->deletePhoto($newName);
+            throw $e;
+        }
+
+        return $newName;
+    }
+
+    private function deletePhoto(string $name): void
+    {
+        @unlink(self::PHOTO_BASE_DIR . '/real/' . $name);
+        @unlink(self::PHOTO_BASE_DIR . '/small/' . $name);
+    }
+
+    private function backWithErrors(array $errors, string $tab = 'settings')
+    {
+        return redirect()->back()->withInput()
+            ->with('errors', $errors)
+            ->with('tab', $tab);
+    }
+
+    private function normalizeName(string $value): string
+    {
+        $value = trim(preg_replace('/\s+/', ' ', $value));
+
+        return mb_convert_case(mb_strtolower($value, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
     }
 
     public function avatar(string $type, string $filename)
