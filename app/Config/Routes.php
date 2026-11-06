@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Rutas de la aplicación.
- * 29-Septiembre-2026 | 10-Octubre-2026
+ * 29-Septiembre-2026 | 05-Noviembre-2026
  * 
  */
 
@@ -31,4 +31,5 @@ $routes->group('tickets', ['filter' => ['session', 'group:admin,user']], functio
     $routes->get('tickets', 'TicketsController::index', ['as' => 'tickets']);
     $routes->get('my-tickets', 'TicketsController::myTickets', ['as' => 'tickets.my-tickets']);
     $routes->get('all', 'TicketsController::all', ['as' => 'tickets.all']);
+    $routes->post('create', 'TicketsController::create', ['as' => 'tickets.create']);
 });

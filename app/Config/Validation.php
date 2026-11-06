@@ -107,5 +107,55 @@ class Validation extends BaseConfig
             ],
         ],
     ];
+
+    public array $createTicket = [
+        'subject'      => [
+            'label' => 'Asunto',
+            'rules' => 'required|max_length[150]',
+            'errors' => [
+                'required'   => 'El campo {field} es obligatorio.',
+                'max_length' => 'El campo {field} no puede exceder los 150 caracteres.',
+            ],
+        ],
+        'description'  => [
+            'label' => 'Descripción',
+            'rules' => 'permit_empty|string',
+        ],
+        'category_id'  => [
+            'label' => 'Categoría',
+            'rules' => 'permit_empty|is_natural_no_zero',
+        ],
+        'status'       => [
+            'label' => 'Estado',
+            'rules' => 'required|in_list[abierto,en_proceso,pendiente,resuelto]',
+            'errors' => [
+                'required' => 'El campo {field} es obligatorio.',
+                'in_list'  => 'El campo {field} debe ser uno de los siguientes valores: abierto, en_proceso, pendiente, resuelto.',
+            ],
+        ],
+        'priority'     => [
+            'label' => 'Prioridad',
+            'rules' => 'required|in_list[alta,media,baja]',
+            'errors' => [
+                'required' => 'El campo {field} es obligatorio.',
+                'in_list'  => 'El campo {field} debe ser uno de los siguientes valores: alta, media, baja.',
+            ],
+        ],
+        'applicant_id' => [
+            'label' => 'Solicitante',
+            'rules' => 'required|is_natural_no_zero',
+            'errors' => [
+                'required' => 'El campo {field} es obligatorio.',
+                'is_natural_no_zero' => 'El campo {field} debe ser un número natural mayor que cero.',
+            ],
+        ],
+        'assigned_id'  => [
+            'label' => 'Asignado a',
+            'rules' => 'permit_empty|is_natural_no_zero',
+            'errors' => [
+                'is_natural_no_zero' => 'El campo {field} debe ser un número natural mayor que cero.',
+            ],
+        ],
+    ];
     
 }

@@ -143,11 +143,19 @@ class TicketsModel extends Model
     public function withRelations(): self
     {
         return $this->select("tickets.*,
-            categories.name AS category_name,
-            CONCAT_WS(' ', applicant_p.nombre, applicant_p.apellido) AS applicant_name,
-            CONCAT_WS(' ', assigned_p.nombre, assigned_p.apellido)   AS assigned_name")
+        categories.name AS category_name,
+        COALESCE(
+            NULLIF(TRIM(CONCAT_WS(' ', applicant_p.nombre, applicant_p.apellido)), ''),
+            applicant_ai.secret
+        ) AS applicant_name,
+        CONCAT_WS(' ', assigned_p.nombre, assigned_p.apellido) AS assigned_name", false)
             ->join('categories', 'categories.id = tickets.category_id', 'left')
             ->join('user_profiles AS applicant_p', 'applicant_p.user_id = tickets.applicant_id', 'left')
-            ->join('user_profiles AS assigned_p', 'assigned_p.user_id = tickets.assigned_id', 'left');
+            ->join('user_profiles AS assigned_p', 'assigned_p.user_id = tickets.assigned_id', 'left')
+            ->join(
+                'auth_identities AS applicant_ai',
+                "applicant_ai.user_id = tickets.applicant_id AND applicant_ai.type = 'email_password'",
+                'left'
+            );
     }
 }

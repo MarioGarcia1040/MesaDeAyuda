@@ -36,5 +36,23 @@ class TicketsController extends BaseController
             'categories'            => $categoriesModel->findAll(),
             'users'                 => $userModel->getUsersWithProfileDetails(),
         ]);
+    }   
+
+    public function create()
+    {
+        $ticketModel = new TicketsModel();
+
+        $data = [
+            'subject'       => $this->request->getPost('subject'),
+            'category_id'   => $this->request->getPost('category'),
+            'description'   => $this->request->getPost('description'),
+            'status'        => TicketsModel::STATUS_OPEN,
+            'priority'      => $this->request->getPost('priority'),
+            'applicant_id'  => $this->request->getPost('applicant'),
+        ];
+
+        $ticketModel->insert($data);
+
+        return redirect()->to('tickets/all')->with('success', 'Ticket creado correctamente');
     }
 }

@@ -153,9 +153,10 @@ $prioridadBadge = [
                     data-bs-dismiss="modal"
                     aria-label="Cerrar"></button>
             </div>
-            <div class="modal-body">
-                <form>
 
+            <div class="modal-body">
+                <form action="<?= base_url('tickets/create') ?>" method="post">
+                    <?= csrf_field() ?>
                     <div class="row mb-3">
                         <label for="applicant" class="col-sm-3 col-form-label">Solicita</label>
                         <div class="col-sm-9">
@@ -186,16 +187,16 @@ $prioridadBadge = [
                     </div>
 
                     <div class="row mb-3">
-                        <label for="password" class="col-sm-3 col-form-label">Asunto</label>
+                        <label for="subject" class="col-sm-3 col-form-label">Asunto</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="text" class="form-control" id="subject" name="subject">
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="password" class="col-sm-3 col-form-label">Descripción</label>
+                        <label for="description" class="col-sm-3 col-form-label">Descripción</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                            <textarea class="form-control" id="description" name="description" aria-label="With textarea"></textarea>
                         </div>
                     </div>
 
@@ -218,8 +219,9 @@ $prioridadBadge = [
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </div>
-                </form>
+                </form>                
             </div>
+
         </div>
     </div>
 </div>
