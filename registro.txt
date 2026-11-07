@@ -25,6 +25,8 @@ Reglas:
   - Los cambios aun no publicados van en la seccion [Sin publicar].
   - Las refactorizaciones sin cambio de comportamiento se registran una sola
     vez, en "Cambiado".
+  - Orden de secciones dentro de cada version: Agregado, Cambiado, Obsoleto,
+    Eliminado, Corregido, Seguridad.
 
 Secciones permitidas: Agregado, Cambiado, Obsoleto, Eliminado, Corregido,
 Seguridad.
@@ -35,28 +37,33 @@ Seguridad.
 (sin cambios pendientes)
 
 
-
-[0.7.1] - 2026-11-05
+[0.7.0] - 2026-11-06
 ----------------------------------------------------------------------------
 Agregado
-  - Se termina modal nuevo ticket
-  - Validaciones en config\validation.php
+  - Modal para crear tickets con validacion y envio por fetch.
+  - Reglas de validacion del ticket en app/Config/Validation.php.
+
+Cambiado
+  - Estados de ticket: abierto, en proceso, resuelto y cerrado (se elimina
+    "pendiente"). Requiere migrar los tickets en "pendiente" a "en proceso".
+  - Campo enum de estados en la base de datos.
+  - Vista y modelo de tickets para los nuevos estados.
+  - Refactorizacion de los controladores Dashboard y Profile.
 
 Corregido
-  - Error en conteo de tickets activos en dashboard
-  - Refactorizacion en controladores Dashboard y profile
+  - Conteo de tickets activos en el dashboard.
 
 
 [0.6.0] - 2026-10-30
 ----------------------------------------------------------------------------
 Agregado
-  - Sidebar se mantiene colapsado o abierto al cambiar pagina
-  - Constante de categorias para carga dinamica
-  - Infobox con contador de ticket por estado
-  - Carga dinamica de tickets en listado
+  - Sidebar se mantiene colapsado o abierto al cambiar de pagina.
+  - Constante de categorias para carga dinamica.
+  - Infobox con contador de tickets por estado.
+  - Carga dinamica de tickets en listado.
 
 Cambiado
-   - Modales y scripts se cambian de ubicación siguiendo la arquitectura
+  - Modales y scripts se cambian de ubicacion siguiendo la arquitectura.
 
 
 [0.5.0] - 2026-10-14
@@ -71,13 +78,13 @@ Cambiado
 
 Eliminado
   - Pestañas bitacora, roles y privilegios en el modulo Mi cuenta.
-  - input username oculto en formulario de registro.
+  - Input username oculto en formulario de registro.
 
 Corregido
   - Error de username que permitia valores duplicados.
 
 
-[0.4.1] - 2026-10-08
+[0.4.0] - 2026-10-08
 ----------------------------------------------------------------------------
 Agregado
   - Vista de usuarios con tabla de datos.
