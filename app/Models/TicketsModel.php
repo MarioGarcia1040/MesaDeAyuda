@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Modelo para consultar los tickets
- * 08-Octubre-2026 | 25-Octubre-2026
+ * 08-Octubre-2026 | 06-Noviembre-2026
  * 
  */
 
@@ -14,8 +14,8 @@ class TicketsModel extends Model
 {
     public const STATUS_OPEN        = 'abierto';
     public const STATUS_IN_PROGRESS = 'en_proceso';
-    public const STATUS_PENDING     = 'pendiente';
     public const STATUS_RESOLVED    = 'resuelto';
+    public const STATUS_CLOSED      = 'cerrado';
 
     public const PRIORITY_HIGH   = 'alta';
     public const PRIORITY_MEDIUM = 'media';
@@ -24,14 +24,13 @@ class TicketsModel extends Model
     public const ACTIVE_STATUSES = [
         self::STATUS_OPEN,
         self::STATUS_IN_PROGRESS,
-        self::STATUS_PENDING,
+        self::STATUS_RESOLVED,
     ];
-
     public const STATUS_LABELS = [
         self::STATUS_OPEN        => 'Abierto',
         self::STATUS_IN_PROGRESS => 'En proceso',
-        self::STATUS_PENDING     => 'Pendiente',
         self::STATUS_RESOLVED    => 'Resuelto',
+        self::STATUS_CLOSED      => 'Cerrado',
     ];
 
     public const PRIORITY_LABELS = [
@@ -66,7 +65,7 @@ class TicketsModel extends Model
         'subject'      => 'required|max_length[150]',
         'description'  => 'permit_empty|string',
         'category_id'  => 'permit_empty|is_natural_no_zero',
-        'status'       => 'required|in_list[abierto,en_proceso,pendiente,resuelto]',
+        'status'       => 'required|in_list[abierto,en_proceso,resuelto,cerrado]',
         'priority'     => 'required|in_list[alta,media,baja]',
         'applicant_id' => 'required|is_natural_no_zero',
         'assigned_id'  => 'permit_empty|is_natural_no_zero',

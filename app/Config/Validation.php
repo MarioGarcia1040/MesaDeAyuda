@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Reglas de validación para llamado desde diferentes controladores.
- * 05-Noviembre-2026
+ * 05-Noviembre-2026 | 06-Noviembre-2026
  * 
  */
 
@@ -125,12 +125,12 @@ class Validation extends BaseConfig
             'label' => 'Categoría',
             'rules' => 'permit_empty|is_natural_no_zero',
         ],
-        'status'       => [
-            'label' => 'Estado',
-            'rules' => 'required|in_list[abierto,en_proceso,pendiente,resuelto]',
+        'status' => [
+            'label'  => 'Estado',
+            'rules'  => 'required|in_list[abierto,en_proceso,resuelto,cerrado]',
             'errors' => [
                 'required' => 'El campo {field} es obligatorio.',
-                'in_list'  => 'El campo {field} debe ser uno de los siguientes valores: abierto, en_proceso, pendiente, resuelto.',
+                'in_list'  => 'El campo {field} debe ser: abierto, en_proceso, resuelto o cerrado.',
             ],
         ],
         'priority'     => [
@@ -157,5 +157,4 @@ class Validation extends BaseConfig
             ],
         ],
     ];
-    
 }

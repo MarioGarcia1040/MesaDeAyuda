@@ -19,7 +19,6 @@ $estadoBadge = [
 $estadoLabel = [
     'abierto'    => 'Abierto',
     'en_proceso' => 'En proceso',
-    'pendiente'  => 'Pendiente',
     'resuelto'   => 'Resuelto',
     'cerrado'    => 'Cerrado',
 ];
@@ -37,8 +36,8 @@ $prioridadBadge = [
     $resume = [
         ['Abiertos',   $countTicketsByStatus['abierto']    ?? 0, 'text-primary'],
         ['En proceso', $countTicketsByStatus['en_proceso'] ?? 0, 'text-warning'],
-        ['Pendientes', $countTicketsByStatus['pendiente']  ?? 0, 'text-info'],
         ['Resueltos',  $countTicketsByStatus['resuelto']   ?? 0, 'text-success'],
+        ['Cerrados',   $countTicketsByStatus['cerrado']    ?? 0, 'text-secondary'],
     ];
     foreach ($resume as [$title, $value, $color]): ?>
         <div class="col-md-3 col-6">
@@ -155,34 +154,41 @@ $prioridadBadge = [
             </div>
 
             <div class="modal-body">
-                <form action="<?= base_url('tickets/create') ?>" method="post">
+                <form id="ticketForm" action="<?= base_url('tickets/create') ?>" method="post" novalidate>
                     <?= csrf_field() ?>
+                    <input type="hidden" name="status" value="abierto">
+
+                    <div id="ticketFormAlert" class="alert alert-danger d-none"></div>
+
                     <div class="row mb-3">
-                        <label for="applicant" class="col-sm-3 col-form-label">Solicita</label>
+                        <label for="applicant_id" class="col-sm-3 col-form-label">Solicita</label>
                         <div class="col-sm-9">
-                            <select id="applicant" name="applicant" class="form-select">
+                            <select id="applicant_id" name="applicant_id" class="form-select">
                                 <option value="">Seleccione un usuario</option>
                                 <?php foreach ($users as $user): ?>
-                                    <?php $nombreCompleto = trim(($user->nombre ?? '') . ' ' . ($user->apellido ?? '')); 
-                                      if (empty($nombreCompleto)) {
-                                          $nombreCompleto = $user->email ?? 'Usuario sin nombre';
-                                      }
-                                    ?>                             
-                                    <option value="<?= $user->id ?>"><?= $nombreCompleto ?></option>
+                                    <?php
+                                    $nombreCompleto = trim(($user->nombre ?? '') . ' ' . ($user->apellido ?? ''));
+                                    if ($nombreCompleto === '') {
+                                        $nombreCompleto = $user->email ?? 'Usuario sin nombre';
+                                    }
+                                    ?>
+                                    <option value="<?= esc($user->id) ?>"><?= esc($nombreCompleto) ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="category" class="col-sm-3 col-form-label">Categoria</label>
+                        <label for="category_id" class="col-sm-3 col-form-label">Categoría</label>
                         <div class="col-sm-9">
-                            <select id="category" name="category" class="form-select">
+                            <select id="category_id" name="category_id" class="form-select">
                                 <option value="">Seleccione una categoría</option>
                                 <?php foreach ($categories as $category): ?>
-                                    <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                                    <option value="<?= esc($category['id']) ?>"><?= esc($category['name']) ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
 
@@ -190,36 +196,37 @@ $prioridadBadge = [
                         <label for="subject" class="col-sm-3 col-form-label">Asunto</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="subject" name="subject">
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="description" class="col-sm-3 col-form-label">Descripción</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" id="description" name="description" aria-label="With textarea"></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="priority" class="col-sm-3 col-form-label">Prioridad</label>
                         <div class="col-sm-9">
-                            <select id="priority" name="priority" class="form-select" required>
+                            <select id="priority" name="priority" class="form-select">
                                 <?php foreach ($priorityLabel as $valor => $texto): ?>
                                     <option value="<?= esc($valor) ?>"
-                                        <?= old('priority', \App\Models\TicketsModel::PRIORITY_MEDIUM) === $valor ? 'selected' : '' ?>>
+                                        <?= \App\Models\TicketsModel::PRIORITY_MEDIUM === $valor ? 'selected' : '' ?>>
                                         <?= esc($texto) ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="ticketSubmit">Guardar</button>
                     </div>
-                </form>                
+                </form>
             </div>
 
         </div>
@@ -251,4 +258,98 @@ $prioridadBadge = [
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('ticketForm');
+        const alertB = document.getElementById('ticketFormAlert');
+        const btn = document.getElementById('ticketSubmit');
+        const csrfName = '<?= csrf_token() ?>';
+
+        const clearErrors = () => {
+            alertB.classList.add('d-none');
+            alertB.innerHTML = '';
+            form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            form.querySelectorAll('.invalid-feedback').forEach(el => el.textContent = '');
+        };
+
+        const showErrors = (errors) => {
+            const general = [];
+
+            Object.entries(errors).forEach(([name, message]) => {
+                const field = form.elements[name];
+                const fb = field && field.type !== 'hidden' ?
+                    field.parentElement.querySelector('.invalid-feedback') :
+                    null;
+
+                if (!fb) {
+                    general.push(message);
+                    return;
+                }
+                field.classList.add('is-invalid');
+                fb.textContent = message;
+            });
+
+            if (general.length) {
+                alertB.textContent = general.join(' ');
+                alertB.classList.remove('d-none');
+            }
+            form.querySelector('.is-invalid')?.focus();
+        };
+
+        const updateCsrf = (token) => {
+            if (!token) return;
+            const input = form.querySelector(`input[name="${csrfName}"]`);
+            if (input) input.value = token;
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearErrors();
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                });
+
+                let data = null;
+                try {
+                    data = await response.json();
+                } catch (_) {}
+
+                updateCsrf(data?.csrf);
+
+                if (response.status === 422 && data?.errors) {
+                    showErrors(data.errors);
+                    return;
+                }
+
+                if (!response.ok || !data) {
+                    alertB.textContent = 'Ocurrió un error inesperado. Intente de nuevo.';
+                    alertB.classList.remove('d-none');
+                    return;
+                }
+
+                bootstrap.Modal.getInstance(form.closest('.modal'))?.hide();
+                window.location.href = data.redirect ?? window.location.href;
+
+            } catch (err) {
+                alertB.textContent = 'No se pudo conectar con el servidor.';
+                alertB.classList.remove('d-none');
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        form.closest('.modal')?.addEventListener('hidden.bs.modal', () => {
+            form.reset();
+            clearErrors();
+        });
+    });
+</script>
 <?= $this->endSection() ?>
