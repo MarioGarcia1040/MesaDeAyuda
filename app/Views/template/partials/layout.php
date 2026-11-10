@@ -3,8 +3,8 @@
 <!--begin::Head-->
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><?= $title ?? 'Shoei' ?></title>
+    <meta charset="utf-8" />
+    <title><?= esc($title ?? 'Shoei') ?></title>
 
     <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
     <script>
@@ -55,21 +55,10 @@
     <!--end::Accessibility Meta Tags-->
 
     <!--begin::Primary Meta Tags-->
-    <meta name="title" content="AdminLTE 4 | Starter Page" />
-    <meta name="author" content="ColorlibHQ" />
-    <meta
-        name="description"
-        content="AdminLTE is a free Bootstrap 5 admin dashboard template with almost 50 example pages, built with vanilla JS and designed with accessibility in mind." />
-    <meta
-        name="keywords"
-        content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard, accessible admin panel" />
+    <meta name="author" content="Mario García" />
+    <meta name="description" content="Sistema de gestión de tickets" />
+    <meta name="keywords" content="sistema, gestion, tickets, ayuda" />
     <!--end::Primary Meta Tags-->
-
-    <!--begin::Accessibility Features-->
-    <!-- Skip links will be dynamically added by accessibility.js -->
-    <meta name="supported-color-schemes" content="light dark" />
-    <link rel="preload" href="<?= base_url('dist/css/adminlte.css') ?>" as="style" />
-    <!--end::Accessibility Features-->
 
     <!--begin::Fonts-->
     <link
@@ -98,11 +87,36 @@
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="<?= base_url('dist/css/adminlte.css') ?>" />
     <!--end::Required Plugin(AdminLTE)-->
+
+    <!--begin::Loader-->
+    <link rel="stylesheet" href="<?= base_url('dist/css/loader.css') ?>?v=<?= filemtime(FCPATH . 'dist/css/loader.css') ?>" />
+    <!--end::Loader-->
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <!--begin::Loader Overlay-->
+    <div id="loader-overlay" class="loader-overlay d-none" role="status" aria-live="polite">
+        <div class="text-white text-center">
+            <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" aria-hidden="true"></div>
+            <p class="mt-2 mb-0" id="loader-text">Cargando...</p>
+        </div>
+    </div>
+    <!--end::Loader Overlay-->
+
+    <?php
+    // renderSection() imprime directamente, así que se captura con un buffer
+    // para poder usar el título y los breadcrumbs en varios lugares.
+    ob_start();
+    $this->renderSection('title');
+    $pageTitle = trim(ob_get_clean()) ?: 'No definido';
+
+    ob_start();
+    $this->renderSection('breadcrumbs');
+    $bc = trim(ob_get_clean());
+    ?>
+
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
         <?php if (auth()->loggedIn()): ?>
@@ -118,17 +132,16 @@
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1 class="mb-0 fs-3"><?= $this->renderSection('title') ?: 'No definido' ?></h1>
+                            <h1 class="mb-0 fs-3"><?= $pageTitle ?></h1>
                         </div>
                         <div class="col-sm-6">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb float-sm-end">
                                     <li class="breadcrumb-item"><a href="<?= site_url('/') ?>">Inicio</a></li>
-                                    <?php $bc = $this->renderSection('breadcrumbs'); ?>
                                     <?php if ($bc !== ''): ?>
                                         <?= $bc ?>
                                     <?php else: ?>
-                                        <li class="breadcrumb-item active" aria-current="page"><?= $this->renderSection('title') ?: 'No definido' ?></li>
+                                        <li class="breadcrumb-item active" aria-current="page"><?= $pageTitle ?></li>
                                     <?php endif; ?>
                                 </ol>
                             </nav>
@@ -156,52 +169,60 @@
         <?php endif; ?>
     </div>
     <!--end::App Wrapper-->
+
     <!--begin::Script-->
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script
         src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
         crossorigin="anonymous"></script>
-    <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+    <!--end::Third Party Plugin(OverlayScrollbars)-->
+    <!--begin::Required Plugin(popperjs for Bootstrap 5)-->
     <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         crossorigin="anonymous"></script>
-    <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+    <!--end::Required Plugin(popperjs for Bootstrap 5)-->
+    <!--begin::Required Plugin(Bootstrap 5)-->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
         crossorigin="anonymous"></script>
-    <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+    <!--end::Required Plugin(Bootstrap 5)-->
+    <!--begin::Required Plugin(AdminLTE)-->
     <script src="<?= base_url('dist/js/adminlte.js') ?>"></script>
     <!--end::Required Plugin(AdminLTE)-->
+
     <!--begin::OverlayScrollbars Configure-->
     <script>
-        const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
-        const Default = {
-            scrollbarTheme: 'os-theme-light',
-            scrollbarAutoHide: 'leave',
-            scrollbarClickScroll: true,
-        };
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+        (function() {
+            const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+            const Default = {
+                scrollbarTheme: 'os-theme-light',
+                scrollbarAutoHide: 'leave',
+                scrollbarClickScroll: true,
+            };
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
 
-            // Disable OverlayScrollbars on mobile devices to prevent touch interference
-            const isMobile = window.innerWidth <= 992;
+                // Disable OverlayScrollbars on mobile devices to prevent touch interference
+                const isMobile = window.innerWidth <= 992;
 
-            if (
-                sidebarWrapper &&
-                OverlayScrollbarsGlobal?.OverlayScrollbars !== undefined &&
-                !isMobile
-            ) {
-                OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-                    scrollbars: {
-                        theme: Default.scrollbarTheme,
-                        autoHide: Default.scrollbarAutoHide,
-                        clickScroll: Default.scrollbarClickScroll,
-                    },
-                });
-            }
-        });
+                if (
+                    sidebarWrapper &&
+                    OverlayScrollbarsGlobal?.OverlayScrollbars !== undefined &&
+                    !isMobile
+                ) {
+                    OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                        scrollbars: {
+                            theme: Default.scrollbarTheme,
+                            autoHide: Default.scrollbarAutoHide,
+                            clickScroll: Default.scrollbarClickScroll,
+                        },
+                    });
+                }
+            });
+        })();
     </script>
     <!--end::OverlayScrollbars Configure-->
+
     <!--begin::Charts follow the colour mode-->
     <script>
         // ApexCharts draws light-theme tooltips and axis text unless told otherwise,
@@ -253,25 +274,73 @@
      module (since 4.1) — no page script needed. Only the no-flash snippet
      in <head> stays inline, because it must run before first paint. -->
     <!--end::Color Mode Toggle-->
+
+    <!--begin::Sidebar State-->
     <script>
-        // Aplicar el estado guardado lo antes posible (evita el parpadeo)
-        if (localStorage.getItem("sidebar-collapsed") === "true") {
-            document.body.classList.add("sidebar-collapse");
-        }
+        (function() {
+            // Aplicar el estado guardado lo antes posible (evita el parpadeo)
+            try {
+                if (localStorage.getItem("sidebar-collapsed") === "true") {
+                    document.body.classList.add("sidebar-collapse");
+                }
+            } catch (e) {}
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const toggleButtons = document.querySelectorAll('[data-lte-toggle="sidebar"]');
+            document.addEventListener("DOMContentLoaded", function() {
+                const toggleButtons = document.querySelectorAll('[data-lte-toggle="sidebar"]');
 
-            toggleButtons.forEach(function(btn) {
-                btn.addEventListener("click", function() {
-                    setTimeout(() => {
-                        const newState = document.body.classList.contains("sidebar-collapse");
-                        localStorage.setItem("sidebar-collapsed", newState);
-                    }, 10);
+                toggleButtons.forEach(function(btn) {
+                    btn.addEventListener("click", function() {
+                        setTimeout(() => {
+                            const newState = document.body.classList.contains("sidebar-collapse");
+                            try {
+                                localStorage.setItem("sidebar-collapsed", newState);
+                            } catch (e) {}
+                        }, 10);
+                    });
                 });
             });
-        });
+        })();
     </script>
+    <!--end::Sidebar State-->
+
+    <!--begin::Loader Script-->
+    <script>
+        (function() {
+            const overlay = document.getElementById('loader-overlay');
+            const text = document.getElementById('loader-text');
+
+            function showLoader(message) {
+                text.textContent = message || 'Cargando...';
+                overlay.classList.remove('d-none');
+            }
+
+            function hideLoader() {
+                overlay.classList.add('d-none');
+                document.querySelectorAll('form[data-loader] button[type="submit"]')
+                    .forEach(b => b.disabled = false);
+            }
+
+            // Exponerlos por si los necesitas en AJAX: showLoader() / hideLoader()
+            window.showLoader = showLoader;
+            window.hideLoader = hideLoader;
+
+            document.addEventListener('submit', function(e) {
+                const form = e.target;
+                if (!form.dataset.loader) return;
+
+                showLoader(form.dataset.loader);
+                const btn = form.querySelector('button[type="submit"]');
+                if (btn) btn.disabled = true;
+            });
+
+            // Al volver con el botón "atrás" el navegador puede restaurar la página con el loader visible
+            window.addEventListener('pageshow', function(e) {
+                if (e.persisted) hideLoader();
+            });
+        })();
+    </script>
+    <!--end::Loader Script-->
+
     <?= $this->renderSection('js') ?>
     <!--end::Script-->
 </body>

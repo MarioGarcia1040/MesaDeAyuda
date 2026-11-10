@@ -36,6 +36,29 @@ Seguridad.
 ----------------------------------------------------------------------------
 (sin cambios pendientes)
 
+[0.8.0] - 2026-11-09
+----------------------------------------------------------------------------
+Agregado
+  - Loader global en el layout (loader.css), que se activa en cualquier
+    formulario con el atributo data-loader y expone showLoader() y
+    hideLoader() para uso en fetch.
+
+Cambiado
+  - Titulo y breadcrumbs del layout se capturan con buffer para reutilizarse.
+  - Scripts del layout (OverlayScrollbars y estado del sidebar) encapsulados
+    para evitar variables globales.
+
+Eliminado
+  - Meta supported-color-schemes, preload redundante de adminlte.css y meta
+    title del layout.
+
+Corregido
+  - Acceso a localStorage protegido con try/catch en el estado del sidebar.
+  - Titulo del breadcrumb activo que podia mostrarse junto a "No definido".
+
+Seguridad
+  - Titulo de la pagina escapado con esc() en el layout.
+
 
 [0.7.0] - 2026-11-06
 ----------------------------------------------------------------------------

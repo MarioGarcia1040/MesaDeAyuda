@@ -154,7 +154,7 @@ $prioridadBadge = [
             </div>
 
             <div class="modal-body">
-                <form id="ticketForm" action="<?= base_url('tickets/create') ?>" method="post" novalidate>
+                <form id="ticketForm" data-loader="Registrando datos..." action="<?= base_url('tickets/create') ?>" method="post" novalidate >
                     <?= csrf_field() ?>
                     <input type="hidden" name="status" value="abierto">
 
