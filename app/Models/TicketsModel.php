@@ -157,4 +157,9 @@ class TicketsModel extends Model
                 'left'
             );
     }
+
+    public function applicant(int $userId): self
+    {
+        return $this->where('tickets.applicant_id', $userId);
+    }
 }

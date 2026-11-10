@@ -18,7 +18,7 @@ class UsersController extends BaseController
     {
         $userProfiles = new UserModel();
         return view('template/users', [
-            'title' => 'Shoei | Usuarios',
+            'title' => 'Usuarios',
             'users' => $userProfiles->getUsersWithProfileDetails(),
             'roles' => config('AuthGroups')->groups,
         ]);

@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Controlador muestra la lista de tickets.
- * 2-Octubre-2026 | 25-Octubre-2026
+ * 2-Octubre-2026 | 10-Noviembre-2026
  * 
  */
 
@@ -17,8 +17,17 @@ class TicketsController extends BaseController
 {
     public function myTickets()
     {
+        $ticketModel = new TicketsModel();
+        $categoriesModel = new CategoriesModel();
+        $userModel = new UserModel();
+
         return view('template/tickets', [
-            'title' => 'Shoei | Mis Tickets',
+            'title'                 => 'Mis Tickets',
+            'countTicketsByStatus'  => $ticketModel->applicant(auth()->id())->countByStatus(),
+            'tickets'               => $ticketModel->withRelations()->applicant(auth()->id())->findAll(),
+            'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
+            'categories'            => $categoriesModel->findAll(),
+            'users'                 => $userModel->getUsersWithProfileDetails(),
         ]);
     }
 
@@ -29,7 +38,7 @@ class TicketsController extends BaseController
         $userModel = new UserModel();
 
         return view('template/tickets', [
-            'title'                 => 'Shoei | Todos los Tickets',
+            'title'                 => 'Todos los Tickets',
             'countTicketsByStatus'  => $ticketModel->countByStatus(),
             'tickets'               => $ticketModel->withRelations()->findAll(),
             'priorityLabel'         => TicketsModel::PRIORITY_LABELS,

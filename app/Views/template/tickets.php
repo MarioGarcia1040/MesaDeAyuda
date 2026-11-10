@@ -91,6 +91,9 @@ $prioridadBadge = [
                     </tr>
                 </thead>
                 <tbody>
+                    <tr id="tickets-empty" hidden>
+                        <td colspan="7" class="text-center text-muted py-4">No se encontraron tickets.</td>
+                    </tr>
                     <?php foreach ($tickets as $t): ?>
                         <tr data-estado="<?= esc($t['status']) ?>">
                             <td class="text-nowrap fw-semibold">#<?= esc($t['id']) ?></td>
@@ -154,7 +157,7 @@ $prioridadBadge = [
             </div>
 
             <div class="modal-body">
-                <form id="ticketForm" data-loader="Registrando datos..." action="<?= base_url('tickets/create') ?>" method="post" novalidate >
+                <form id="ticketForm" action="<?= base_url('tickets/create') ?>" method="post" novalidate>
                     <?= csrf_field() ?>
                     <input type="hidden" name="status" value="abierto">
 
@@ -242,19 +245,37 @@ $prioridadBadge = [
         const buscador = document.getElementById('ticket-search');
         const filtro = document.getElementById('ticket-filter-estado');
         const filas = document.querySelectorAll('#tickets-table tbody tr[data-estado]');
+        const vacio = document.getElementById('tickets-empty');
+
+        if (!buscador || !filtro) return;
+
+        const normalizar = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+        // Se calcula una sola vez por fila, no en cada tecla
+        const textos = new Map();
+        filas.forEach(fila => textos.set(fila, normalizar(fila.textContent)));
 
         const filtrar = () => {
-            const texto = buscador.value.trim().toLowerCase();
+            const texto = normalizar(buscador.value.trim());
             const estado = filtro.value;
+            let visibles = 0;
+
             filas.forEach(fila => {
-                const coincideTexto = fila.textContent.toLowerCase().includes(texto);
+                const coincideTexto = textos.get(fila).includes(texto);
                 const coincideEstado = !estado || fila.dataset.estado === estado;
-                fila.hidden = !(coincideTexto && coincideEstado);
+                const mostrar = coincideTexto && coincideEstado;
+                fila.hidden = !mostrar;
+                if (mostrar) visibles++;
             });
+
+            if (vacio) vacio.hidden = visibles > 0;
         };
 
         buscador.addEventListener('input', filtrar);
         filtro.addEventListener('change', filtrar);
+
+        filtrar(); // aplica los valores restaurados por el navegador
+        window.addEventListener('pageshow', filtrar); // y al volver con "atrás"
     });
 </script>
 
@@ -306,6 +327,8 @@ $prioridadBadge = [
             e.preventDefault();
             clearErrors();
             btn.disabled = true;
+            showLoader('Registrando datos...');
+            let redirecting = false;
 
             try {
                 const response = await fetch(form.action, {
@@ -335,6 +358,8 @@ $prioridadBadge = [
                     return;
                 }
 
+                // Éxito: se deja el loader visible hasta que la página recargue
+                redirecting = true;
                 bootstrap.Modal.getInstance(form.closest('.modal'))?.hide();
                 window.location.href = data.redirect ?? window.location.href;
 
@@ -342,13 +367,23 @@ $prioridadBadge = [
                 alertB.textContent = 'No se pudo conectar con el servidor.';
                 alertB.classList.remove('d-none');
             } finally {
-                btn.disabled = false;
+                if (!redirecting) {
+                    hideLoader();
+                    btn.disabled = false;
+                }
             }
         });
 
         form.closest('.modal')?.addEventListener('hidden.bs.modal', () => {
             form.reset();
             clearErrors();
+        });
+
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted) {
+                btn.disabled = false;
+                hideLoader();
+            }
         });
     });
 </script>

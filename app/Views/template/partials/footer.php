@@ -1,7 +1,7 @@
 <!--begin::Footer-->
 <footer class="app-footer">
     <!--begin::To the end-->
-    <div class="float-end d-none d-sm-inline">Versión 0.7.1</div>
+    <div class="float-end d-none d-sm-inline">Versión 0.8.0</div>
     <!--end::To the end-->
     <!--begin::Copyright-->
     <strong>

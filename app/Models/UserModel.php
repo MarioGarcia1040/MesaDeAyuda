@@ -49,6 +49,6 @@ class UserModel extends ShieldUserModel
                 'left'
             )
             ->findAll();
-    }
+    }   
 
 }

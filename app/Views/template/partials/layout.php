@@ -1,10 +1,21 @@
+<?php
+ob_start();
+$this->renderSection('title', true);
+$sectionTitle = trim(ob_get_clean());
+
+$pageTitle = $sectionTitle !== '' ? $sectionTitle : ($title ?? 'No definido');
+
+ob_start();
+$this->renderSection('breadcrumbs', true);
+$bc = trim(ob_get_clean());
+?>
 <!doctype html>
 <html lang="es">
 <!--begin::Head-->
 
 <head>
     <meta charset="utf-8" />
-    <title><?= esc($title ?? 'Shoei') ?></title>
+    <title>Shoei | <?= esc(strip_tags($pageTitle)) ?></title>
 
     <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
     <script>
@@ -105,18 +116,6 @@
     </div>
     <!--end::Loader Overlay-->
 
-    <?php
-    // renderSection() imprime directamente, así que se captura con un buffer
-    // para poder usar el título y los breadcrumbs en varios lugares.
-    ob_start();
-    $this->renderSection('title');
-    $pageTitle = trim(ob_get_clean()) ?: 'No definido';
-
-    ob_start();
-    $this->renderSection('breadcrumbs');
-    $bc = trim(ob_get_clean());
-    ?>
-
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
         <?php if (auth()->loggedIn()): ?>
@@ -132,7 +131,7 @@
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1 class="mb-0 fs-3"><?= $pageTitle ?></h1>
+                            <h1 class="mb-0 fs-3"><?= esc($pageTitle) ?></h1>
                         </div>
                         <div class="col-sm-6">
                             <nav aria-label="breadcrumb">

@@ -36,6 +36,23 @@ Seguridad.
 ----------------------------------------------------------------------------
 (sin cambios pendientes)
 
+[0.9.0] - 2026-11-10
+----------------------------------------------------------------------------
+Agregado
+  - Filtro en Mis Tickets: solo muestra los tickets cuyo solicitante es el
+    usuario autenticado.
+
+Cambiado
+  - La busqueda de tickets acepta acentos.
+  - Listado enum en status, quedando Abierto, En_proceso, Cerrado y 
+    Resuelto
+  
+Corregido
+  - Loader no se quitaba en modal nuevo ticket
+  - Titulo de pagina y breadcrumbs en el layout: se captura la seccion
+    con buffer antes del <head>, con respaldo a $title, y se quita el
+    prefijo "Shoei |" de los titulos de las vistas.
+
 [0.8.0] - 2026-11-09
 ----------------------------------------------------------------------------
 Agregado

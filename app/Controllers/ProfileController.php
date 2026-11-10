@@ -20,7 +20,7 @@ class ProfileController extends BaseController
         $user = auth()->user();
 
         return view('template/profile', [
-            'title'       => 'Shoei | Mi Cuenta',
+            'title'       => 'Mi Cuenta',
             'accesses'    => model(AccessLogModel::class)->recentForUser($user),
             'profileData' => model(UserProfilesModel::class)->findByUserId($user->id),
         ]);

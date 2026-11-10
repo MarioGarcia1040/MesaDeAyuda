@@ -19,7 +19,7 @@ class DashboardController extends BaseController
         $ticketsModel = new TicketsModel();
                
         return view('template/dashboard', [
-            'title'              => 'Shoei | Dashboard',
+            'title'              => 'Dashboard',
             'usersTotal'         => $usersTotal,
         ]);
     }
