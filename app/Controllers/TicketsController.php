@@ -38,7 +38,7 @@ class TicketsController extends BaseController
         $userModel = new UserModel();
 
         return view('template/tickets', [
-            'title'                 => 'Todos los Tickets',
+            'title'                 => 'Todos',
             'countTicketsByStatus'  => $ticketModel->countByStatus(),
             'tickets'               => $ticketModel->withRelations()->findAll(),
             'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
@@ -54,7 +54,7 @@ class TicketsController extends BaseController
         $userModel = new UserModel();
 
         return view('template/tickets', [
-            'title'                 => 'Tickets Asignados',
+            'title'                 => 'Asignados',
             'countTicketsByStatus'  => $ticketModel->assigned(auth()->id())->countByStatus(),
             'tickets'               => $ticketModel->withRelations()->assigned(auth()->id())->findAll(),
             'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
