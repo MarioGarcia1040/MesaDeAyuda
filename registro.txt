@@ -53,6 +53,10 @@ Corregido
     con buffer antes del <head>, con respaldo a $title, y se quita el
     prefijo "Shoei |" de los titulos de las vistas.
 
+Seguridad
+  - Se agrega esc() en valores de vista faltantes
+
+
 [0.8.0] - 2026-11-09
 ----------------------------------------------------------------------------
 Agregado

@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Modelo para consultar los tickets
- * 08-Octubre-2026 | 06-Noviembre-2026
+ * 08-Octubre-2026 | 11-Noviembre-2026
  * 
  */
 
@@ -161,5 +161,10 @@ class TicketsModel extends Model
     public function applicant(int $userId): self
     {
         return $this->where('tickets.applicant_id', $userId);
+    }
+
+    public function assigned(int $userId): self
+    {
+        return $this->where('tickets.assigned_id', $userId);
     }
 }

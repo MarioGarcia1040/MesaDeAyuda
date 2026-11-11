@@ -91,6 +91,13 @@ $isSectionActive = fn(string $segment) => str_starts_with($currentUri, $segment)
                                 <p>Todos</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="<?= site_url('tickets/assigned') ?>"
+                                class="nav-link <?= $isActive('tickets/assigned') ? 'active' : '' ?>">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Asignados</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

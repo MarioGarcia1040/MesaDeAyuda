@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Controlador muestra la lista de tickets.
- * 2-Octubre-2026 | 10-Noviembre-2026
+ * 2-Octubre-2026 | 11-Noviembre-2026
  * 
  */
 
@@ -47,6 +47,22 @@ class TicketsController extends BaseController
         ]);
     }
     
+    public function assigned()
+    {
+        $ticketModel = new TicketsModel();
+        $categoriesModel = new CategoriesModel();
+        $userModel = new UserModel();
+
+        return view('template/tickets', [
+            'title'                 => 'Tickets Asignados',
+            'countTicketsByStatus'  => $ticketModel->assigned(auth()->id())->countByStatus(),
+            'tickets'               => $ticketModel->withRelations()->assigned(auth()->id())->findAll(),
+            'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
+            'categories'            => $categoriesModel->findAll(),
+            'users'                 => $userModel->getUsersWithProfileDetails(),
+        ]);
+    }
+
     public function create()
     {
         if (! $this->validate('createTicket')) {

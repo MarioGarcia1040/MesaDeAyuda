@@ -31,5 +31,6 @@ $routes->group('tickets', ['filter' => ['session', 'group:admin,user']], functio
     $routes->get('tickets', 'TicketsController::index', ['as' => 'tickets']);
     $routes->get('my-tickets', 'TicketsController::myTickets', ['as' => 'tickets.my-tickets']);
     $routes->get('all', 'TicketsController::all', ['as' => 'tickets.all']);
+    $routes->get('assigned', 'TicketsController::assigned', ['as' => 'tickets.assigned']);
     $routes->post('create', 'TicketsController::create', ['as' => 'tickets.create']);
 });
