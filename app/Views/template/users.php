@@ -67,9 +67,7 @@
                                 <th>Rol</th>
                                 <th>Estado</th>
                                 <th>Registro</th>
-                                <!-- Acciones
                                 <th class="text-end">Acciones</th>
-                                -->
                             </tr>
                         </thead>
                         <tbody>
@@ -140,7 +138,6 @@
                                         <?php endif; ?>
                                     </td>
                                     <td><?= esc($fecha) ?></td>
-                                    <!-- Acciones
                                     <td class="text-end">
                                         <div class="btn-group btn-group-sm">
                                             <a href="<?= site_url('users/edit/' . (int) $user->user_id) ?>"
@@ -148,6 +145,15 @@
                                                 aria-label="Editar <?= esc($nombreCompleto, 'attr') ?>">
                                                 <i class="bi bi-pencil" aria-hidden="true"></i>
                                             </a>
+                                            <button type="button"
+                                                class="btn btn-outline-warning"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-delete-user"
+                                                data-user-id="<?= (int) $user->user_id ?>"
+                                                data-user-name="<?= esc($nombreCompleto, 'attr') ?>"
+                                                aria-label="Eliminar <?= esc($nombreCompleto, 'attr') ?>">
+                                                <i class="bi bi-ban" aria-hidden="true"></i>
+                                            </button>
                                             <button type="button"
                                                 class="btn btn-outline-danger"
                                                 data-bs-toggle="modal"
@@ -158,7 +164,7 @@
                                                 <i class="bi bi-trash" aria-hidden="true"></i>
                                             </button>
                                         </div>
-                                    </td> -->
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

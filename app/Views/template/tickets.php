@@ -12,7 +12,6 @@
 $estadoBadge = [
     'abierto'    => 'text-bg-primary',
     'en_proceso' => 'text-bg-warning',
-    'pendiente'  => 'text-bg-info',
     'resuelto'   => 'text-bg-success',
     'cerrado'    => 'text-bg-secondary',
 ];
@@ -95,7 +94,16 @@ $prioridadBadge = [
                         <td colspan="7" class="text-center text-muted py-4">No se encontraron tickets.</td>
                     </tr>
                     <?php foreach ($tickets as $t): ?>
-                        <tr data-estado="<?= esc($t['status']) ?>">
+                        <tr data-estado="<?= esc($t['status'], 'attr') ?>"
+                            data-search="<?= esc(mb_strtolower(implode(' ', [
+                                                $t['id'],
+                                                $t['subject'],
+                                                $t['applicant_name'],
+                                                $t['category_name'],
+                                                $estadoLabel[$t['status']] ?? '',
+                                                $t['priority'],
+                                                $t['assigned_name'] ?: 'sin asignar',
+                                            ])), 'attr') ?>">
                             <td class="text-nowrap fw-semibold">#<?= esc($t['id']) ?></td>
                             <td>
                                 <a href="#" class="fw-semibold text-decoration-none"><?= esc($t['subject']) ?></a>
@@ -132,8 +140,19 @@ $prioridadBadge = [
         </div>
     </div>
 
-    <div class="card-footer">
-        <small class="text-secondary">Mostrando <?= count($tickets) ?> tickets</small>
+    <div class="card-footer d-flex flex-wrap align-items-center gap-2">
+        <span id="tickets-count" class="fs-7 text-body-secondary" aria-live="polite">
+            Mostrando <?= count($tickets) ?> de <?= count($tickets) ?> tickets
+        </span>
+        <div class="d-flex align-items-center gap-2 ms-auto">
+            <select id="tickets-page-size" class="form-select form-select-sm w-auto" aria-label="Tickets por página">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <ul class="pagination pagination-sm m-0" id="tickets-pagination"></ul>
+        </div>
     </div>
 </div>
 
@@ -244,10 +263,17 @@ $prioridadBadge = [
     document.addEventListener('DOMContentLoaded', () => {
         const buscador = document.getElementById('ticket-search');
         const filtro = document.getElementById('ticket-filter-estado');
-        const filas = document.querySelectorAll('#tickets-table tbody tr[data-estado]');
+        const selectorTamano = document.getElementById('tickets-page-size');
+        const filas = Array.from(document.querySelectorAll('#tickets-table tbody tr[data-estado]'));
         const vacio = document.getElementById('tickets-empty');
+        const contador = document.getElementById('tickets-count');
+        const nav = document.getElementById('tickets-pagination');
 
         if (!buscador || !filtro) return;
+
+        let porPagina = parseInt(selectorTamano?.value ?? '10', 10);
+        let pagina = 1;
+        let coincidentes = filas;
 
         const normalizar = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
@@ -255,24 +281,92 @@ $prioridadBadge = [
         const textos = new Map();
         filas.forEach(fila => textos.set(fila, normalizar(fila.textContent)));
 
+        const crearItem = (etiqueta, destino, {
+            activo = false,
+            deshabilitado = false,
+            aria = null
+        } = {}) => {
+            const li = document.createElement('li');
+            li.className = 'page-item' + (activo ? ' active' : '') + (deshabilitado ? ' disabled' : '');
+
+            const a = document.createElement('a');
+            a.className = 'page-link';
+            a.href = '#';
+            a.innerHTML = etiqueta;
+            if (aria) a.setAttribute('aria-label', aria);
+            if (activo) a.setAttribute('aria-current', 'page');
+
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (activo || deshabilitado) return;
+                pagina = destino;
+                render();
+            });
+
+            li.appendChild(a);
+            return li;
+        };
+
+        const dibujarPaginas = (totalPaginas) => {
+            nav.replaceChildren();
+
+            const fin = Math.min(totalPaginas, Math.max(1, pagina - 2) + 4);
+            const inicio = Math.max(1, fin - 4);
+
+            nav.appendChild(crearItem('&laquo;', pagina - 1, {
+                deshabilitado: pagina === 1,
+                aria: 'Anterior'
+            }));
+            for (let i = inicio; i <= fin; i++) {
+                nav.appendChild(crearItem(i, i, {
+                    activo: i === pagina
+                }));
+            }
+            nav.appendChild(crearItem('&raquo;', pagina + 1, {
+                deshabilitado: pagina === totalPaginas,
+                aria: 'Siguiente'
+            }));
+        };
+
+        const render = () => {
+            const total = coincidentes.length;
+            const totalPaginas = Math.max(1, Math.ceil(total / porPagina));
+            pagina = Math.min(pagina, totalPaginas);
+
+            const inicio = (pagina - 1) * porPagina;
+            const fin = inicio + porPagina;
+
+            filas.forEach(f => f.hidden = true);
+            coincidentes.slice(inicio, fin).forEach(f => f.hidden = false);
+
+            if (vacio) vacio.hidden = total > 0;
+            contador.textContent = total ?
+                `Mostrando ${inicio + 1} a ${Math.min(fin, total)} de ${total} tickets` :
+                'Sin resultados';
+
+            dibujarPaginas(totalPaginas);
+        };
+
         const filtrar = () => {
             const texto = normalizar(buscador.value.trim());
             const estado = filtro.value;
-            let visibles = 0;
 
-            filas.forEach(fila => {
-                const coincideTexto = textos.get(fila).includes(texto);
-                const coincideEstado = !estado || fila.dataset.estado === estado;
-                const mostrar = coincideTexto && coincideEstado;
-                fila.hidden = !mostrar;
-                if (mostrar) visibles++;
-            });
+            coincidentes = filas.filter(fila =>
+                textos.get(fila).includes(texto) &&
+                (!estado || fila.dataset.estado === estado)
+            );
 
-            if (vacio) vacio.hidden = visibles > 0;
+            pagina = 1;
+            render();
         };
 
         buscador.addEventListener('input', filtrar);
         filtro.addEventListener('change', filtrar);
+        selectorTamano?.addEventListener('change', () => {
+            porPagina = parseInt(selectorTamano.value, 10);
+            pagina = 1;
+            render();
+        });
 
         filtrar(); // aplica los valores restaurados por el navegador
         window.addEventListener('pageshow', filtrar); // y al volver con "atrás"

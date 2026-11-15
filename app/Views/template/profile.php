@@ -94,6 +94,19 @@ $activeTab = $flashTab ?? 'settings';
 
                     <li class="nav-item" role="presentation">
                         <button
+                            class="nav-link <?= $activeTab === 'rbac' ? 'active' : '' ?>"
+                            id="rbac-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#rbac"
+                            type="button"
+                            role="tab"
+                            aria-selected="<?= $activeTab === 'rbac' ? 'true' : 'false' ?>">
+                            Roles y privilegios
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button
                             class="nav-link <?= $activeTab === 'access_registration' ? 'active' : '' ?>"
                             id="access-registration-tab"
                             data-bs-toggle="tab"
@@ -269,6 +282,16 @@ $activeTab = $flashTab ?? 'settings';
                                 <button type="reset" class="btn btn-outline-secondary ms-1">Cancelar</button>
                             </div>
                         </form>
+                    </div>
+
+                    
+                    <!-- RBCA tab -->
+                    <div
+                        class="tab-pane fade <?= ($activeTab ?? '') === 'rbac' ? 'show active' : '' ?>"
+                        id="rbac"
+                        role="tabpanel"
+                        aria-labelledby="rbac-tab">
+                        <!-- Roles y privilegios -->
                     </div>
 
                     <!-- Access Registration tab -->

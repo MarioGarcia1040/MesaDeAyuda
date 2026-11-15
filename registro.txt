@@ -41,11 +41,15 @@ Seguridad.
 Agregado
   - Filtro en Mis Tickets: solo muestra los tickets cuyo solicitante es el
     usuario autenticado.
+  - Se crean tablas ticket_commments, ticket_history
+  - Paginacion en vista tickets
+  - Pestaña roles y privilegios en profile
 
 Cambiado
   - La busqueda de tickets acepta acentos.
   - Listado enum en status, quedando Abierto, En_proceso, Cerrado y 
     Resuelto
+  - Tabla tickets se agregan opciones de cambio  
   
 Corregido
   - Loader no se quitaba en modal nuevo ticket
