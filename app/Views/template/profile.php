@@ -222,6 +222,7 @@ $activeTab = $flashTab ?? 'settings';
                                 <input type="password"
                                     class="form-control <?= isset($errors['new-email-password-verification']) ? 'is-invalid' : '' ?>"
                                     id="new-email-password-verification" name="new-email-password-verification"
+                                    placeholder="Contraseña actual"
                                     autocomplete="current-password" required>
                                 <?php if (isset($errors['new-email-password-verification'])): ?>
                                     <div class="invalid-feedback"><?= esc($errors['new-email-password-verification']) ?></div>
@@ -248,7 +249,7 @@ $activeTab = $flashTab ?? 'settings';
                                 <label class="form-label" for="actual-password">Actual</label>
                                 <input type="password"
                                     class="form-control <?= isset($errors['actual-password']) ? 'is-invalid' : '' ?>"
-                                    id="actual-password" name="actual-password"
+                                    id="actual-password" name="actual-password" placeholder="Contraseña actual"
                                     autocomplete="current-password" required>
                                 <?php if (isset($errors['actual-password'])): ?>
                                     <div class="invalid-feedback"><?= esc($errors['actual-password']) ?></div>
@@ -259,7 +260,7 @@ $activeTab = $flashTab ?? 'settings';
                                 <label class="form-label" for="new-password">Nueva</label>
                                 <input type="password"
                                     class="form-control <?= isset($errors['new-password']) ? 'is-invalid' : '' ?>"
-                                    id="new-password" name="new-password"
+                                    id="new-password" name="new-password" placeholder="Nueva contraseña"
                                     autocomplete="new-password" required>
                                 <?php if (isset($errors['new-password'])): ?>
                                     <div class="invalid-feedback"><?= esc($errors['new-password']) ?></div>
@@ -270,7 +271,7 @@ $activeTab = $flashTab ?? 'settings';
                                 <label class="form-label" for="confirm-password">Repetir</label>
                                 <input type="password"
                                     class="form-control <?= isset($errors['confirm-password']) ? 'is-invalid' : '' ?>"
-                                    id="confirm-password" name="confirm-password"
+                                    id="confirm-password" name="confirm-password" placeholder="Repetir nueva contraseña"
                                     autocomplete="new-password" required>
                                 <?php if (isset($errors['confirm-password'])): ?>
                                     <div class="invalid-feedback"><?= esc($errors['confirm-password']) ?></div>
@@ -284,14 +285,81 @@ $activeTab = $flashTab ?? 'settings';
                         </form>
                     </div>
 
-                    
-                    <!-- RBCA tab -->
+                    <!-- RBAC tab -->
                     <div
                         class="tab-pane fade <?= ($activeTab ?? '') === 'rbac' ? 'show active' : '' ?>"
                         id="rbac"
                         role="tabpanel"
                         aria-labelledby="rbac-tab">
-                        <!-- Roles y privilegios -->
+                        <form action="#" method="POST">
+
+                            <!-- Selector de rol -->
+                            <div class="col-md-12 mb-4">
+                                <label class="form-label fw-semibold" for="roles">Roles</label>
+                                <select id="roles" name="groups[]" multiple placeholder="Selecciona uno o más roles…" autocomplete="off">
+                                    <option value="admin" selected>Administrador</option>
+                                    <option value="user" selected>Usuario</option>
+                                    <option value="support">Soporte</option>
+                                </select>
+                                <div class="form-text">Un usuario puede tener varios roles; los permisos se suman.</div>
+                            </div>
+                            <!-- Módulo: Usuarios -->
+                            <div class="border rounded p-3 mb-3">
+                                <h6 class="fw-semibold mb-3">Usuarios</h6>
+                                <div class="d-flex flex-wrap gap-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="users-view" name="permissions[]" value="users.view" checked>
+                                        <label class="form-check-label" for="users-view">Ver</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="users-create" name="permissions[]" value="users.create" checked>
+                                        <label class="form-check-label" for="users-create">Crear</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="users-edit" name="permissions[]" value="users.edit" checked>
+                                        <label class="form-check-label" for="users-edit">Editar</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="users-block" name="permissions[]" value="users.block" checked>
+                                        <label class="form-check-label" for="users-block">Bloquear</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="users-delete" name="permissions[]" value="users.delete">
+                                        <label class="form-check-label" for="users-delete">Borrar</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Módulo: Tickets -->
+                            <div class="border rounded p-3 mb-3">
+                                <h6 class="fw-semibold mb-3">Tickets</h6>
+                                <div class="d-flex flex-wrap gap-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="tickets-view" name="permissions[]" value="tickets.view" checked>
+                                        <label class="form-check-label" for="tickets-view">Ver</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="tickets-create" name="permissions[]" value="tickets.create" checked>
+                                        <label class="form-check-label" for="tickets-create">Crear</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="tickets-edit" name="permissions[]" value="tickets.edit">
+                                        <label class="form-check-label" for="tickets-edit">Editar</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="tickets-block" name="permissions[]" value="tickets.block">
+                                        <label class="form-check-label" for="tickets-block">Bloquear</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="tickets-delete" name="permissions[]" value="tickets.delete">
+                                        <label class="form-check-label" for="tickets-delete">Borrar</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                            <button type="reset" class="btn btn-outline-secondary ms-1">Cancelar</button>
+                        </form>
                     </div>
 
                     <!-- Access Registration tab -->
@@ -389,4 +457,17 @@ $activeTab = $flashTab ?? 'settings';
         bootstrap.Modal.getOrCreateInstance(document.getElementById('avatarModal')).show();
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        new TomSelect('#roles', {
+            plugins: ['remove_button'], // la × en cada tag
+            create: false, // no permite inventar roles nuevos
+            maxOptions: null,
+            closeAfterSelect: false,
+            hidePlaceholder: true
+        });
+    });
+</script>
+
 <?= $this->endSection() ?>

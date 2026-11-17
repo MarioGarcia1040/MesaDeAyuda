@@ -99,6 +99,13 @@ $bc = trim(ob_get_clean());
     <link rel="stylesheet" href="<?= base_url('dist/css/adminlte.css') ?>" />
     <!--end::Required Plugin(AdminLTE)-->
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tom-select@2.7.0/dist/css/tom-select.bootstrap5.min.css"
+      integrity="sha384-dBBUUG/rOlQcpM3Jp7O/2wgpaufQnBX2k10r4kLhMxxrC0BSdQ3nPe96G5ug24R+"
+      crossorigin="anonymous"
+    />
+
     <!--begin::Loader-->
     <link rel="stylesheet" href="<?= base_url('dist/css/loader.css') ?>?v=<?= filemtime(FCPATH . 'dist/css/loader.css') ?>" />
     <!--end::Loader-->
@@ -339,6 +346,12 @@ $bc = trim(ob_get_clean());
         })();
     </script>
     <!--end::Loader Script-->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/tom-select@2.7.0/dist/js/tom-select.complete.min.js"
+      integrity="sha384-6MTvOa3EHHoM7xZpNAMYb7CudHNfwio+DW1LFx1HBz6Udh5eW8hJjh4HKUsg7MoO"
+      crossorigin="anonymous"
+    ></script>
 
     <?= $this->renderSection('js') ?>
     <!--end::Script-->
