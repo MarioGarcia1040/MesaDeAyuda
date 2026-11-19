@@ -53,7 +53,7 @@ $prioridadBadge = [
 <!-- Listado -->
 <div class="card">
     <div class="card-header d-flex flex-wrap gap-2 align-items-center">
-        <h3 class="card-title mb-0 me-auto">Todos los tickets</h3>
+        <h3 class="card-title mb-0 me-auto">Listado</h3>
 
         <div class="input-group input-group-sm" style="width: 16rem">
             <span class="input-group-text"><i class="bi bi-search" aria-hidden="true"></i></span>
@@ -68,11 +68,14 @@ $prioridadBadge = [
                 <option value="<?= esc($valor) ?>"><?= esc($texto) ?></option>
             <?php endforeach; ?>
         </select>
-
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#demoModalScrollable">
-            <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>
-            Nuevo ticket
-        </button>
+        
+        <?php if ($canCreateTicket): ?>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#demoModalScrollable">
+                <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>
+                Nuevo ticket
+            </button>
+        <?php endif; ?>
+        
     </div>
 
     <div class="card-body p-0">
@@ -183,22 +186,26 @@ $prioridadBadge = [
                     <div id="ticketFormAlert" class="alert alert-danger d-none"></div>
 
                     <div class="row mb-3">
-                        <label for="applicant_id" class="col-sm-3 col-form-label">Solicita</label>
-                        <div class="col-sm-9">
-                            <select id="applicant_id" name="applicant_id" class="form-select">
-                                <option value="">Seleccione un usuario</option>
-                                <?php foreach ($users as $user): ?>
-                                    <?php
-                                    $nombreCompleto = trim(($user->nombre ?? '') . ' ' . ($user->apellido ?? ''));
-                                    if ($nombreCompleto === '') {
-                                        $nombreCompleto = $user->email ?? 'Usuario sin nombre';
-                                    }
-                                    ?>
-                                    <option value="<?= esc($user->id) ?>"><?= esc($nombreCompleto) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                            <div class="invalid-feedback"></div>
-                        </div>
+                        <?php if ($applicant): ?>
+                            <input type="hidden" name="applicant_id" value="<?= esc($applicant) ?>">
+                        <?php else: ?>
+                            <label for="applicant_id" class="col-sm-3 col-form-label">Solicita</label>
+                            <div class="col-sm-9">
+                                <select id="applicant_id" name="applicant_id" class="form-select">
+                                    <option value="">Seleccione un usuario</option>
+                                    <?php foreach ($users as $user): ?>
+                                        <?php
+                                        $nombreCompleto = trim(($user->nombre ?? '') . ' ' . ($user->apellido ?? ''));
+                                        if ($nombreCompleto === '') {
+                                            $nombreCompleto = $user->email ?? 'Usuario sin nombre';
+                                        }
+                                        ?>
+                                        <option value="<?= esc($user->id) ?>"><?= esc($nombreCompleto) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                     <div class="row mb-3">

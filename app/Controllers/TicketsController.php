@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Controlador muestra la lista de tickets.
- * 2-Octubre-2026 | 11-Noviembre-2026
+ * 2-Octubre-2026 | 17-Noviembre-2026
  * 
  */
 
@@ -28,6 +28,8 @@ class TicketsController extends BaseController
             'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
             'categories'            => $categoriesModel->findAll(),
             'users'                 => $userModel->getUsersWithProfileDetails(),
+            'applicant'             => auth()->id(),
+            'canCreateTicket'       => true,
         ]);
     }
 
@@ -44,6 +46,8 @@ class TicketsController extends BaseController
             'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
             'categories'            => $categoriesModel->findAll(),
             'users'                 => $userModel->getUsersWithProfileDetails(),
+            'applicant'             => null,
+            'canCreateTicket'       => true,
         ]);
     }
     
@@ -60,6 +64,8 @@ class TicketsController extends BaseController
             'priorityLabel'         => TicketsModel::PRIORITY_LABELS,
             'categories'            => $categoriesModel->findAll(),
             'users'                 => $userModel->getUsersWithProfileDetails(),
+            'applicant'             => null,
+            'canCreateTicket'       => false,
         ]);
     }
 
@@ -96,8 +102,9 @@ class TicketsController extends BaseController
 
         return $this->response->setJSON([
             'success'  => $created,
-            'redirect' => base_url('tickets/all'),
+            'redirect' => previous_url(),
             'csrf'     => csrf_hash(),
         ]);
     }
+
 }

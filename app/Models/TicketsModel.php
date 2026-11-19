@@ -155,7 +155,8 @@ class TicketsModel extends Model
                 'auth_identities AS applicant_ai',
                 "applicant_ai.user_id = tickets.applicant_id AND applicant_ai.type = 'email_password'",
                 'left'
-            );
+            )
+            ->orderBy('tickets.id', 'DESC');
     }
 
     public function applicant(int $userId): self
