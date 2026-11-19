@@ -22,5 +22,10 @@ class UsersController extends BaseController
             'users' => $userProfiles->getUsersWithProfileDetails(),
             'roles' => config('AuthGroups')->groups,
         ]);
-    }   
+    }
+    
+    public function add()
+    {
+        echo "Agregar usuario";
+    }
 }

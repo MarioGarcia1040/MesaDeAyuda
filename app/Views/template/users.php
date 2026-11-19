@@ -41,7 +41,6 @@
                                     <option value="<?= esc($clave, 'attr') ?>"><?= esc($rol['title']) ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <!-- Boton nuevo usuario
                             <button
                                 type="button"
                                 class="btn btn-sm btn-primary"
@@ -49,7 +48,7 @@
                                 data-bs-target="#modal-add-user">
                                 <i class="bi bi-person-plus-fill me-1" aria-hidden="true"> </i>
                                 Nuevo usuario
-                            </button> -->
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -207,6 +206,48 @@
                 <img id="avatar-zoom-img" src="" alt="Foto de perfil ampliada"
                     class="img-fluid rounded shadow" style="max-height: 80vh;">
             </div>
+        </div>
+    </div>
+</div>
+
+<div
+    class="modal fade"
+    id="modal-add-user"
+    tabindex="-1"
+    aria-labelledby="demoModalScrollableLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modal-add-user-label">
+                    Nuevo Usuario
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="add-user-form" action="<?= base_url('users/add') ?>" method="post" novalidate>
+                    <?= csrf_field() ?>
+
+                    <div class="input-group mb-1">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="floatingEmailInput" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required>
+                            <label for="floatingEmailInput"><?= lang('Auth.email') ?></label>
+                        </div>
+                        <div class="input-group-text">
+                            <span class="bi bi-envelope"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="ticketSubmit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
