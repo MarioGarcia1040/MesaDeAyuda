@@ -62,6 +62,7 @@
                             <tr>
                                 <th>Usuario</th>
                                 <th>Email</th>
+                                <th>Teams</th>
                                 <th>Teléfono</th>
                                 <th>Rol</th>
                                 <th>Estado</th>
@@ -103,6 +104,18 @@
                                             <a href="mailto:<?= esc($email, 'attr') ?>"><?= esc($email) ?></a>
                                         <?php else: ?>
                                             <span class="text-muted">Email no disponible</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($email): ?>
+                                            <a class="btn btn-sm btn-outline-primary"
+                                                href="https://teams.microsoft.com/l/chat/0/0?users=<?= esc($email, 'url') ?>"
+                                                target="_blank" rel="noopener noreferrer"
+                                                aria-label="Teams de <?= esc($nombreCompleto, 'attr') ?>">
+                                                <i class="bi bi-microsoft-teams"></i>
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="text-muted">-</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
@@ -230,20 +243,23 @@
             </div>
 
             <div class="modal-body">
-                <form id="add-user-form" action="<?= base_url('users/add') ?>" method="post" novalidate>
+                <form id="userAddForm" action="<?= base_url('users/add') ?>" method="post" novalidate>
                     <?= csrf_field() ?>
+
+                    <div id="userAddFormAlert" class="alert alert-danger d-none"></div>                    
 
                     <div class="input-group mb-1">
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="floatingEmailInput" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required>
-                            <label for="floatingEmailInput"><?= lang('Auth.email') ?></label>
+                            <input type="email" class="form-control" id="floatingAddUserInput" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required>
+                            <label for="floatingAddUserInput"><?= lang('Auth.email') ?></label>
                         </div>
                         <div class="input-group-text">
                             <span class="bi bi-envelope"></span>
                         </div>
                     </div>
+
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="ticketSubmit">Guardar</button>
+                        <button type="submit" class="btn btn-primary" id="userAddFormSubmit">Guardar</button>
                     </div>
                 </form>
             </div>
