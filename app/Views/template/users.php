@@ -223,39 +223,32 @@
     </div>
 </div>
 
-<div
-    class="modal fade"
-    id="modal-add-user"
-    tabindex="-1"
-    aria-labelledby="demoModalScrollableLabel"
-    aria-hidden="true">
+<div class="modal fade" id="modal-add-user" tabindex="-1"
+    ari a-labelledby="modal-add-user-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modal-add-user-label">
-                    Nuevo Usuario
-                </h1>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Cerrar"></button>
+                <h1 class="modal-title fs-5" id="modal-add-user-label">Nuevo Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
 
             <div class="modal-body">
                 <form id="userAddForm" action="<?= base_url('users/add') ?>" method="post" novalidate>
                     <?= csrf_field() ?>
 
-                    <div id="userAddFormAlert" class="alert alert-danger d-none"></div>                    
+                    <div id="userAddFormAlert" class="alert alert-danger d-none"></div>
 
-                    <div class="input-group mb-1">
+                    <div class="input-group has-validation mb-3">
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="floatingAddUserInput" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required>
+                            <input type="email" class="form-control" id="floatingAddUserInput"
+                                name="email" inputmode="email" autocomplete="email"
+                                placeholder="<?= lang('Auth.email') ?>">
                             <label for="floatingAddUserInput"><?= lang('Auth.email') ?></label>
                         </div>
-                        <div class="input-group-text">
-                            <span class="bi bi-envelope"></span>
-                        </div>
+                        <span class="input-group-text">
+                            <i class="bi bi-envelope" aria-hidden="true"></i>
+                        </span>
+                        <div class="invalid-feedback"></div>
                     </div>
 
                     <div class="modal-footer">
@@ -263,7 +256,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
@@ -394,6 +386,118 @@
         });
 
         filtrar();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('userAddForm');
+        const alertB = document.getElementById('userAddFormAlert');
+        const btn = document.getElementById('userAddFormSubmit');
+        const csrfName = '<?= csrf_token() ?>';
+
+        const clearErrors = () => {
+            alertB.classList.add('d-none');
+            alertB.innerHTML = '';
+            form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            form.querySelectorAll('.invalid-feedback').forEach(el => {
+                el.textContent = '';
+                el.classList.remove('d-block');
+            });
+        };
+
+        const showAlert = (msg) => {
+            alertB.textContent = msg;
+            alertB.classList.remove('d-none');
+        };
+
+        const showErrors = (errors) => {
+            const general = [];
+
+            Object.entries(errors).forEach(([name, message]) => {
+                const field = form.elements[name];
+                const fb = field && field.type !== 'hidden' ?
+                    field.closest('.input-group')?.querySelector('.invalid-feedback') :
+                    null;
+
+                if (!fb) {
+                    general.push(message);
+                    return;
+                }
+                field.classList.add('is-invalid');
+                fb.textContent = message;
+                fb.classList.add('d-block');
+            });
+
+            if (general.length) showAlert(general.join(' '));
+            form.querySelector('.is-invalid')?.focus();
+        };
+
+        const updateCsrf = (token) => {
+            if (!token) return;
+            const input = form.querySelector(`input[name="${csrfName}"]`);
+            if (input) input.value = token;
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearErrors();
+            btn.disabled = true;
+            showLoader('Registrando datos...');
+            let redirecting = false;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                });
+
+                let data = null;
+                try {
+                    data = await response.json();
+                } catch (_) {}
+
+                updateCsrf(data?.csrf);
+
+                if (response.status === 422 && data?.errors) {
+                    showErrors(data.errors);
+                    return;
+                }
+
+                if (!response.ok || !data) {
+                    showAlert(data?.message ?? 'Ocurrió un error inesperado. Intente de nuevo.');
+                    return;
+                }
+
+                redirecting = true;
+                bootstrap.Modal.getInstance(form.closest('.modal'))?.hide();
+                window.location.href = data.redirect ?? window.location.href;
+
+            } catch (err) {
+                showAlert('No se pudo conectar con el servidor.');
+            } finally {
+                if (!redirecting) {
+                    hideLoader();
+                    btn.disabled = false;
+                }
+            }
+        });
+
+        form.closest('.modal')?.addEventListener('hidden.bs.modal', () => {
+            form.reset();
+            clearErrors();
+        });
+
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted) {
+                btn.disabled = false;
+                hideLoader();
+            }
+        });
     });
 </script>
 

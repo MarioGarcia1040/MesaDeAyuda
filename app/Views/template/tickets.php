@@ -68,14 +68,14 @@ $prioridadBadge = [
                 <option value="<?= esc($valor) ?>"><?= esc($texto) ?></option>
             <?php endforeach; ?>
         </select>
-        
+
         <?php if ($canCreateTicket): ?>
             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#demoModalScrollable">
                 <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>
                 Nuevo ticket
             </button>
         <?php endif; ?>
-        
+
     </div>
 
     <div class="card-body p-0">

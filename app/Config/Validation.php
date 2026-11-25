@@ -2,7 +2,7 @@
 /*
  * Autor: Mario García - mariogarcia1040@gmail.com
  * Descripción: Reglas de validación para llamado desde diferentes controladores.
- * 05-Noviembre-2026 | 06-Noviembre-2026
+ * 05-Noviembre-2026 | 21-Noviembre-2026
  * 
  */
 
@@ -157,4 +157,17 @@ class Validation extends BaseConfig
             ],
         ],
     ];
+
+    public array $addUser = [
+        'email' => [
+            'label'  => 'Email',
+            'rules'  => 'required|valid_email|max_length[100]|is_unique[auth_identities.secret]',
+            'errors' => [
+                'required' => 'El campo {field} es obligatorio.',
+                'valid_email' => 'El campo {field} debe contener un correo electrónico válido.',
+                'max_length' => 'El campo {field} no puede exceder los 100 caracteres.',
+                'is_unique' => 'El correo electrónico ya está registrado.',
+            ],
+        ]
+    ];    
 }

@@ -34,10 +34,16 @@ Seguridad.
 
 [Sin publicar]
 ----------------------------------------------------------------------------
+(sin cambios pendientes)
+
+
+[0.10.0]
+----------------------------------------------------------------------------
 Agregado 
   - Se agregan tabulador de roles y privilegios en mi cuenta
   - Mejora en boton nuevo ticket segun apartado del menu
-(sin cambios pendientes)
+  - Alta de usuarios en lista de usuarios
+
 
 [0.9.0] - 2026-11-10
 ----------------------------------------------------------------------------

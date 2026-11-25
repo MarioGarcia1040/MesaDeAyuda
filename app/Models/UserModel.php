@@ -51,4 +51,9 @@ class UserModel extends ShieldUserModel
             ->findAll();
     }   
 
+   public function createUser()
+   {
+    echo "createUser method called";
+   }
+
 }
