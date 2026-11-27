@@ -133,17 +133,21 @@ class UsersController extends BaseController
         $identities = model(UserIdentityModel::class);
 
         // Elimina tokens anteriores para no acumularlos
-        $identities->deleteIdentitiesByType($user, Session::ID_TYPE_MAGIC_LINK);
+        $identities->where('user_id', $user->id)
+            ->where('type', Session::ID_TYPE_MAGIC_LINK)
+            ->delete();
 
-        return $identities->createCodeIdentity(
-            $user,
-            [
-                'type'  => Session::ID_TYPE_MAGIC_LINK,
-                'name'  => 'login',
-                'extra' => lang('Auth.magicLinkDetails'),
-            ],
-            static fn(): string => bin2hex(random_bytes(16))
-        );
+        $token = bin2hex(random_bytes(20));
+
+        $identities->insert([
+            'user_id' => $user->id,
+            'type'    => Session::ID_TYPE_MAGIC_LINK,
+            'secret'  => $token,
+            'expires' => Time::now()
+                ->addSeconds(setting('Auth.magicLinkLifetime'))
+                ->format('Y-m-d H:i:s'),
+        ]);
+
+        return $token;
     }
-
 }
