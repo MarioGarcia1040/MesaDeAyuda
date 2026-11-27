@@ -13,6 +13,7 @@ use App\Models\UserModel;
 use CodeIgniter\Shield\Entities\User;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
 use CodeIgniter\Shield\Models\UserIdentityModel;
+use CodeIgniter\I18n\Time;
 
 
 class UsersController extends BaseController
