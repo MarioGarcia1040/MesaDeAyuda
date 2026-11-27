@@ -11,6 +11,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\UserModel;
 use CodeIgniter\Shield\Entities\User;
+use CodeIgniter\Shield\Authentication\Authenticators\Session;
+use CodeIgniter\Shield\Models\UserIdentityModel;
 
 
 class UsersController extends BaseController
@@ -85,7 +87,14 @@ class UsersController extends BaseController
                 ]);
         }
 
-        session()->setFlashdata('success', 'Usuario agregado correctamente.');
+        $correoEnviado = $this->sendMagicLinkEmail($usuario);
+
+        session()->setFlashdata(
+            $correoEnviado ? 'success' : 'warning',
+            $correoEnviado
+                ? 'Usuario agregado correctamente. Se envió un correo de acceso.'
+                : 'Usuario agregado, pero no se pudo enviar el correo de acceso.'
+        );
 
         return $this->response->setJSON([
             'success'  => true,
@@ -93,4 +102,48 @@ class UsersController extends BaseController
             'csrf'     => csrf_hash(),
         ]);
     }
+
+    private function sendMagicLinkEmail(User $user): bool
+    {
+        try {
+            $token = $this->createMagicLinkToken($user);
+
+            $email = service('email');
+            $email->setTo($user->email);
+            $email->setSubject('Tu acceso al sistema');
+            $email->setMessage(view('template/emails/registredbysupport', [
+                'username' => $user->username,
+                'link'     => url_to('verify-magic-link') . '?token=' . $token,
+            ]));
+
+            if (! $email->send(false)) {
+                log_message('error', 'Email de acceso falló: ' . $email->printDebugger(['headers']));
+                return false;
+            }
+
+            return true;
+        } catch (\Throwable $e) {
+            log_message('error', 'Email de acceso: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    private function createMagicLinkToken(User $user): string
+    {
+        $identities = model(UserIdentityModel::class);
+
+        // Elimina tokens anteriores para no acumularlos
+        $identities->deleteIdentitiesByType($user, Session::ID_TYPE_MAGIC_LINK);
+
+        return $identities->createCodeIdentity(
+            $user,
+            [
+                'type'  => Session::ID_TYPE_MAGIC_LINK,
+                'name'  => 'login',
+                'extra' => lang('Auth.magicLinkDetails'),
+            ],
+            static fn(): string => bin2hex(random_bytes(16))
+        );
+    }
+
 }
